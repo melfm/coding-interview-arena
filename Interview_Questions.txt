@@ -1,0 +1,487 @@
+OK 1. Print all numbers between 1 and a million - with no repeating digits
+
+OK 2. You are given a list of numbers. When you reach the end of the list you will come back to the beginning of the list (a circular list). Write the most efficient algorithm 
+  a) to find the minimum no in this list
+  b) Find any given # in the list.
+The numbers in the list are always increasing but you don’t know where the circular list begins, ie: 38, 40, 55, 89, 6, 13, 20, 23, 36.
+
+3. You are given an array with integers (both positive and negative) in any random order. Find the sub-array with the largest sum.
+
+int maxSubArraySum(int a[], int size)
+{
+   int start = 0, end = 0;
+   int max_so_far = a[0];
+   int max_ending_here = a[0];
+   
+   for(int i = 1; i < size; i++)
+   {
+     max_ending_here = max_ending_here + a[i];
+
+     if (max_ending_here < a[i]) {
+        start = i;
+        max_ending_here = a[i];
+     }
+
+     if (max_so_far < max_ending_here) {
+        end = i;
+        max_so_far = max_ending_here;
+     }
+   }
+   return max_so_far;
+}
+
+// [-2,-1,-3]
+
+
+OK 4. given an array of sorted integers with duplicate values , sort the array so that there are only unique values left in sorted order ( do not use any additional data type , do inplace sort )
+
+
+void removeDuplicates(int A[], int size) {
+    int p1 = 0;    // goes in front
+    int p2 = 0;    // going behind p1
+
+    while (p1 < size) {
+        // If value pointed by p1 is not same as value pointed by p2,
+        // then increment p2 and copy value of p1 to p2's location
+        if (A[p1] != A[p2] {
+            p2++;
+            A[p2] = A[p1];
+        }
+        ++p1;
+    }
+}
+
+OK 5. Given (i) a non-empty binary search tree with double values (e.g. 3.5) in each node and (ii) a key value K, write a method to find the closest value to K.
+----------------
+n: node
+d: difference between node to be checked and key targetted
+un = ultimate node or solution node
+min = current minimum
+
+CK(n, d)
+	if(abs(d) < min)
+		un = n
+	if(d == 0)
+		return
+	if(d < 0)
+		CK(n->r, n->r - k)
+	else
+		CK(n->l, n->l - k)
+----------------
+
+OK 6. Two numbers are represented as linked lists. Both lists are of same length. Add them without manipulating the lists and without a second traversal.
+----------------
+L1[], L2[], CRV = 0, RES=0
+for (i = 0; i < L1.size(); ++i)
+{
+    CRV = L1[i] + L2[i]
+    RES = RES * 10
+    RES = RES + CRV
+}
+----------------
+
+OK 7. Sort the input character array based on the alphabet given.
+
+For eg:, If input word is “SHEEP“, sorting will make it as “EEHPS“. But in the alphabet, E may not be at first. As per the alphabet, if P is first, S followed and E later and finally H. Then sorted array is “PSEEH“.
+----------------
+public String sortByD(String s, List<Char> dict){
+	String output = "";
+	HashMap<Char, String> map = new HashMap<Char, String>();
+	for (Char c : dict)
+		m.put(c,"");
+	for (int i = 0; i < s.length(); ++i)
+		m.put(s.charAt(i),m.get(s.charAt(i))+s.charAt(i));
+	for (Char c : dict)
+		output += m.get(c);
+	return output;
+}
+----------------
+
+OK 8. Implement a set that supports insert, remove and getRandomElement() operations.
+----------------
+Using a hashtable and an array.
+Hashtable key=data, value=index in the array. Array[index] = data
+----------------
+
+OK 9. Give a examples of hash functions that maps english word to byte.
+----------------
+byte hash(string word) {
+	byte hash=0
+	for (int i=0;i < word.size(); i++) {
+		hash ^= word[i];
+	}
+	return hash;
+}
+----------------
+
+10. Given a BST and a value x. Find two nodes in the tree whose sum is equal x. Additional space: O(height of the tree). It is not allowed to modify the tree
+----------------
+
+----------------
+
+OK 11. Write a program to return list of words (from the given list of words) that can be formed from the list of given characters. This is like Scribble game. Say for example the given characters are ('a' , 'c' , 't' } and list the words are {'cat', 'act', 'ac', 'stop' , 'cac'}. The program should return only the words that can be formed from given letters. Here the output should be {'cat', 'act', 'ac'}.
+----------------
+	public static void main(String[] args) {
+		byte[] letters = { 'a', 'c', 't' };
+		String[] words = { "cat", "act", "ac", "stop", "cac" };
+		List tempList = new ArrayList();
+		String tempword = "";
+		for (String x : words) {
+			tempword = x;
+			for (byte z : x.getBytes()) {
+				tempList.add(z);
+			}
+			for (byte z : letters) {
+				tempList.remove((Object) z);
+			}
+			if (tempList.size() == 0) {
+				System.out.println(tempword);
+			}
+
+		}
+----------------
+
+OK 12. Implement a circular queue of integers of user-specified size using a simple array. Provide routines to initialize(), enqueue() and dequeue() the queue. Make it thread safe.
+----------------
+
+----------------
+
+OK 13. Given a sorted array of integers, write a function that will return the number with the biggest number of repetitions. Can you suggest an optimisation?
+
+
+OK 14. How would you implement an infinite counter?
+----------------
+Using a link list. A node consists of a counter, then add a new node (in front) when the previous node overflows, and reset. This can be continuded to limitless number of nodes.
+----------------
+
+
+15. Build a key-value data structure which can perform following 2 functions 
+- lookup(key) 
+- rangeLookup(key1, key2)
+----------------
+
+----------------
+
+
+OK 16. a) Write a function "minValue(Node root)" to return the minimum value of tree.
+    b) Write a function "isBST(Node root)" to check if given binary tree is a Binary Search Tree (BST)
+
+OK 17. You are given a string FOOFIGHTERS. You have to come up with an algorithm that will compress this string. 
+For example: FOOFIGHTERS will be compressed as FO2FIGHTERS. You should not use another array or bitfield to keep a frequency count for the individual letters.
+
+18. Given a array of integers, find 3 indexes i,j,k such that, i<j<k and a[i] < a[j] < a[k]. Best possible is a O(n) algorithm.
+----------------
+From the original array build two arrays. 
+i)  LMin[i] contains index of the min element seen so far from the left including a[i]. 
+ii) RMax[i] contains index of the max element seen so far from the right including a[i]. 
+consider the following array: 
+a    =4,7,5,1,3,8,9,6,2 
+LMin =0,0,0,3,3,3,3,3,3 
+RMax =6,6,6,6,6,6,6,7,8 
+
+Now for i=1 to n if (a[LMin[i]] < a[i] < a[RMax[i]) print LMin[i],a[i],RMax[i] 
+Time complexity: O(n) 
+Space Complexity: O(n)
+----------------
+
+OK 19. Given a matrix represented as int[n][n]
+	a) Transpose the array (i.e rows become columns and columns become rows)
+	b) Rotate original array 90 degrees clockwise in-place. (In-place means minimal extra memory to be used, ie, don't make a new array to copy into). Rotate clockwise means top-row becomes right-column, right column becomes bottom-row etc.
+
+OK 20. Given a tree and a sum, returns true if there is a path from the root down to a leaf, such that adding up all the values along the path equals the given sum. Strategy: subtract the node value from the sum when recurring down, and check to see if the sum is 0 when you run out of tree.
+----------------
+public boolean hasPathSum(int sum) { 
+ return( hasPathSum(root, sum) ); 
+}
+boolean hasPathSum(Node node, int sum) { 
+  // return true if we run out of tree and sum==0 
+  if (node == null) { 
+    return(sum == 0); 
+  } 
+  else { 
+  // otherwise check both subtrees 
+    int subSum = sum - node.data; 
+    return(hasPathSum(node.left, subSum) || hasPathSum(node.right, subSum)); 
+  } 
+}
+----------------
+
+OK 21. If you're given a list of countries and its corresponding population, write a function that will return a random country but the higher the population of the country, the more likely it is to be picked at random.
+----------------
+First of all, sum the population of all countries. Let the sum be N. 
+Now think of it in terms of a number line. Have a number line from 1 to N. Now allocate proportional part of the number line to corresponding country based on its population (Higher the population more numbers in number line and vice versa). Let say 1 to n1 is for 1st country , n1+1 to n2 to second and so on. 
+Now generate a random number between 1 to N. Just return the country which owns that number in that number line.
+----------------
+
+
+OK 22. Implement a simple regex parser which, given a string and a pattern, returns a boolean indicating whether the input matches the pattern. By simple, we mean that the regex can only contain one special character: * (star). The star means what you'd expect, that there will be zero or more of any character in that place in the pattern. However, multiple consecutive stars are allowed. Some examples of valid input (and expected output):
+
+f(a*b, acb) => true 
+f(abc*, abbc) => false 
+f(**bc, bc) => true
+
+Following solution does not work for all cases!!
+----------------
+bool regex(string str1, string str2)
+{
+	int j;
+	for (int i=0; i<str1.length(); i++)
+	{
+		for (j=0; j<str2.length(); j++)
+		{
+			if (i+j >= str1.length())
+				return false;
+			if (str1[i+j] != str2[j] && str2[j] != '*')
+				break;
+		}
+		if (j >= str2.size())
+			return true;
+	}
+}
+----------------
+// Java version
+static boolean regex(String str1, String str2) {
+	int i, j;
+	for (i=0; i < str1.length(); i++)
+	{
+		for (j =0; j <str2.length(); j++)
+		{
+			if (i+j >= str1.length()) {
+				return false;
+			}
+			if (str1.charAt(i+j) != str2.charAt(j) && str2.charAt(j) != '*') {
+				break;
+			}
+		}
+		if (j >= str2.length()) {
+			return true;
+		}
+	}
+	return false;		
+}
+----------------
+
+OK 22. Implement a hash table that can store integer keys with a uniform distribution in the range 1 - 1000. Provide the following functions: insert(), lookup(), delete().
+
+23. Sort an input string according to the given order string. There might be characters in input string that are not present in the order string and vice-versa. The characters of input string that are not present in the order string should come at the end of the output string in any order. Write code... 
+
+Example: Sort("abdcdfs","dacg")  =>  Output: ddacfbs
+----------------
+int main()
+{
+            char str[] = {'a','b','d','c','d','f','s','\0'}, *sortOrder = "dacg", ch; 
+	int i=0, j=0, k=0, count[256]; 
+	
+	printf("\n %s", str);
+
+             for(; i<;256;i++)
+	{
+		count[i] = 0;
+	}
+	for(i=0; (ch = str[i])!= '\0'; i++)
+		count[ch] +=1;
+	for( i=0; (ch= sortOrder[i])!= '\0'; i++)
+	{
+		for(j=0; j < count[ch]; j++)
+			str[k++] = ch;
+		count[ch] = 0;
+	}
+	for(i=0; i<;256; i++)
+	{
+		if( count[i] != 0 )
+		{			
+			for(j=0; j < count[i]; j++)
+				str[k++] = i;
+			count[i] = 0;
+		}
+	}
+	str[k] = '\0';
+	printf("\n %s", str);
+	return 0;
+}
+----------------
+
+24. OK An integer array contains elements in increasing order till some point and then decreasing order , return the index of maximum number. Solution should be less than O(n). Ex - {1,2,3,4,5,3,1}
+
+
+25. You are given a large set of integers, which are not sorted. Figure out a method to retrieve the largest 1000 elements, in O(n) run time.
+----------------
+Heap backed data structure (DS) that can store 1000 integers. Iterate array and add integers DS. First 1000 is always added. Thereafer, if valued being added is greater than current min, replace current min with new value, otherwise do nothing. 
+
+// Java implementation (tested)
+static Integer[] funnel(Integer N, Integer[] data) {
+	Queue<Integer> heap = new PriorityQueue<Integer>();
+	// Add first N values to heap
+	for (int i = 0; i < N; ++i) {
+		heap.add(data[i]);
+	}
+	// Scan thru rest of the data and insert numbers to heap that are
+	// greater than the current head value (i.e. current minimum)
+	for (int i = N; i < data.length; ++i) {
+		if (data[i] > heap.peek()) {
+			heap.poll();
+			heap.add(data[i]);
+		}		
+	}
+	// Return heap values as an array
+	return heap.toArray(new Integer[0]);
+}
+----------------
+largestElemens(ArrayList numbers){
+    Heap daheap = new MinimumHeap()
+
+    // Place first 1000 numbers in heap
+    for(int i =0; i < 1000; ++i){
+        daheap.add(numbers.get(i)); 
+    }
+    // Now do the rest
+    for(int i = 1000; i < numbers.size(); ++i){
+        // Check if number is greater than current minimum (i.e. root node in min-heap)
+        if(numbers.get(i) > daheap.rootValue()){
+            // replace the current min wtih new value
+            // Are we assuming min-heap yeah? YES - created a MinimumHeap class above .. see?
+            daheap.deleteRootNode();
+            daheap.add(numbers.get(i)); 
+        }
+    }
+}
+----------------
+
+26. OK Given a matrix of characters and a string, find whether the string can be obtained from the matrix. From each character in the matrix, we can move up/down/right/left. for example, if the matrix[3][4] is 
+
+o f a s 
+l l q w 
+z o w k 
+
+and the string is "follow", then the function should return true.
+
+27. OK  if the given expression contains redundant parantheses. ex :if expr = a+(b*c) , print false, if expr = a+((b*c)), print true.
+
+----------------
+We traverse the expression, and we push either a bracket, or a value. If the top of stack contains a value, we don't push another value, just leave it as is. If we encounter a right bracket, we expect a value on top to pop. We then pop the value and pop a bracket. If we don't get a value on top when we encounter a right bracket, then we have redundant brackets. 
+
+We ignore operators. 
+stack <Token> s;
+TokenStream stream = new Lexer(input_expression);
+foreach token in stream {
+    if (token.Type == Operator) continue; // Ignore them.
+   
+    if (token.Type == Value) {
+        if (!s.Empty() && s.Top().Type == Value) continue;
+        s.Push(token);
+    }
+    
+    if (token.Type == Left) { // Left bracket
+        s.Push(token);
+    }
+
+    if (token.Type == Right) {
+        if (s.Empty()) throw IllegalExpressionException;
+        if (s.Peek().Type != Value) return false;
+        s.Pop();
+        if (s.Empty() || s.Top.Type() != Left) throw IllegalExpressionException;
+    }
+}
+if (!s.Empty()) throw IllegalExpressionException;  
+return true;
+----------------
+
+OK 28. You are given an array with numbers - [11, 3, 11, 11, 3, 2, 0, -2, 2] 
+
+You are supposed to write a function that returns the number that appears "odd" number of times. 
+
+The solution is obviously using HashMap. But that takes O(n) to populate the HashMap and O(n) to scan for frequencies. How can one eliminate the second O(n) yet keeping the HashMap?
+
+OK 21. Code for computing a^b and optimize it. Function signature is -> power(a, b)
+----------------
+	public static int pow(int a, int b,int[] memo) {
+		if(b==0)
+			return 1;
+		if(b==1)
+			return a;
+
+	    if(memo[b]!=-1)
+	        return memo[b];
+
+	    if(b%2=0){
+	        memo[b] = pow(a,b/2,memo) * pow(a,b/2,memo);
+	    }
+	    else {
+	        memo[b] = pow(a,(b-1)/2,memo) * pow(a,(b-1)/2,memo) * a;
+		}
+	    return memo[b];
+	}
+----------------
+
+22. Find the largest continuous sequence in a array which sums to zero
+
+23. Write a program to find the number of occurrences of a given search word in a two-dimensional array of characters given that the word can go up, down, left, right, and around 90 degree bends? 
+
+Ex: 
+Count of occurrences of SNAKES 
+S N B S N 
+B A K E A 
+B K B B K 
+S E B S E 
+
+The answer is 3. 
+
+
+24. Given a string (for example: "a?bc?def?g"), write a program to generate all the possible strings by replacing ? with 0 and 1. 
+Example: 
+Input : a?b?c? 
+Output: a0b0c0, a0b0c1, a0b1c0, a0b1c1, a1b0c0, a1b0c1, a1b1c0, a1b1c1.
+
+25. Given a string with multiple spaces write a function to in-place trim all spaces leaving a single space between words 
+e.g. 
+_ _ _ Hello _ _ _ World _ _ _ 
+Hello _ World _ _ _ _ _ _ _ _ _
+
+26. Given a complete binary tree, print the outline of the tree in anti-clockwise direction, starting from the root. I.e. first print all the nodes on the left 
+edge of the tree going downwards, then print all the leaves going left to right (including leaves on both the last and the 2nd last level if necessary), then 
+print the nodes on the right edge of the tree going upwards. 
+
+Example tree: 
+        A
+       / \
+      /   \
+     /     \ 
+    B       C 
+   / \     / \ 
+  D   E   F   G 
+ / \     / 
+H   I   J 
+
+Expected Output: ABDHIJFGC
+
+27. You have an array of integers(size N), such that each integer is present an odd number of time, except 3 of them(which are present even number of times). Find the three numbers. 
+
+Only XOR based solution was permitted. 
+Time Complexity: O(N) 
+Space Complexity: O(1) 
+
+Sample Input: 
+{1,6,4,1,4,5,8,8,4,6,8,8,9,7,9,5,9} 
+Sample Output: 
+1 6 8
+
+28. Given an unsorted array of integers, you need to return maximum possible n such that the array consists at least n values greater than or equals to n. Array can contain duplicate values. 
+Sample input : [1, 2, 3, 4] -- output : 2 
+Sample input : [900, 2, 901, 3, 1000] -- output: 3
+
+29. Given a Binary Search tree of integers, you need to return the number of nodes having values between two given integers. You can assume that you already have some extra information at each node (number of children in left and right subtrees !!).
+
+
+Design
+------
+
+1. Design a filing system for storing email attachments. Users are able to issue filing and retrieval commands in the form of email messages sent to a designated email address. The system will periodically monitor messages in this inbox to process filing commands. The system response to a command is also an email message addressed to the sender of the original message. Files to be stored in the system are attached to an email with a set of associated keywords and the filing command. A user can retrieve files from the system by giving the retrieval command and some keywords. If successful, the system returns files matching the criteria as email attachments.
+
+2. Design a Logging mechanism. Should be thread safe. 
+
+3. How would you synchronize a linked list across multiple computers. If nodes are added/removed to a linked list on one computer, all others must reflect this change. Concurrancy must be accounted for.
+
+
+Puzzles
+
+1. You have eight balls all of the same size. 7 of them weigh the same, and one of them weighs slightly more. How can you find the ball that is heavier by using a balance and only two weighings?
