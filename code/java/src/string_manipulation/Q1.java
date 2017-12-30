@@ -1,3 +1,5 @@
+package string_manipulation;
+
 import java.util.Arrays;
 
 //
@@ -8,7 +10,7 @@ import java.util.Arrays;
 // Output: a0b0c0, a0b0c1, a0b1c0, a0b1c1, a1b0c0, a1b0c1, a1b1c0, a1b1c1.
 //
 
-public class Q3 {
+public class Q1 {
 	//
 	// Starting point
 	//

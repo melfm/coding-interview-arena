@@ -1,7 +1,9 @@
+package string_manipulation;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Puzzle {
+public class Q2 {
 
 	/************************************************************************
 	 * 1. Scan original string and count number of ?s in the string. Also make
@@ -10,7 +12,7 @@ public class Puzzle {
 	 * binary sequence, replace ?s in the original string with 0s and 1s. Use of
 	 * the locations will improve efficiency of the replacement operations ..
 	 * instead of having to scan the string over and over again.
-	 */
+	 ************************************************************************/
 	
 	ArrayList<String> detectAndGenerateOnesZeros(String s){
 		// Go thru the string and search for ?
@@ -53,5 +55,4 @@ public class Puzzle {
 	}
 
 	//************************************************************************
-
 }
