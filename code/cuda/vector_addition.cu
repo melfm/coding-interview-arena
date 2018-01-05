@@ -2,7 +2,7 @@
 
 
 __global__ void add(int *a, int *b, int *c) {
-	c[blockIdx.x] = a[blockIdx.x] + b[blockIdx.x];
+    c[blockIdx.x] = a[blockIdx.x] + b[blockIdx.x];
 }
 
 void random_ints(int* a, int N){
