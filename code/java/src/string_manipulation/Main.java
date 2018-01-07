@@ -42,6 +42,15 @@ public class Main {
 		System.out.println("Question 4:");
 		System.out.println(matches);
 
+
+		/************************************/
+		Q5 question_five = new Q5();
+		// Data
+		String fruit = "Apple";
+		String fruit_reversed = question_five.reverse_string(fruit);
+		System.out.println("Question 5:");
+		System.out.println(fruit_reversed);
+
 	}
 
 }
