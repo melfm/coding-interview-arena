@@ -23,14 +23,42 @@
 int Bitcount(unsigned char x)
 {
     int count;
-    for (count = 0 ; x!= 0; x>>=1)
+    int i = 0;
+    // char size is 8 bits
+    for (i = 0 ; i < 8; i++)
     {
-        if (x & 01)
+        if (x & 0b00000001)
             count++;
+        x = x >> 1;
     }
+
     return count;
 }
 
+
+// Given a binary number, reverse the bits
+unsigned int reverseBits(unsigned int x)
+{
+    unsigned int num_of_bits = sizeof(x) * 8;
+    unsigned int reversed_x = 0;
+    int i = 0;
+    unsigned int tmp;
+
+    for(i = 0; i < num_of_bits; ++i)
+    {
+        tmp = (x & (1 << i));
+        if (tmp)
+            reversed_x |= (1 << (num_of_bits - 1) - i);
+    }
+    return reversed_x;
+}
+
+void print_binary(unsigned n)
+{
+    unsigned i;
+    for (i = 1 << 31; i > 0; i = i / 2)
+        (n & i)? printf("1"): printf("0");
+}
 
 // Given a number x and two positions from right,
 // in binary write a function that swaps n bits
@@ -61,12 +89,33 @@ int swapBits(unsigned int x, unsigned int p1,
 int main()
 {
 
+    ////////////////
+    // BitCount
+    ////////////////
     int bit_count = Bitcount(24);
     // 24 -> 11000
-    printf("Bit count = %d \n", bit_count);
+    printf("Bit count of 24 = %d \n", bit_count);
+
+    ////////////////
+    // BitReverse
+    ////////////////
+    unsigned int x = 24;
+    print_binary(x);
+    printf("\n");
+
+    unsigned int reversed_x = reverseBits(x);
+    printf("Reversed bits ->\n");
+    print_binary(reversed_x);
+    printf("\n");
+
+    ////////////////
+    // BitSwap
+    ////////////////
+
     int res = swapBits(28, 0, 3, 2);
     // Expected result -> 7
     printf("Result = %d \n", res);
+
     return 0;
 }
 
