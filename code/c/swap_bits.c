@@ -111,7 +111,6 @@ int main()
     ////////////////
     // BitSwap
     ////////////////
-
     int res = swapBits(28, 0, 3, 2);
     // Expected result -> 7
     printf("Result = %d \n", res);
