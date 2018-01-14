@@ -38,6 +38,16 @@ class StringManipulationTest(unittest.TestCase):
 
         self.assertFalse(palin_answer)
 
+    def test_return_palindrome_subset(self):
+        word = 'xolmox'
+        exp_subset = 'xoox'
+        palin_subset = str_manip.return_palindrome_subset(word)
+        if self.dump_output:
+            print('Palindrome subset of {}:'.format(word))
+            print('Answer ', palin_subset)
+
+        self.assertEqual(palin_subset, exp_subset)
+
 
 if __name__ == '__main__':
     unittest.main()
