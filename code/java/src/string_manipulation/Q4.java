@@ -8,8 +8,12 @@ public class Q4 {
 	 * down, left, right, and around 90 degree bends?
 	 * 
 	 * 
-	 * Ex: Count of occurrences of SNAKES [5x4] S N B S N B A K E A B K B B K S
-	 * E B S E The answer is 3.
+	 * Ex: Count of occurrences of SNAKES [5x4]
+	 * S N B S N
+	 * B A K E A
+	 * B K B B K
+	 * S E B S E
+	 * The answer is 3.
 	 * 
 	 * */
 	// Global word counter
