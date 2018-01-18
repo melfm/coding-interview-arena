@@ -1,5 +1,7 @@
 import numpy as np
 
+import pdb
+
 
 def rotate_matrix(matrix):
     """Given an matrix represented by N x N matrix where each pixel in the
@@ -63,3 +65,47 @@ def map_matrix_island_color(matrix):
     Write a function to return number of different countries.
     Complexity -> Expected worst-case time and space of O(N*M).
     """
+
+    visit_map = np.ones_like(matrix)
+    num_of_visited_countries = 0
+
+    row_len = matrix.shape[0]
+    col_len = matrix.shape[1]
+
+    # Visit the cells
+    for i in range(0, row_len):
+        for j in range(0, col_len):
+
+            current_cell = matrix[i][j]
+            print('current i and j ->', i, ',', j)
+
+            print(visit_map)
+            if visit_map[i][j] == 1:
+                print('Incrementing for ',  i, ',', j)
+
+                num_of_visited_countries += 1
+                visit_map[i][j] = 0
+
+            # Check neighbors
+            # Check left
+            if j < col_len - 1:
+                if current_cell == matrix[i][j+1]:
+                    visit_map[i][j+1] = 0
+            if j != 0:
+                # Check Right
+                if current_cell == matrix[i][j-1]:
+                    visit_map[i][j-1] = 0
+
+            # Check top
+            if i != 0:
+                if current_cell == matrix[i-1][j]:
+                    visit_map[i-1][j] = 0
+
+            if i < row_len - 1:
+                # Check bottom
+                if current_cell == matrix[i+1][j]:
+                    visit_map[i+1][j] = 0
+
+    print('Map', visit_map)
+    print('Num ', num_of_visited_countries)
+    return num_of_visited_countries
