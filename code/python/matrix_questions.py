@@ -72,6 +72,8 @@ def map_matrix_island_color(matrix):
     row_len = matrix.shape[0]
     col_len = matrix.shape[1]
 
+    neighbor_checked = False
+
     # Visit the cells
     for i in range(0, row_len):
         for j in range(0, col_len):
@@ -82,30 +84,101 @@ def map_matrix_island_color(matrix):
             print(visit_map)
             if visit_map[i][j] == 1:
                 print('Incrementing for ',  i, ',', j)
+                print('\nCounter ', num_of_visited_countries)
 
-                num_of_visited_countries += 1
+                if not neighbor_checked:
+                    num_of_visited_countries += 1
                 visit_map[i][j] = 0
 
             # Check neighbors
             # Check left
             if j < col_len - 1:
                 if current_cell == matrix[i][j+1]:
-                    visit_map[i][j+1] = 0
+                    if visit_map[i][j+1] == 0:
+                        neighbor_checked = True
+                    else:
+                        visit_map[i][j+1] = 0
             if j != 0:
                 # Check Right
                 if current_cell == matrix[i][j-1]:
-                    visit_map[i][j-1] = 0
+                    if visit_map[i][j-1] == 0:
+                        neighbor_checked = True
+                    else:
+                        visit_map[i][j-1] = 0
 
             # Check top
             if i != 0:
                 if current_cell == matrix[i-1][j]:
-                    visit_map[i-1][j] = 0
+                    if visit_map[i-1][j] == 0:
+                        neighbor_checked = True
+                    else:
+                        visit_map[i-1][j] = 0
 
             if i < row_len - 1:
                 # Check bottom
                 if current_cell == matrix[i+1][j]:
-                    visit_map[i+1][j] = 0
+                    if visit_map[i+1][j] == 0:
+                        neighbor_checked = True
+                    else:
+                        visit_map[i+1][j] = 0
+
+        neighbor_checked = False
 
     print('Map', visit_map)
     print('Num ', num_of_visited_countries)
+    return num_of_visited_countries
+
+
+def check_neighbourhood(colour, visit_map, matrix, i, j):
+
+    row_len = matrix.shape[0]
+    col_len = matrix.shape[1]
+
+    if visit_map[i][j] == 0:
+        return
+    if matrix[i][j] != colour:
+        return
+    visit_map[i][j] = 0
+
+    if i < row_len - 1:
+        check_neighbourhood(colour, visit_map, matrix, i + 1, j)
+    if i != 0:
+        check_neighbourhood(colour, visit_map, matrix, i - 1, j)
+
+    if j < col_len - 1:
+        check_neighbourhood(colour, visit_map, matrix, i, j+1)
+
+    if j != 0:
+        check_neighbourhood(colour, visit_map, matrix, i, j-1)
+
+
+def map_matrix_island_color_recursive(matrix):
+    """A rectangular N x M map contains colored areas. The areas
+    in the map belong to the same country if:
+        - They have the same color
+        - It is possible to travel from one area to the other
+        orthogonally (that is by moving only north, south, west or
+        east.
+    The map is a represented by a matrix and colours by the element
+    of the matrix.
+    Write a function to return number of different countries.
+    Complexity -> Expected worst-case time and space of O(N*M).
+    """
+
+    visit_map = np.ones_like(matrix)
+    num_of_visited_countries = 0
+
+    row_len = matrix.shape[0]
+    col_len = matrix.shape[1]
+
+    # Visit the cells
+    for i in range(0, row_len):
+        for j in range(0, col_len):
+            if visit_map[i][j] == 0:
+                continue
+            num_of_visited_countries += 1
+            check_neighbourhood(matrix[i][j],
+                                visit_map,
+                                matrix,
+                                i, j)
     return num_of_visited_countries
