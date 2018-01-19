@@ -45,10 +45,11 @@ class MatrixQuestionsTest(unittest.TestCase):
                                 [3, 3, 4],
                                 [1, 4, 4]))
 
-        #num_of_countries = matrix_q.map_matrix_island_color(country_map)
-        num_of_countries = \
+        exp_num_countries = 9
+        num_countries = \
             matrix_q.map_matrix_island_color_recursive(country_map)
-        print('Result recursive 1-> ', num_of_countries)
+
+        self.assertEqual(num_countries, exp_num_countries)
 
         country_map = np.array(([5, 4, 4],
                                 [4, 3, 4],
@@ -56,10 +57,12 @@ class MatrixQuestionsTest(unittest.TestCase):
                                 [4, 4, 4],
                                 [3, 3, 4],
                                 [1, 4, 4]))
+        exp_num_countries = 6
 
-        num_of_countries = matrix_q.map_matrix_island_color_recursive(
-                                                                      country_map)
-        print('Result recursivei 2-> ', num_of_countries)
+        num_countries = \
+            matrix_q.map_matrix_island_color_recursive(country_map)
+
+        self.assertEqual(num_countries, exp_num_countries)
 
 
 if __name__ == '__main__':
