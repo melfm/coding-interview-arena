@@ -76,9 +76,6 @@ class ArraysTest(unittest.TestCase):
         self.assertEqual(end, exp_end)
 
         if self.dump_output:
-            import pdb
-            pdb.set_trace()
-
             print("Max so far {} with indices {},{} ".format(
                     max_sum, start, end))
 
