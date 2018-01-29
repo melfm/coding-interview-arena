@@ -32,7 +32,7 @@ class GraphTraversalQuestionsTest(unittest.TestCase):
         self.assertEqual(nodes, exp_nodes)
 
         if self.dump_output:
-            print('BFS -> ', nodes)
+            print('Breadth First Search -> ', nodes)
 
         nodes = graph.bfs(self.graph_two, 'A')
         exp_nodes = ['A', 'B', 'C', 'D', 'E', 'F']
@@ -40,7 +40,7 @@ class GraphTraversalQuestionsTest(unittest.TestCase):
         self.assertEqual(nodes, exp_nodes)
 
         if self.dump_output:
-            print('BFS -> ', nodes)
+            print('Breadth First Search  -> ', nodes)
 
     def test_dfs(self):
 
@@ -49,14 +49,24 @@ class GraphTraversalQuestionsTest(unittest.TestCase):
         self.assertEqual(nodes, exp_nodes)
 
         if self.dump_output:
-            print('DFS -> ', nodes)
+            print('Depth First Search -> ', nodes)
 
         nodes = graph.dfs(self.graph_two, 'A')
         exp_nodes = ['A', 'C', 'F', 'E', 'B', 'D']
         self.assertEqual(nodes, exp_nodes)
 
         if self.dump_output:
-            print('DFS -> ', nodes)
+            print('Depth First Search -> ', nodes)
+
+    def test_dfs_recursive(self):
+
+        nodes = []
+        graph.dfs_recursive(self.graph_one, 'A', nodes)
+        exp_nodes = ['A', 'B', 'D', 'E', 'C', 'F', 'G']
+        self.assertEqual(nodes, exp_nodes)
+
+        if self.dump_output:
+            print('Depth First Search -> ', nodes)
 
 
 if __name__ == '__main__':
