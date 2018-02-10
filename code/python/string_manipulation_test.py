@@ -52,6 +52,27 @@ class StringManipulationTest(unittest.TestCase):
 
         self.assertEqual(palin_subset, exp_subset)
 
+    def test_string_anagram(self):
+
+        string_a = 'abcd'
+        string_b = 'dabc'
+
+        self.assertTrue(str_manip.string_anagram_loop(string_a, string_b))
+
+        self.assertTrue(str_manip.string_anagram_count(string_a, string_b))
+
+        string_a = 'abcd'
+        string_b = 'daacd'
+
+        self.assertFalse(str_manip.string_anagram_loop(string_a, string_b))
+        self.assertFalse(str_manip.string_anagram_count(string_a, string_b))
+
+        string_a = 'listen'
+        string_b = 'silent'
+
+        self.assertTrue(str_manip.string_anagram_loop(string_a, string_b))
+        self.assertTrue(str_manip.string_anagram_count(string_a, string_b))
+
 
     def test_insertion_sort(self):
 
