@@ -3,6 +3,25 @@ def reverse_string(string):
 
     return string[::-1]
 
+def reverse_string_v2(string):
+
+    p1 = 0
+    p2 = len(string) - 1
+
+    string_chars = list(string)
+
+    while p1 != p2:
+
+        tmp = string_chars[p1]
+        string_chars[p1] = string_chars[p2]
+        string_chars[p2] = tmp
+
+        p1 += 1
+        p2 -=1
+
+    return ''.join(string_chars)
+
+
 
 def is_palindrome(word):
     """ Write an algorithm that returns true/false if a
@@ -54,6 +73,29 @@ def return_palindrome_subset(word):
 
     return word
 
+
+def sort_input_alphabet(string):
+
+    string_list = list(string)
+
+    sorted_string = insertion_sort(string_list)
+
+    return sorted_string
+
+def insertion_sort(array):
+
+    for i in range(1, len(array)):
+
+        val = array[i]
+
+        p_prev = i - 1
+        while p_prev >=0 and val < array[p_prev]:
+            array[p_prev+1] = array[p_prev]
+            p_prev -= 1
+
+        array[p_prev+1] = val
+
+    return array
 
 def string_anagram_loop(string_a, string_b):
     """Write a method to decide if two strings
