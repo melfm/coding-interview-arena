@@ -74,17 +74,6 @@ class StringManipulationTest(unittest.TestCase):
         self.assertTrue(str_manip.string_anagram_count(string_a, string_b))
 
 
-    def test_insertion_sort(self):
-
-        array = [12, 11, 13, 5, 6]
-
-        sorted_arr = str_manip.insertion_sort(array)
-        print(sorted_arr)
-
-        string = 'sheep'
-        sorted_string = str_manip.sort_input_alphabet(string)
-        print(sorted_string)
-
 
 if __name__ == '__main__':
     unittest.main()
