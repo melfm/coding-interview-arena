@@ -14,6 +14,10 @@ class StringManipulationTest(unittest.TestCase):
 
         reversed_str = str_manip.reverse_string(input_str)
 
+
+        revesed_str_2 = str_manip.reverse_string_v2(input_str)
+
+
         if self.dump_output:
             print('Original string -> {}'.format(input_str))
             print('Reversed string -> ', reversed_str)
@@ -47,6 +51,18 @@ class StringManipulationTest(unittest.TestCase):
             print('Answer ', palin_subset)
 
         self.assertEqual(palin_subset, exp_subset)
+
+
+    def test_insertion_sort(self):
+
+        array = [12, 11, 13, 5, 6]
+
+        sorted_arr = str_manip.insertion_sort(array)
+        print(sorted_arr)
+
+        string = 'sheep'
+        sorted_string = str_manip.sort_input_alphabet(string)
+        print(sorted_string)
 
 
 if __name__ == '__main__':
