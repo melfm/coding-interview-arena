@@ -1,35 +1,19 @@
 import numpy as np
 
 
-n = 10
-memo = np.full(n + 1, fill_value=-1)
-
-
 def get_min_steps_mem(n):
-    """Memoization"""
+    """Minimum steps to minimize n as per given condition.
+    If n is divisible by 2 then we may reduce n to n/2.
+    If n is divisible by 3 then you may reduce n to n/3.
+    Decrement n by 1.
+    Technique: Memoization"""
 
-    if n == 1:
-        return 0
-
-    if memo[n] != -1:
-        return memo[n]
-
-    # x - 1 step
-    # r will contain the optimal answer finally
-    r = 1 + get_min_steps_mem(n - 1)
-    if n % 2 == 0:
-        # x/2 step
-        r = min(r, 1 + get_min_steps_mem(n/2))
-    if n % 3 == 0:
-        r = min(r, 1 + get_min_steps_mem(n/3))
-
-    # Save the result, this is the different step from
-    # simple recursion
-    memo[n] = r
-    return r
+    pass
 
 
 def get_min_steps_dp(n):
+    """Get minimum steps to reduce an int to 1.
+    Technique: Dynamic programming."""
 
     dp = np.zeros([n])
 
@@ -45,9 +29,34 @@ def get_min_steps_dp(n):
     return dp[n]
 
 
-if __name__ == '__main__':
-    import pdb
-    pdb.set_trace()
-    mem_res = get_min_steps_mem(10)
-    print('mem_res ', mem_res)
-    db_res = get_min_steps_dp(10)
+def fibonacci_dp_recursive(n, fib_array, first_time):
+    """Calculates fibonacci using DP recursively."""
+
+    if first_time:
+        # Hack because its doing n - 1 ??
+        n += 1
+        first_time = False
+
+    if n < 0:
+        print('Invalid input!')
+
+    elif n <= len(fib_array):
+        # print(fib_array)
+        return fib_array[n - 1]
+
+    else:
+        tmp = fibonacci_dp_recursive((n - 1), fib_array, False) + \
+              fibonacci_dp_recursive((n - 2), fib_array, False)
+        fib_array.append(tmp)
+        return tmp
+
+
+def fibonacci_dp(n):
+    """Calculates fibonacci using DP wiht a loop."""
+
+    fib_array = [0, 1]
+
+    for i in range(2, n + 1):
+        fib_array.append(fib_array[i - 1] + fib_array[i - 2])
+
+    return fib_array[-1]
