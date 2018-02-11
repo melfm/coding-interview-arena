@@ -3,56 +3,62 @@ import numpy as np
 
 def get_min_steps_mem(n):
     """Minimum steps to minimize n as per given condition.
-    If n is divisible by 2 then we may reduce n to n/2.
-    If n is divisible by 3 then you may reduce n to n/3.
-    Decrement n by 1.
+    - If n is divisible by 2 then we may reduce n to n/2.
+    - If n is divisible by 3 then you may reduce n to n/3.
+    - Else decrement n by 1.
     Technique: Memoization"""
 
-    pass
+    steps = np.full(n+1, -1)
+    return get_min_steps(n, steps)
 
 
-def get_min_steps_dp(n):
-    """Get minimum steps to reduce an int to 1.
-    Technique: Dynamic programming."""
+def get_min_steps(n, steps):
+    """
+    Try all possibilities to find the minimum.
+    f(n) = 1 + f(n-1)
+    f(n) = 1 + f(n/2) // if n is divisible by 2
+    f(n) = 1 + f(n/3) // if n is divisible by 3
+    """
 
-    dp = np.zeros([n])
+    if n == 1:
+        return 0
 
-    dp[1] = 0
+    if steps[n] != -1:
+        return steps[n]
 
-    for i in range(n):
-        dp[i] = 1 + dp[i-1]
-        if i % 2:
-            dp[i] = min(dp[i], 1 + dp[i/2])
-        if i % 3:
-            dp[i] = min(dp[i], 1 + dp[i/3])
+    res = get_min_steps(n - 1, steps)
 
-    return dp[n]
+    if n % 2 == 0:
+        res = min(res, get_min_steps(int(n/2), steps))
+
+    if n % 3 == 0:
+        res = min(res, get_min_steps(int(n/3), steps))
+
+    # Increment the step
+    steps[n] = 1 + res
+
+    return steps[n]
 
 
-def fibonacci_dp_recursive(n, fib_array, first_time):
+def fibonacci_dp_recursive(n, fib_array):
     """Calculates fibonacci using DP recursively."""
-
-    if first_time:
-        # Hack because its doing n - 1 ??
-        n += 1
-        first_time = False
 
     if n < 0:
         print('Invalid input!')
 
-    elif n <= len(fib_array):
-        # print(fib_array)
-        return fib_array[n - 1]
+    elif (n+1) <= len(fib_array):
+        print(fib_array)
+        return fib_array[n]
 
     else:
-        tmp = fibonacci_dp_recursive((n - 1), fib_array, False) + \
-              fibonacci_dp_recursive((n - 2), fib_array, False)
-        fib_array.append(tmp)
-        return tmp
+        current = fibonacci_dp_recursive((n - 1), fib_array) + \
+              fibonacci_dp_recursive((n - 2), fib_array)
+        fib_array.append(current)
+        return current
 
 
 def fibonacci_dp(n):
-    """Calculates fibonacci using DP wiht a loop."""
+    """Calculates fibonacci using DP with a loop."""
 
     fib_array = [0, 1]
 
