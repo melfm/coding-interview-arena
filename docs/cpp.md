@@ -65,8 +65,8 @@ D d;
 d.Foo(); // no longer ambiguous
 ```
 
-
 ## Pointer vs Reference
+A variable which stores the address of another variable is called a pointer.
 1. A pointer can be reassigned, a reference cannot and must be assigned at initialization.
 2. A pointer has its own memory address and size on the stack (4 bytes on x86) whereas a reference shares the same memory address as the original variable. Can think of reference as another name for that variable.
 3. You can have pointers to pointers to pointers offering levels of indirection. Whereas references only offer one level of indirection.
@@ -95,6 +95,16 @@ int* const ptr = &a;
 *ptr = 5 // OK
 
 ```
+
+## Dereference operator (*)
+- When you want to access the value in the memory that the pointer points to
+then you *dereference* the pointer.
+- The operator itself can be read as ``value pointed to by``.
+
+## Address-of Operator (&)
+- The address of a variable can be obtained by preceding the name of a variable
+with an ampersand sign (&).
+- & is the address-of operator, and can be read simply as "address of"
 
 ## Mutable
 - Used to allow a particular data member of const object to be modified.
