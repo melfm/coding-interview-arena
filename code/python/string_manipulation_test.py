@@ -12,8 +12,10 @@ class StringManipulationTest(unittest.TestCase):
         input_str = 'Apple'
         exp_str = 'elppA'
 
-        reversed_str = str_manip.reverse_string(input_str)
+        reversed_str = str_manip.reverse_string_py(input_str)
 
+        self.assertEqual(str_manip.reverse_string(input_str),
+                         exp_str)
         if self.dump_output:
             print('Original string -> {}'.format(input_str))
             print('Reversed string -> ', reversed_str)
@@ -47,6 +49,41 @@ class StringManipulationTest(unittest.TestCase):
             print('Answer ', palin_subset)
 
         self.assertEqual(palin_subset, exp_subset)
+
+    def test_string_anagram(self):
+
+        string_a = 'abcd'
+        string_b = 'dabc'
+
+        self.assertTrue(str_manip.string_anagram_loop(string_a, string_b))
+
+        self.assertTrue(str_manip.string_anagram_count(string_a, string_b))
+
+        string_a = 'abcd'
+        string_b = 'daacd'
+
+        self.assertFalse(str_manip.string_anagram_loop(string_a, string_b))
+        self.assertFalse(str_manip.string_anagram_count(string_a, string_b))
+
+        string_a = 'listen'
+        string_b = 'silent'
+
+        self.assertTrue(str_manip.string_anagram_loop(string_a, string_b))
+        self.assertTrue(str_manip.string_anagram_count(string_a, string_b))
+
+    def test_string_has_unique_chars(self):
+
+        test_str = 'abcde'
+        self.assertTrue(str_manip.string_has_unique_chars(test_str))
+
+        test_str = 'abcdeaa'
+        self.assertFalse(str_manip.string_has_unique_chars(test_str))
+
+        test_str = 'abcd'
+        self.assertTrue(str_manip.string_has_unique_chars_v2(test_str))
+
+        test_str = 'aaabbcc'
+        self.assertFalse(str_manip.string_has_unique_chars_v2(test_str))
 
 
 if __name__ == '__main__':

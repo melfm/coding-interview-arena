@@ -37,3 +37,19 @@ def merge_and_sort(array1, array2):
         p2 -= 1
 
     return array1
+
+
+def insertion_sort(array):
+
+    for i in range(1, len(array)):
+
+        val = array[i]
+
+        p_prev = i - 1
+        while p_prev >= 0 and val < array[p_prev]:
+            array[p_prev+1] = array[p_prev]
+            p_prev -= 1
+
+        array[p_prev+1] = val
+
+    return array

@@ -64,6 +64,28 @@ class MatrixQuestionsTest(unittest.TestCase):
 
         self.assertEqual(num_countries, exp_num_countries)
 
+    def test_shorted_path_bin_maze(self):
+
+        maze = np.asarray([[1, 0, 1, 1, 1, 1, 0, 1, 1, 1],
+                           [1, 0, 1, 0, 1, 1, 1, 0, 1, 1],
+                           [1, 1, 1, 0, 1, 1, 0, 1, 0, 1],
+                           [0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+                           [1, 1, 1, 0, 1, 1, 1, 0, 1, 0],
+                           [1, 0, 1, 1, 1, 1, 0, 1, 0, 0],
+                           [1, 0, 0, 0, 0, 0, 0, 0, 0, 1]])
+
+        shortest_path = matrix_q.shorted_path_bin_maze(maze,
+                                                       [0, 0],
+                                                       [3, 4])
+
+        self.assertEqual(shortest_path, 11)
+
+        shortest_path = matrix_q.shorted_path_bin_maze(maze,
+                                                       [0, 0],
+                                                       [4, 3])
+        # No path found
+        self.assertEqual(shortest_path, -1)
+
 
 if __name__ == '__main__':
     unittest.main()
