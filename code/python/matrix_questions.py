@@ -60,10 +60,12 @@ def check_neighbourhood(colour, visit_map, matrix, i, j):
         return
     if matrix[i][j] != colour:
         return
+
     visit_map[i][j] = 0
 
     if i < row_len - 1:
         check_neighbourhood(colour, visit_map, matrix, i + 1, j)
+
     if i != 0:
         check_neighbourhood(colour, visit_map, matrix, i - 1, j)
 
@@ -104,3 +106,58 @@ def map_matrix_island_color_recursive(matrix):
                                 matrix,
                                 i, j)
     return num_of_visited_countries
+
+
+def shorted_path_bin_maze(maze, start, end):
+    """Shortest path in a Binary Maze.
+    Given a MxN matrix where each element can either be 0 or 1.
+    We need to find the shortest path between a given start
+    cell to an end cell. The path can only be created out of a
+    cell if its value is 1.
+
+    Args:
+        maze: A MxN matrix of binary values.
+        start: An array in the form [i, j] of the starting location
+            in the matrix.
+        end: An array in the form [i, j] of the end location.
+    """
+
+    visit_map = np.zeros_like(maze)
+
+    row_len = maze.shape[0]
+    col_len = maze.shape[1]
+
+    # Append distance info to the cell -> [i, j, distance]
+    # starting with distance 0.
+    start.append(0)
+    queue = [start]
+    visit_map[start[0], start[1]] = 1
+
+    def is_valid(row, col, max_row, max_col):
+
+        return (row >= 0) and (col >= 0) and \
+            (row < (max_row - 1)) and (col < (max_col - 1))
+
+    rowNum = [-1, 0, 0, 1]
+    colNum = [0, -1, 1, 0]
+
+    while queue:
+        cell = queue.pop()
+        current_distance = cell[2]
+
+        if cell[0] == end[0] and cell[1] == end[1]:
+            return cell[2]
+
+        for i in range(4):
+            # Check adjacent neighbours
+            row = cell[0] + rowNum[i]
+            col = cell[1] + colNum[i]
+
+            if is_valid(row, col, row_len, col_len) and \
+                    maze[row][col] and (not visit_map[row][col]):
+                # Append distance information to the cell
+                queue.append([row, col, current_distance + 1])
+                visit_map[row][col] = 1
+
+    # No path found!
+    return -1

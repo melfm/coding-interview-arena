@@ -1,9 +1,14 @@
+"""String manipulation questions."""
 
-def reverse_string(string):
+import pdb
+
+
+def reverse_string_py(string):
 
     return string[::-1]
 
-def reverse_string_v2(string):
+
+def reverse_string(string):
 
     p1 = 0
     p2 = len(string) - 1
@@ -17,10 +22,9 @@ def reverse_string_v2(string):
         string_chars[p2] = tmp
 
         p1 += 1
-        p2 -=1
+        p2 -= 1
 
     return ''.join(string_chars)
-
 
 
 def is_palindrome(word):
@@ -124,5 +128,45 @@ def string_anagram_count(string_a, string_b):
     for i in range(num_of_chars):
         if count_a[i] != count_b[i]:
             return False
+
+    return True
+
+
+def string_has_unique_chars(string):
+    """Determines if a string has all unique characters.
+    Note: only works for a-z.
+    """
+
+    visited_char = [0] * 256
+    string_list = list(string)
+
+    for i in string_list:
+        if visited_char[ord(i)] == 0:
+            # set the character char to 1
+            visited_char[ord(i)] = 1
+
+        else:
+            return False
+
+    return True
+
+
+def string_has_unique_chars_v2(string):
+    """Determines if a string has all unique characters,
+    without using an extra data structure.
+    Note: only works for a-z.
+    With this you need remember: bitwise OR operator (|) sets a bit to 1.
+    """
+
+    checker = 0
+    string_list = list(string)
+
+    for i in string_list:
+        ascii_val = ord(i)
+
+        if (checker & (1 << ascii_val)) > 0:
+            return False
+        # Set the bit for that ascii character to 1
+        checker = checker | (1 << ascii_val)
 
     return True
