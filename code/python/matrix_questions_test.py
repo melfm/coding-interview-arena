@@ -86,6 +86,21 @@ class MatrixQuestionsTest(unittest.TestCase):
         # No path found
         self.assertEqual(shortest_path, -1)
 
+    def test_set_matrix_zeros(self):
+        matrix = np.asarray([[1, 2, 3, 4, 5],
+                             [0, 4, 7, 6, 2],
+                             [3, 0, 3, 6, 2],
+                             [1, 2, 3, 4, 1]])
+
+        exp_matrix = np.asarray([[0, 0, 3, 4, 5],
+                                 [0, 0, 0, 0, 0],
+                                 [0, 0, 0, 0, 0],
+                                 [0, 0, 3, 4, 1]])
+
+        mat_out = matrix_q.set_matrix_row_col_all_zeros(matrix)
+        np.testing.assert_array_equal(mat_out,
+                                      exp_matrix)
+
 
 if __name__ == '__main__':
     unittest.main()

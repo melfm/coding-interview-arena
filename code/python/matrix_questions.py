@@ -161,3 +161,30 @@ def shorted_path_bin_maze(maze, start, end):
 
     # No path found!
     return -1
+
+
+def set_matrix_row_col_all_zeros(matrix):
+    """
+    Write an algorithm such that if an element in an
+    MxN matrix is 0, its entire row and column is set to 0
+    """
+
+    row_length = matrix.shape[0]
+    col_length = matrix.shape[1]
+
+    rows = np.zeros(row_length)
+    cols = np.zeros(col_length)
+
+    # Identify places with zeros first
+    for i in range(row_length):
+        for j in range(col_length):
+            if matrix[i][j] == 0:
+                rows[i] = 1
+                cols[j] = 1
+
+    for i in range(row_length):
+        for j in range(col_length):
+            if (rows[i] == 1 or cols[j] == 1):
+                matrix[i][j] = 0
+
+    return matrix
