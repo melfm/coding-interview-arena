@@ -1,3 +1,4 @@
+"""Misc Questions."""
 
 
 def isPowerOf3_loop(n):
@@ -27,3 +28,24 @@ def isPowerOf3_recursive(n):
         return True
 
     return isPowerOf3_recursive(n/3)
+
+
+def two_sum(array, sum_k):
+    """Given an array of n integers and a number k,
+    determine whether there is a pair of elements in
+    the array that sums to k.
+    Complexity O(n).
+    """
+
+    table = set()
+    for i in range(len(array)):
+        value = sum_k - array[i]
+        # This works because a = b + c, therefore
+        # c = a - b. So if we've already added c
+        # which could've been a past solution, then
+        # there is a potential pair.
+        if value in table:
+            return True
+        table.add(array[i])
+
+    return False

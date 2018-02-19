@@ -17,6 +17,14 @@ class MiscQuestionsTest(unittest.TestCase):
         self.assertTrue(misc.isPowerOf3_recursive(27))
         self.assertFalse(misc.isPowerOf3_recursive(10))
 
+    def test_two_sum(self):
+
+        array = [1, 3, 7]
+        sum_k = 8
+        self.assertTrue(misc.two_sum(array, sum_k))
+
+        sum_k = 6
+        self.assertFalse(misc.two_sum(array, sum_k))
 
 if __name__ == '__main__':
     unittest.main()
