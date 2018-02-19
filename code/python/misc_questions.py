@@ -12,6 +12,9 @@ def isPowerOf3_loop(n):
 
 
 def isPowerOf3_int_limit(n):
+    # Works for integers of limited size
+    # The biggest power of 3 that fits into
+    # signed 32 bits (3^19)
     return n > 0 and 1162261467 % n == 0
 
 
