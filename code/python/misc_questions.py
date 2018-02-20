@@ -1,4 +1,6 @@
 """Misc Questions."""
+import math
+import numpy as np
 
 
 def isPowerOf3_loop(n):
@@ -49,3 +51,43 @@ def two_sum(array, sum_k):
         table.add(array[i])
 
     return False
+
+
+def find_top_k_min_distance(array, top_k, location):
+    """Given an array of integers of 2D points and a location
+    point, return the top_k closest points to the location.
+    """
+
+    top_k_list = np.full((top_k, 3), np.inf)
+
+    def find_distance(point1, point2):
+        x_diff = (point2[0] - point1[0]) ** 2
+        y_diff = (point2[1] - point1[1]) ** 2
+
+        return math.sqrt(x_diff + y_diff)
+
+    for i in range(len(array)):
+        current_point = array[i]
+
+        distance = find_distance(current_point,
+                                 location)
+
+        if np.inf in top_k_list:
+            inf_indx = np.where(top_k_list == np.inf)[0][0]
+            top_k_list[inf_indx, 0] = distance
+            top_k_list[inf_indx, 1] = current_point[0]
+            top_k_list[inf_indx, 2] = current_point[1]
+
+        else:
+            # Update the existing indices
+            # Compare the distance against the max of locations
+            # found so far.
+            current_max = np.max(top_k_list[:, 0])
+            current_max_idx = np.argmax(top_k_list[:, 0])
+
+            if distance < current_max:
+                top_k_list[current_max_idx, 0] = distance
+                top_k_list[current_max_idx, 1] = current_point[0]
+                top_k_list[current_max_idx, 2] = current_point[1]
+
+    return top_k_list
