@@ -58,6 +58,7 @@ def find_top_k_min_distance(array, top_k, location):
     point, return the top_k closest points to the location.
     """
 
+    # Store locations in the format [distance, x, y]
     top_k_list = np.full((top_k, 3), np.inf)
 
     def find_distance(point1, point2):
@@ -73,7 +74,9 @@ def find_top_k_min_distance(array, top_k, location):
                                  location)
 
         if np.inf in top_k_list:
-            inf_indx = np.where(top_k_list == np.inf)[0][0]
+            # Check the distance indices only
+            # and replace the first one
+            inf_indx = np.where(top_k_list[:, 0] == np.inf)[0][0]
             top_k_list[inf_indx, 0] = distance
             top_k_list[inf_indx, 1] = current_point[0]
             top_k_list[inf_indx, 2] = current_point[1]
@@ -91,3 +94,40 @@ def find_top_k_min_distance(array, top_k, location):
                 top_k_list[current_max_idx, 2] = current_point[1]
 
     return top_k_list
+
+
+def find_min_overlapping_ranges(ranges):
+    """Given a list of ranges, find a list of minimum number of
+    'ranges' by combining the overlapping 'ranges'.
+    """
+
+    ranges = sorted(ranges)
+
+    num_ranges = len(ranges)
+
+    first_ptr = 0
+    snd_ptr = 0
+
+    while first_ptr != num_ranges:
+        current_first_range = ranges[first_ptr]
+        snd_ptr = first_ptr + 1
+
+        while(snd_ptr != num_ranges):
+
+            current_snd_range = ranges[snd_ptr]
+            removed_ptr = False
+
+            if not (current_first_range[0] < current_snd_range[0] and
+                    current_first_range[1] < current_snd_range[1]):
+
+                ranges.remove(current_snd_range)
+                num_ranges -= 1
+                removed_ptr = True
+
+            # If an element was removed, don't incremenet the pointer
+            if not removed_ptr:
+                snd_ptr += 1
+
+        first_ptr += 1
+
+    return ranges
