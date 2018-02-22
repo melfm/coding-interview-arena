@@ -170,3 +170,57 @@ def string_has_unique_chars_v2(string):
         checker = checker | (1 << ascii_val)
 
     return True
+
+
+def breakup_sms(input_string, char_limit):
+    # Hey Mel, your uber
+    # is arriving now
+
+    # Hey blahblahblah-long named
+    # person
+
+    split_string = input_string.split(' ')
+
+    new_string = []
+
+    string_so_far = ''
+    character_count = 0
+
+    for i in range(len(split_string)):
+        # Grab each element and count the characters
+        current_string = split_string[i]
+
+        string_size = len(current_string)
+
+        if string_size < char_limit:
+            # Need to break the string
+
+            mini_split = list(current_string)
+
+            new_split = len(mini_split) / char_limit
+
+            for j in range(new_split):
+
+                mini_string = current_string[j]
+                string_so_far += current_string + ' '
+
+        # idea: replace contents in original list instead of extra logic
+
+        # The extra one is for space between words
+        character_count += string_size + 1
+
+        if character_count < char_limit:
+
+            string_so_far += current_string + ' '
+            if '\n' in current_string:
+                new_string.append(string_so_far)
+
+        else:
+            new_string.append(string_so_far)
+            string_so_far = ''
+            if current_string:
+                string_so_far += current_string + ' '
+            character_count = 0
+
+    # return list of strings
+    return new_string

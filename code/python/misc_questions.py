@@ -124,6 +124,17 @@ def find_min_overlapping_ranges(ranges):
                 num_ranges -= 1
                 removed_ptr = True
 
+            elif current_first_range[1] == current_snd_range[0]:
+                # Overlap, can combine the ranges
+                new_range = [current_first_range[0],
+                             current_snd_range[1]]
+
+                ranges.remove(current_first_range)
+                ranges.remove(current_snd_range)
+                ranges.append(new_range)
+                num_ranges -= 1
+                removed_ptr = True
+
             # If an element was removed, don't incremenet the pointer
             if not removed_ptr:
                 snd_ptr += 1
