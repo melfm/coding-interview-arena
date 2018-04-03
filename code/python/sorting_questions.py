@@ -53,3 +53,46 @@ def insertion_sort(array):
         array[p_prev+1] = val
 
     return array
+
+
+def heap_sort(array):
+    """Algorithm:
+    1 - Build a max heap from the input data.
+    2 - The largest input is stored at the root of the heap.
+    Replace it with the last item of the heap and reduce the
+    size of the heap by 1.
+    3. Repeat while size of heap is greater than 1.
+    """
+
+    def heapify(array, n, i):
+        # Largest is the root
+        largest = i
+        left = 2 * i + 1
+        right = 2 * i + 2
+
+        # Check the left child first
+        if left < n and array[i] < array[left]:
+            largest = left
+
+        # Check the right child
+        if right < n and array[i] < array[right]:
+            largest = right
+
+        # Replace the root if needed
+        if largest != i:
+            # Swap
+            array[i], array[largest] = array[largest], array[i]
+            # heapify the root
+            heapify(array, n, i)
+
+    array_size = len(array)
+    # build a max heap
+    for i in range(array_size, -1, -1):
+        heapify(array, array_size, i)
+
+    # Remove elements one by one
+    for i in range(array_size - 1, 0, -1):
+        array[0], array[i] = array[i], array[0]
+        heapify(array, i, 0)
+
+    return array
