@@ -1,0 +1,17 @@
+dist: trusty
+sudo: required
+group: edge
+
+language: python
+
+python:
+    - "3.5"
+
+cache: pip
+
+script:
+    - python -m unittest discover -b --pattern "*_test.py"
+
+notifications:
+        email: false
+
