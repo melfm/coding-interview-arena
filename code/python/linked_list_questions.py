@@ -47,7 +47,6 @@ class LinkedList:
         print('--------------')
 
     def delete(self, value):
-        # TODO
         if self.head.value == value:
             tmp_value = self.head.value
             self.head.value = None

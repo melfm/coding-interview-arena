@@ -42,7 +42,7 @@ class LinkedListQuestionsTest(unittest.TestCase):
         test_list.push(9)
         test_list.push(18)
         if self.dump_output:
-            print('Test case detect cycle')
+            print('Test case: detect cycle')
             test_list.print_list()
 
         self.assertTrue(test_list.detect_cycle())
