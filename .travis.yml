@@ -10,6 +10,7 @@ python:
 cache: pip
 
 script:
+    - cd code/python
     - python -m unittest discover -b --pattern "*_test.py"
 
 notifications:
