@@ -1,4 +1,5 @@
 import unittest
+import numpy as np
 
 import sorting_questions as sorting
 
@@ -28,6 +29,18 @@ class SortingTest(unittest.TestCase):
 
         sorted_string = sorting.insertion_sort(string_list)
         print(sorted_string)
+
+    def test_heap_sort(self):
+
+        array = [12, 11, 13, 5, 6, 7]
+        exp_array = [5, 6, 7, 11, 12, 13]
+        sorted_array = sorting.heap_sort(array)
+
+        if self.dump_output:
+            print("Heap Sort ->", sorted_array)
+
+        np.testing.assert_array_equal(sorted_array,
+                                      exp_array)
 
 
 if __name__ == '__main__':
