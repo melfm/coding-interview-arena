@@ -1,6 +1,7 @@
 """Graph traversal questions."""
 import pdb
 
+
 def dfs(graph, start_node):
     """Depth-first search."""
 
@@ -17,6 +18,7 @@ def dfs(graph, start_node):
                 stack.extend(neighbor)
 
     return visited
+
 
 def dfs_recursive(graph, start_node, visited=[]):
     """Depth-first search recursive."""
@@ -50,7 +52,7 @@ def bfs(graph, start_node):
 
 def path_exist(graph, start_node, node_a, node_b,
                visited=[], first_node_found=False,
-               all_paths=[]):
+               path_found_list=[], all_paths=[]):
     """ Q1: You are provided with network dataset, composed of nodes
     and one-directional links. Check whether a route exists between
     two specific nodes in the network.
@@ -73,48 +75,20 @@ def path_exist(graph, start_node, node_a, node_b,
                 if first_node_found:
                     if current_node == node_b:
                         path_found = True
-                        all_paths.append(path_found)
+                        current_path = visited
+                        current_path.append(current_node)
+                        all_paths.append(current_path)
+                        print('The paths ', all_paths)
+
+                        path_found_list.append(path_found)
                         print('Found a path.')
 
                 if current_node in graph:
                     path_exist(graph, current_node, node_a, node_b,
                                visited, first_node_found,
-                               all_paths)
+                               path_found_list)
 
-    return all_paths
-
-
-def dfs_possible_routes(graph, node_a, node_b):
-
-    stack = [(node_a, [node_b])]
-    #pdb.set_trace()
-
-    while stack:
-        #pdb.set_trace()
-        (vertex, path) = stack.pop()
-        for next in graph[vertex] - set(path):
-            if next == node_b:
-                yield path + [next]
-            else:
-                stack.append((next, path + [next]))
-
-
-def bfs_paths2(graph, start, goal):
-    queue = [(start, [start])]
-    while queue:
-        (vertex, path) = queue.pop(0)
-        for next in graph[vertex] - set(path):
-            if next == goal:
-                yield path + [next]
-            else:
-                queue.append((next, path + [next]))
-
-
-def shortest_path(graph, start, goal):
-    try:
-        return next(bfs_paths2(graph, start, goal))
-    except StopIteration:
-        return None
+    return path_found_list
 
 
 def path_exist_bfs(graph, start_node, node_a, node_b):
@@ -130,7 +104,7 @@ def path_exist_bfs(graph, start_node, node_a, node_b):
         first_node_found = True
 
     while queue:
-        print('Queue ->' ,queue)
+        print('Queue ->', queue)
         node = queue.pop(0)
 
         if node == node_a:
@@ -143,7 +117,6 @@ def path_exist_bfs(graph, start_node, node_a, node_b):
                 if node == node_b:
                     return True
 
-
             if node in graph:
                 neighbors = graph[node]
                 for neighbor in neighbors:
@@ -153,4 +126,3 @@ def path_exist_bfs(graph, start_node, node_a, node_b):
                 no_further_neigh = True
 
     return False
-
