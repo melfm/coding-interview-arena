@@ -96,20 +96,24 @@ def find_top_k_min_distance(array, top_k, location):
     return top_k_list
 
 
-#TODO:FixMe
 def find_min_overlapping_ranges(ranges):
     """Given a list of ranges, find a list of minimum number of
     'ranges' by combining the overlapping 'ranges'.
     """
 
+    # Sort the range by the lower bound.
     ranges = sorted(ranges)
-
     num_ranges = len(ranges)
 
     first_ptr = 0
     snd_ptr = 0
 
+    # Start from the beginning, is set to True when a range is
+    # combined.
+    reset = False
+
     while first_ptr != num_ranges:
+        reset = False
         current_first_range = ranges[first_ptr]
         snd_ptr = first_ptr + 1
 
@@ -134,12 +138,19 @@ def find_min_overlapping_ranges(ranges):
                 ranges.remove(current_snd_range)
                 ranges.append(new_range)
                 num_ranges -= 1
-                removed_ptr = True
+
+                # Reset the pointers, sort the new range and start over
+                first_ptr = 0
+                snd_ptr = 0
+                ranges = sorted(ranges)
+                reset = True
+                break
 
             # If an element was removed, don't incremenet the pointer
             if not removed_ptr:
                 snd_ptr += 1
 
-        first_ptr += 1
+        if not reset:
+            first_ptr += 1
 
     return ranges
