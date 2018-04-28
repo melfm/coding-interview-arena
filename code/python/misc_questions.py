@@ -96,6 +96,7 @@ def find_top_k_min_distance(array, top_k, location):
     return top_k_list
 
 
+import pdb
 def find_min_overlapping_ranges(ranges):
     """Given a list of ranges, find a list of minimum number of
     'ranges' by combining the overlapping 'ranges'.
@@ -125,26 +126,35 @@ def find_min_overlapping_ranges(ranges):
             if not (current_first_range[0] < current_snd_range[0] and
                     current_first_range[1] < current_snd_range[1]):
 
-                ranges.remove(current_snd_range)
-                num_ranges -= 1
-                removed_ptr = True
-
-            elif current_first_range[1] == current_snd_range[0]:
-                # Overlap, can combine the ranges
-                new_range = [current_first_range[0],
-                             current_snd_range[1]]
+                new_range = [min(current_first_range[0], current_snd_range[0]),
+                             max(current_first_range[1], current_snd_range[1])]
 
                 ranges.remove(current_first_range)
                 ranges.remove(current_snd_range)
                 ranges.append(new_range)
-                num_ranges -= 1
-
-                # Reset the pointers, sort the new range and start over
-                first_ptr = 0
-                snd_ptr = 0
+                num_ranges = len(ranges)
                 ranges = sorted(ranges)
-                reset = True
-                break
+                removed_ptr = True
+
+            if (current_first_range[0] < current_snd_range[0] and
+                    current_first_range[1] < current_snd_range[1]):
+
+                if current_snd_range[0] - current_first_range[1] <= 0:
+
+                    new_range = [current_first_range[0], current_snd_range[1]]
+                    ranges.remove(current_snd_range)
+                    ranges.remove(current_first_range)
+                    removed_ptr = True
+                    ranges.append(new_range)
+
+                    ranges = sorted(ranges)
+                    first_ptr = 0
+                    snd_ptr = 0
+                    ranges = sorted(ranges)
+                    reset = True
+                    num_ranges = len(ranges)
+
+                    break
 
             # If an element was removed, don't incremenet the pointer
             if not removed_ptr:

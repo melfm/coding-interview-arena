@@ -58,7 +58,6 @@ class MiscQuestionsTest(unittest.TestCase):
 
     def test_find_min_overlapping_ranges(self):
 
-
         ranges = [[0, 2], [3, 5], [2, 7]]
         exp_ranges = [[0, 7]]
 
@@ -91,7 +90,7 @@ class MiscQuestionsTest(unittest.TestCase):
             print('New range-> ', min_ranges)
 
         ranges = [[0, 2], [0, 5], [3, 8], [6, 10], [10, 12]]
-        exp_ranges = [[0, 2], [3, 8], [6, 12]]
+        exp_ranges = [[0, 12]]
 
         min_ranges = misc.find_min_overlapping_ranges(ranges)
         self.assertListEqual(min_ranges, exp_ranges)
@@ -99,9 +98,8 @@ class MiscQuestionsTest(unittest.TestCase):
         if self.dump_output:
             print('New range-> ', min_ranges)
 
-
-        ranges = [[0, 2], [1, 3], [2, 4]]
-        exp_ranges = [[0, 4]]
+        ranges = [[0, 2], [1, 3], [2, 4], [1, 5]]
+        exp_ranges = [[0, 5]]
 
         min_ranges = misc.find_min_overlapping_ranges(ranges)
 
@@ -110,7 +108,6 @@ class MiscQuestionsTest(unittest.TestCase):
         if self.dump_output:
             print('Original range-> ', ranges)
             print('New range-> ', min_ranges)
-
 
 if __name__ == '__main__':
     unittest.main()
