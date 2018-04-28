@@ -68,6 +68,22 @@ class GraphTraversalQuestionsTest(unittest.TestCase):
         if self.dump_output:
             print('Depth First Search -> ', nodes)
 
+    def test_path_exist(self):
+
+        graph_data = {1: [2, 3],
+                      2: [4, 5, 6],
+                      3: [7, 8, 9],
+                      8: [10]}
+
+        path_found = graph.path_exist(graph_data, 1, 1, 6)
+        if self.dump_output:
+            print('Path found.')
+        self.assertTrue(path_found[0])
+
+        path_found = graph.path_exist(
+            graph_data, 1, 3, 4, [], False, [])
+        self.assertFalse(path_found)
+
 
 if __name__ == '__main__':
     unittest.main()
