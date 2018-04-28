@@ -76,13 +76,13 @@ class GraphTraversalQuestionsTest(unittest.TestCase):
                       8: [10]}
 
         path_found = graph.path_exist(graph_data, 1, 1, 6)
-        print('Path found? ', path_found[0])
+        if self.dump_output:
+            print('Path found.')
+        self.assertTrue(path_found[0])
 
         path_found = graph.path_exist(
             graph_data, 1, 3, 4, [], False, [])
-
-        if not path_found:
-            print('No path found')
+        self.assertFalse(path_found)
 
 
 if __name__ == '__main__':

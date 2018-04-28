@@ -1,5 +1,4 @@
 """Graph traversal questions."""
-import pdb
 
 
 def dfs(graph, start_node):
@@ -52,10 +51,19 @@ def bfs(graph, start_node):
 
 def path_exist(graph, start_node, node_a, node_b,
                visited=[], first_node_found=False,
-               path_found_list=[], all_paths=[]):
-    """ Q1: You are provided with network dataset, composed of nodes
+               path_found_list=[]):
+    """ Q: You are provided with network dataset, composed of nodes
     and one-directional links. Check whether a route exists between
     two specific nodes in the network.
+
+    Args:
+        graph: Graph represented as a dict.
+        start_node: Root node to start from.
+        node_a: First node to start the route.
+        node_b: Second node to end the route.
+        first_node_found: Set to True when 'node_a' is found.
+        path_found_list: Stores the flag which indicates the path
+            is found.
     """
 
     stack = [start_node]
@@ -77,11 +85,10 @@ def path_exist(graph, start_node, node_a, node_b,
                         path_found = True
                         current_path = visited
                         current_path.append(current_node)
-                        all_paths.append(current_path)
-                        print('The paths ', all_paths)
-
+                        # path = []
+                        # path.append(current_path)
+                        # print('The paths ', path)
                         path_found_list.append(path_found)
-                        print('Found a path.')
 
                 if current_node in graph:
                     path_exist(graph, current_node, node_a, node_b,
@@ -89,40 +96,3 @@ def path_exist(graph, start_node, node_a, node_b,
                                path_found_list)
 
     return path_found_list
-
-
-def path_exist_bfs(graph, start_node, node_a, node_b):
-
-    visited = []
-    queue = [start_node]
-
-    first_node_found = False
-    no_further_neigh = False
-
-    if start_node == node_a:
-        print('Found first node')
-        first_node_found = True
-
-    while queue:
-        print('Queue ->', queue)
-        node = queue.pop(0)
-
-        if node == node_a:
-            first_node_found = True
-
-        if node not in visited:
-            visited.append(node)
-            if first_node_found:
-
-                if node == node_b:
-                    return True
-
-            if node in graph:
-                neighbors = graph[node]
-                for neighbor in neighbors:
-                    queue.append(neighbor)
-            else:
-                print('Status of queue ', queue)
-                no_further_neigh = True
-
-    return False
