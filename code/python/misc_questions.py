@@ -96,9 +96,6 @@ def find_top_k_min_distance(array, top_k, location):
     return top_k_list
 
 
-import pdb
-
-
 def find_min_overlapping_ranges(ranges):
     """Given a list of ranges, find a list of minimum number of
     'ranges' by combining the overlapping 'ranges'.
