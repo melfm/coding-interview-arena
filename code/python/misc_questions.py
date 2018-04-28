@@ -96,50 +96,80 @@ def find_top_k_min_distance(array, top_k, location):
     return top_k_list
 
 
-#TODO:FixMe
 def find_min_overlapping_ranges(ranges):
     """Given a list of ranges, find a list of minimum number of
     'ranges' by combining the overlapping 'ranges'.
     """
 
+    # Sort the range by the lower bound.
     ranges = sorted(ranges)
-
     num_ranges = len(ranges)
 
     first_ptr = 0
     snd_ptr = 0
 
+    # Start from the beginning, is set to True when a range is
+    # combined.
+    reset = False
+
+    def merge_ranges(ranges, current_first_range, current_snd_range):
+        new_range = [min(current_first_range[0], current_snd_range[0]),
+                     max(current_first_range[1], current_snd_range[1])]
+
+        ranges.remove(current_first_range)
+        ranges.remove(current_snd_range)
+        ranges.append(new_range)
+        ranges = sorted(ranges)
+
+        return ranges
+
     while first_ptr != num_ranges:
+        reset = False
         current_first_range = ranges[first_ptr]
         snd_ptr = first_ptr + 1
 
         while(snd_ptr != num_ranges):
 
             current_snd_range = ranges[snd_ptr]
-            removed_ptr = False
 
             if not (current_first_range[0] < current_snd_range[0] and
                     current_first_range[1] < current_snd_range[1]):
-
-                ranges.remove(current_snd_range)
+                # The case when the ranges overlap, i.e. one range
+                # covers the other range. For instance, [0, 5] and [2, 3]
+                ranges = merge_ranges(ranges, current_first_range,
+                                      current_snd_range)
                 num_ranges -= 1
-                removed_ptr = True
 
-            elif current_first_range[1] == current_snd_range[0]:
-                # Overlap, can combine the ranges
-                new_range = [current_first_range[0],
-                             current_snd_range[1]]
+                # Reset the pointers, and start over.
+                first_ptr = 0
+                snd_ptr = 0
+                reset = True
+                break
 
-                ranges.remove(current_first_range)
-                ranges.remove(current_snd_range)
-                ranges.append(new_range)
-                num_ranges -= 1
-                removed_ptr = True
+            if (current_first_range[0] < current_snd_range[0] and
+                    current_first_range[1] < current_snd_range[1]):
+                # The case when the ranges overlap, but also need to
+                # check for gaps between the ranges to avoid merging
+                # non-overlapping ranges. For instance [0, 5] and [6, 10]
+                # should not be merged, even though the above condition holds.
+                # However [6, 10] and [10, 12] should be merged.
+                if current_snd_range[0] - current_first_range[1] <= 0:
+
+                    ranges = merge_ranges(ranges, current_first_range,
+                                          current_snd_range)
+                    num_ranges -= 1
+
+                    # Reset the pointers, and start over.
+                    first_ptr = 0
+                    snd_ptr = 0
+                    reset = True
+                    break
 
             # If an element was removed, don't incremenet the pointer
-            if not removed_ptr:
+            if not reset:
                 snd_ptr += 1
 
-        first_ptr += 1
+        if not reset:
+            first_ptr += 1
 
     return ranges

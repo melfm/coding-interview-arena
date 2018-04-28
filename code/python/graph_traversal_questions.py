@@ -52,7 +52,7 @@ def bfs(graph, start_node):
 def path_exist(graph, start_node, node_a, node_b,
                visited=[], first_node_found=False,
                path_found_list=[]):
-    """ Q: You are provided with network dataset, composed of nodes
+    """ Q: You are given a network dataset, composed of nodes
     and one-directional links. Check whether a route exists between
     two specific nodes in the network.
 

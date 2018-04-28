@@ -26,6 +26,7 @@ class MiscQuestionsTest(unittest.TestCase):
         sum_k = 6
         self.assertFalse(misc.two_sum(array, sum_k))
 
+
     def test_find_top_k_min_distance(self):
 
         top_k = 5
@@ -54,8 +55,19 @@ class MiscQuestionsTest(unittest.TestCase):
             print('Closest points:')
             print(closest_points)
 
-    @unittest.skip("algorithm contains broken logic.")
+
     def test_find_min_overlapping_ranges(self):
+
+        ranges = [[0, 2], [3, 5], [0, 6], [2, 7]]
+        exp_ranges = [[0, 7]]
+
+        min_ranges = misc.find_min_overlapping_ranges(ranges)
+        self.assertListEqual(min_ranges, exp_ranges)
+
+        if self.dump_output:
+            print('Original range-> ', ranges)
+            print('New range-> ', min_ranges)
+
         ranges = [[0, 5], [6, 10], [2, 3]]
         exp_ranges = [[0, 5], [6, 10]]
 
@@ -64,6 +76,7 @@ class MiscQuestionsTest(unittest.TestCase):
         self.assertListEqual(min_ranges, exp_ranges)
 
         if self.dump_output:
+            print('Original range-> ', ranges)
             print('New range-> ', min_ranges)
 
         ranges = [[1, 2], [6, 10], [0, 5], [4, 5], [10, 12]]
@@ -73,10 +86,11 @@ class MiscQuestionsTest(unittest.TestCase):
         self.assertListEqual(min_ranges, exp_ranges)
 
         if self.dump_output:
+            print('Original range-> ', ranges)
             print('New range-> ', min_ranges)
 
         ranges = [[0, 2], [0, 5], [3, 8], [6, 10], [10, 12]]
-        exp_ranges = [[0, 2], [3, 8], [6, 12]]
+        exp_ranges = [[0, 12]]
 
         min_ranges = misc.find_min_overlapping_ranges(ranges)
         self.assertListEqual(min_ranges, exp_ranges)
@@ -84,6 +98,16 @@ class MiscQuestionsTest(unittest.TestCase):
         if self.dump_output:
             print('New range-> ', min_ranges)
 
+        ranges = [[0, 2], [1, 3], [2, 4], [1, 5]]
+        exp_ranges = [[0, 5]]
+
+        min_ranges = misc.find_min_overlapping_ranges(ranges)
+
+        self.assertListEqual(min_ranges, exp_ranges)
+
+        if self.dump_output:
+            print('Original range-> ', ranges)
+            print('New range-> ', min_ranges)
 
 if __name__ == '__main__':
     unittest.main()
