@@ -58,7 +58,7 @@ class MiscQuestionsTest(unittest.TestCase):
 
     def test_find_min_overlapping_ranges(self):
 
-        ranges = [[0, 2], [3, 5], [2, 7]]
+        ranges = [[0, 2], [3, 5], [0, 6], [2, 7]]
         exp_ranges = [[0, 7]]
 
         min_ranges = misc.find_min_overlapping_ranges(ranges)
