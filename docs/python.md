@@ -37,8 +37,8 @@ def create_generator():
 ### Summary of Python's Generators vs Iterators
 - Every generator is an iterator, but not vice versa.
 - A generator is a subset of an interator.
-- A Generator is called by calling a function that has a *yield* expression.
-- Iterators are objects that have an *__iter__* and *__next__* method.
+- A Generator is called by calling a function that has a `yield` expression.
+- Iterators are objects that have an `__iter__` and `__next__` method.
 
 
 
