@@ -172,55 +172,43 @@ def string_has_unique_chars_v2(string):
     return True
 
 #TODO:FixMe
-def breakup_sms(input_string, char_limit):
-    # Hey Mel, your uber
-    # is arriving now
+import pdb
 
-    # Hey blahblahblah-long named
-    # person
 
-    split_string = input_string.split(' ')
+def breakup_sentence(input_string, char_limit):
 
-    new_string = []
 
-    string_so_far = ''
+    splitted_string = input_string.split(' ')
+    new_sentences = []
+
+    composed_string =''
     character_count = 0
 
-    for i in range(len(split_string)):
-        # Grab each element and count the characters
-        current_string = split_string[i]
+    for i in range(len(splitted_string)):
+        # Grab each word and count the characters
+        current_word = splitted_string[i]
 
-        string_size = len(current_string)
+        # Check the size of the word
+        word_size = len(current_word)
 
-        if string_size < char_limit:
-            # Need to break the string
+        if character_count + word_size < char_limit:
 
-            mini_split = list(current_string)
+            composed_string += current_word + ' '
+            character_count += word_size + 1
 
-            new_split = len(mini_split) / char_limit
-
-            for j in range(new_split):
-
-                mini_string = current_string[j]
-                string_so_far += current_string + ' '
-
-        # idea: replace contents in original list instead of extra logic
-
-        # The extra one is for space between words
-        character_count += string_size + 1
-
-        if character_count < char_limit:
-
-            string_so_far += current_string + ' '
-            if '\n' in current_string:
-                new_string.append(string_so_far)
 
         else:
-            new_string.append(string_so_far)
-            string_so_far = ''
-            if current_string:
-                string_so_far += current_string + ' '
+            # Remove the extra space in the end of the sentence.
+            composed_string = composed_string[:-1]
+            new_sentences.append(composed_string)
+            composed_string = ''
+            if current_word:
+                composed_string += current_word + ' '
             character_count = 0
 
-    # return list of strings
-    return new_string
+    if composed_string:
+        composed_string = composed_string[:-1]
+        new_sentences.append(composed_string)
+
+    pdb.set_trace()
+    return new_sentences

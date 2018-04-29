@@ -85,6 +85,21 @@ class StringManipulationTest(unittest.TestCase):
         test_str = 'aaabbcc'
         self.assertFalse(str_manip.string_has_unique_chars_v2(test_str))
 
+    def test_breakup_sentence(self):
+
+        test_str = "Hey Mel, your uber is arriving now"
+        exp_str = ["Hey Mel, your uber,", "is arriving now"]
+
+        #answer = str_manip.breakup_sentence(test_str, 20)
+
+        #self.assertEquals(answer, exp_str)
+
+        #print('Answer is ', answer)
+
+        test_str = "Hey blahblahblah-long named, your uber is arriving now"
+
+        answer = str_manip.breakup_sentence(test_str, 10)
+
 
 if __name__ == '__main__':
     unittest.main()
