@@ -1,3 +1,4 @@
+import numpy as np
 import unittest
 
 import string_manipulation as str_manip
@@ -87,18 +88,23 @@ class StringManipulationTest(unittest.TestCase):
 
     def test_breakup_sentence(self):
 
-        test_str = "Hey Mel, your uber is arriving now"
-        exp_str = ["Hey Mel, your uber,", "is arriving now"]
+        test_str = 'Hey Mel, your uber is arriving now'
+        exp_str = ['Hey Mel, your uber', 'is arriving now']
 
-        #answer = str_manip.breakup_sentence(test_str, 20)
+        answer = str_manip.breakup_sentence(test_str, 20)
 
-        #self.assertEquals(answer, exp_str)
+        np.testing.assert_array_equal(np.asarray(answer),
+                                      np.asarray(exp_str))
 
-        #print('Answer is ', answer)
 
-        test_str = "Hey blahblahblah-long named, your uber is arriving now"
+        test_str = 'Hey blahblahblah-long named, your uber is arriving now'
+
+        exp_str = ['Hey', 'blahblahbl', 'ah-long', 'named, your uber',
+                   'is arriving', 'now']
 
         answer = str_manip.breakup_sentence(test_str, 10)
+        np.testing.assert_array_equal(np.asarray(answer),
+                                      np.asarray(exp_str))
 
 
 if __name__ == '__main__':
