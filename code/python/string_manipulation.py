@@ -233,7 +233,7 @@ def breakup_sentence(input_string, char_limit):
                 composed_string += current_word + ' '
                 # Edge case - when the string size is the size of
                 # the limit. This is safe to do because the words
-                # should already been broken up to the correct size.
+                # should have already been broken up to the correct size.
                 if len(composed_string) >= char_limit:
                     composed_string = composed_string[:-1]
                     new_sentences.append(composed_string)
