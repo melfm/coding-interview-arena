@@ -1,6 +1,6 @@
 """String manipulation questions."""
 
-import pdb
+from collections import Iterable
 
 
 def reverse_string_py(string):
@@ -171,56 +171,89 @@ def string_has_unique_chars_v2(string):
 
     return True
 
-#TODO:FixMe
-def breakup_sms(input_string, char_limit):
-    # Hey Mel, your uber
-    # is arriving now
 
-    # Hey blahblahblah-long named
-    # person
+def breakup_sentence(input_string, char_limit):
+    """Given a sentence, break it up into sub-sentences where
+    the length of each sub-sentence, character-wise, is below
+    the 'char_limit'.
 
-    split_string = input_string.split(' ')
+    Note: This solution loops the list "twice" to identify words
+    that go over the character limit.
+    """
 
-    new_string = []
+    splitted_string = input_string.split(' ')
+    new_sentences = []
 
-    string_so_far = ''
+    composed_string = ''
     character_count = 0
 
-    for i in range(len(split_string)):
-        # Grab each element and count the characters
-        current_string = split_string[i]
+    split_size = len(splitted_string)
 
-        string_size = len(current_string)
+    new_splitted_string = []
+    for i in range(split_size):
+        # Grab each word and count the characters
+        current_word = splitted_string[i]
 
-        if string_size < char_limit:
-            # Need to break the string
+        # Check the size of the word
+        word_size = len(current_word)
 
-            mini_split = list(current_string)
+        if word_size > char_limit:
+            # Need to break the string down further
+            splitted_words = [current_word[i:i+char_limit]
+                              for i in range(0, len(current_word), char_limit)]
 
-            new_split = len(mini_split) / char_limit
+            splitted_string[i] = splitted_words
+            flattened = flatten(splitted_string)
+            for word in flattened:
+                new_splitted_string.append(word)
 
-            for j in range(new_split):
+    # If new splits were not needed, use the old list
+    if not new_splitted_string:
+        new_splitted_string = splitted_string
 
-                mini_string = current_string[j]
-                string_so_far += current_string + ' '
+    split_size = len(new_splitted_string)
+    for i in range(split_size):
+        # Grab each word and count the characters
+        current_word = new_splitted_string[i]
 
-        # idea: replace contents in original list instead of extra logic
+        # Check the size of the word
+        word_size = len(current_word)
 
-        # The extra one is for space between words
-        character_count += string_size + 1
+        if character_count + word_size < char_limit:
 
-        if character_count < char_limit:
-
-            string_so_far += current_string + ' '
-            if '\n' in current_string:
-                new_string.append(string_so_far)
+            composed_string += current_word + ' '
+            character_count += word_size + 1
 
         else:
-            new_string.append(string_so_far)
-            string_so_far = ''
-            if current_string:
-                string_so_far += current_string + ' '
+            # Remove the extra space in the end of the sentence.
+            composed_string = composed_string[:-1]
+            new_sentences.append(composed_string)
+            composed_string = ''
+            if current_word:
+                composed_string += current_word + ' '
+                # Edge case - when the string size is the size of
+                # the limit. This is safe to do because the words
+                # should have already been broken up to the correct size.
+                if len(composed_string) >= char_limit:
+                    composed_string = composed_string[:-1]
+                    new_sentences.append(composed_string)
+                    composed_string = ''
             character_count = 0
 
-    # return list of strings
-    return new_string
+    if composed_string:
+        composed_string = composed_string[:-1]
+        new_sentences.append(composed_string)
+
+    return new_sentences
+
+
+def flatten(coll):
+    """Helper function used in 'breakup_sentence' to flatten
+    a nested list of strings.
+    """
+    for i in coll:
+        if isinstance(i, Iterable) and not isinstance(i, str):
+            for subc in flatten(i):
+                yield subc
+        else:
+            yield i

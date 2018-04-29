@@ -48,3 +48,10 @@ function fib(n)
     return m[n]
 ```
 - This technique of saving values that have already been calculated is called **memoization**.
+
+## Duck typing
+- A term used in dynamic languages that do not have strong typing.
+- You don't need a type in order to invoke an existing method on an object.
+- If it looks like a duck and quacks like a duck, it's a duck.
+- With normal typing, suitability is assumed to be determined by an object's type.
+- In duck typing, an object's suitability is determined by the presence of certain methods and properties rather than the actual type of the object.
