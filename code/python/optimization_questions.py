@@ -1,7 +1,5 @@
 """Questions that require optimization tricks."""
 
-import time
-
 
 def sum_set_of_k_v1(k):
     """Write a function to return consecutive subset of numbers
@@ -14,9 +12,8 @@ def sum_set_of_k_v1(k):
     current_set = []
     current_sum = 0
 
-    # Optimization no.1-> Only need to check the sum
+    # Optimization -> Only need to check the sum
     # for half/k as the sum will be larger.
-    start = time.time()
     for p1 in range(1, int(k/2) + 1):
         p2 = p1 + 1
 
@@ -40,6 +37,42 @@ def sum_set_of_k_v1(k):
             current_sum = 0
             current_set = []
 
-    end = time.time()
-    print('Total time v1 ', end - start)
+    return total_set
+
+
+def sum_set_of_k_v2(k):
+    """Alternative implementation of 'sum_set_of_k_v1'.
+    We need to find consecutive numbers that add up to k.
+    But we don't know how many consecutive numbers we need.
+    So instead of calculating the consecutive sum to find a match,
+    we solve the following equation :
+        # of sequences : 2
+        Equation : n + (n + 1) = 2n + 1
+        # of sequences : 3
+        Equation : n + (n + 1) + (n + 2) = 3n + 3
+        # of sequences : 4
+        Equation : 4n + 6
+
+    We can loop through the number of sequences, and solve for the
+    above equations. The addition term is always the sum of the sequence
+    and the previous term.
+    """
+
+    total_set = []
+    current_set = []
+    addition_term = 1
+    for seq in range(2, int(k/2) + 1):
+        # Solve for n
+        n = (k - addition_term) / seq
+        # Only care about positives
+        if n > 0:
+            # If there is a solution i.e. n is a whole number
+            if n.is_integer():
+                for x in range(int(n), int(n + seq)):
+                    current_set.append(x)
+                total_set.append(current_set)
+                current_set = []
+
+            addition_term = seq + addition_term
+
     return total_set
