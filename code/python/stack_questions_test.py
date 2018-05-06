@@ -66,6 +66,44 @@ class StackQuestionsTest(unittest.TestCase):
         self.assertFalse(trip_stack.is_empty(3))
         self.assertTrue(trip_stack.is_empty(1))
 
+    def test_triple_stackv2(self):
+
+        trip_stack_v2 = stack_q.TripleStackV2(3)
+        trip_stack_v2.push(0, 19)
+
+        trip_stack_v2.push(0, 9)
+        trip_stack_v2.push(0, 23)
+        trip_stack_v2.push(0, 100)
+
+        exp_triple_stack = [19, 9, 23, 100, 0, 0, 0, 0]
+        np.testing.assert_array_equal(trip_stack_v2.get_elements(),
+                                      exp_triple_stack)
+
+        trip_stack_v2.pop(0)
+
+        trip_stack_v2.push(1, -4)
+        trip_stack_v2.push(2, 8)
+        trip_stack_v2.push(2, -200)
+
+        exp_triple_stack = [19, 9, 23, -4, 8, -200, 0, 0]
+        np.testing.assert_array_equal(trip_stack_v2.get_elements(),
+                                      exp_triple_stack)
+
+        trip_stack_v2.pop(1)
+        trip_stack_v2.pop(2)
+
+        exp_triple_stack = [19, 9, 23, 0, 8, 0, 0, 0]
+        np.testing.assert_array_equal(trip_stack_v2.get_elements(),
+                                      exp_triple_stack)
+
+        trip_stack_v2 = stack_q.TripleStackV2(2)
+        trip_stack_v2.push(0, 19)
+        trip_stack_v2.pop(0)
+        trip_stack_v2.pop(0)
+        exp_triple_stack = [0, 0, 0, 0, 0]
+        np.testing.assert_array_equal(trip_stack_v2.get_elements(),
+                                      exp_triple_stack)
+
 
 if __name__ == '__main__':
     unittest.main()

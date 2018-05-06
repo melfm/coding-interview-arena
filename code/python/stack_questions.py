@@ -3,6 +3,9 @@ import numpy as np
 
 class TripleStack:
     """Q: Use a single array to implement three stacks.
+
+    Solution: Divide the array in three equal parts and allow
+    the individual stack to grow in that limited space.
     """
 
     def __init__(self, stack_size):
@@ -99,3 +102,68 @@ class TripleStack:
                 return False
         else:
             raise ValueError('Invalid stack number.')
+
+
+class TripleStackV2:
+    """Q: Use a single array to implement three stacks.
+
+    Solution: Any stack can grow as long as there is any free
+    space in the array. Note: This code needs error handling.
+    """
+
+    def __init__(self, stack_size):
+        self.stack_size = stack_size
+        self.index_used = 0
+        self.stack_pointers = [-1, -1, -1]
+        self.stack_array = []
+
+        # Initialize the stacks array with zeros
+        self.stack_array = [self.StackNode(0, 0) for i in
+                            range(self.stack_size * 3 - 1)]
+
+    class StackNode:
+
+        def __init__(self, previous, value):
+            self.previous = previous
+            self.value = value
+
+    def push(self, stack_num, value):
+        last_index = self.stack_pointers[stack_num]
+        self.stack_pointers[stack_num] = self.index_used
+        self.index_used += 1
+        if self.index_used < self.stack_size * 3:
+            self.stack_array[self.stack_pointers[stack_num]] = \
+                self.StackNode(last_index, value)
+        else:
+            print('Stack is full!')
+
+    def pop(self, stack_num):
+        if self.stack_pointers[stack_num] == -1:
+            print('Stack is empty.')
+            return
+
+        self.print_stack()
+        out_value = self.stack_array[self.stack_pointers[stack_num]].value
+        last_index = self.stack_pointers[stack_num]
+
+        self.stack_pointers[stack_num] = self.stack_array[
+            self.stack_pointers[stack_num]].previous
+
+        self.stack_array[last_index] = self.StackNode(0, 0)
+        self.index_used -= 1
+
+        return out_value
+
+    def print_stack(self):
+
+        elements = self.get_elements()
+        print('Stack pointers -> ,', self.stack_pointers)
+        print('Stack ->', elements)
+
+    def get_elements(self):
+        elements = []
+        for i in range(len(self.stack_array)):
+            value = self.stack_array[i].value
+            elements.append(value)
+
+        return elements
