@@ -108,7 +108,8 @@ class TripleStackV2:
     """Q: Use a single array to implement three stacks.
 
     Solution: Any stack can grow as long as there is any free
-    space in the array. Note: This code needs error handling.
+    space in the array. Note: This code needs error handling
+    inside 'push' to avoid overwriting other stack vals.
     """
 
     def __init__(self, stack_size):
@@ -142,7 +143,6 @@ class TripleStackV2:
             print('Stack is empty.')
             return
 
-        self.print_stack()
         out_value = self.stack_array[self.stack_pointers[stack_num]].value
         last_index = self.stack_pointers[stack_num]
 
