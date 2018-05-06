@@ -26,7 +26,6 @@ class TripleStack:
                 print('Stack is full, cannot add.')
         elif stack_num == 2:
             if self.sp2 <= self.stack_size * 2:
-
                 self.sp2 += 1
                 if self.sp2 != self.stack_size * 2:
                     self.stacks_array[self.sp2] = value
@@ -80,8 +79,23 @@ class TripleStack:
         else:
             raise ValueError('Invalid stack number!')
 
-    def peek(self, stack_num):
-        pass
-
     def is_empty(self, stack_num):
-        pass
+
+        if stack_num == 1:
+            if self.stacks_array[0] == 0:
+                return True
+            else:
+                return False
+
+        elif stack_num == 2:
+            if self.stacks_array[self.stack_size] == 0:
+                return True
+            else:
+                return False
+        elif stack_num == 3:
+            if self.stacks_array[self.stack_size * 2] == 0:
+                return True
+            else:
+                return False
+        else:
+            raise ValueError('Invalid stack number.')

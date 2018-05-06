@@ -38,8 +38,6 @@ class StackQuestionsTest(unittest.TestCase):
         np.testing.assert_array_equal(trip_stack.stacks_array,
                                       exp_triple_stack)
 
-        print('Stack -> ', trip_stack.stacks_array)
-
         trip_stack.pop(1)
         trip_stack.pop(1)
         trip_stack.pop(1)
@@ -49,14 +47,12 @@ class StackQuestionsTest(unittest.TestCase):
         np.testing.assert_array_equal(trip_stack.stacks_array,
                                       exp_triple_stack)
 
-        print('Stack -> ', trip_stack.stacks_array)
         trip_stack.pop(2)
 
         exp_triple_stack = [0, 0, 0, 4, 7, 0, 9, 10, 12]
 
         np.testing.assert_array_equal(trip_stack.stacks_array,
                                       exp_triple_stack)
-        print('Stack -> ', trip_stack.stacks_array)
 
         trip_stack.pop(3)
         trip_stack.pop(3)
@@ -66,7 +62,9 @@ class StackQuestionsTest(unittest.TestCase):
 
         np.testing.assert_array_equal(trip_stack.stacks_array,
                                       exp_triple_stack)
-        print('Stack -> ', trip_stack.stacks_array)
+
+        self.assertFalse(trip_stack.is_empty(3))
+        self.assertTrue(trip_stack.is_empty(1))
 
 
 if __name__ == '__main__':
