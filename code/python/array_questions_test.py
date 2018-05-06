@@ -1,3 +1,4 @@
+import numpy as np
 import unittest
 
 import array_questions as array_qs
@@ -78,6 +79,28 @@ class ArraysTest(unittest.TestCase):
         if self.dump_output:
             print("Max so far {} with indices {},{} ".format(
                     max_sum, start, end))
+
+
+    def test_add_one(self):
+
+        array = [1, 2, 3, 4]
+        exp_ans = [1, 2, 3, 5]
+
+        answer = array_qs.add_one(array)
+        np.testing.assert_array_equal(answer, exp_ans)
+
+        array = [1, 9, 9]
+        exp_ans = [2, 0 ,0]
+
+        answer = array_qs.add_one(array)
+        np.testing.assert_array_equal(answer, exp_ans)
+
+
+        array = [9, 9, 9]
+        exp_ans = [1, 0 ,0, 0]
+
+        answer = array_qs.add_one(array)
+        np.testing.assert_array_equal(answer, exp_ans)
 
 
 if __name__ == '__main__':
