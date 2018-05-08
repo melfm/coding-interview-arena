@@ -169,5 +169,21 @@ class BinaryTreeQuestionTest(unittest.TestCase):
         self.assertEqual(common_ancestor.value, 6)
 
 
+        array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+
+        tree_var = trees.create_tree_from_sorted_array(array)
+
+        all_nodes = []
+        tree_var.traverse_bfs(tree_var, all_nodes)
+
+        node_a = tree_var.left.left.right
+        node_b = tree_var.left.right.right
+
+        common_ancestor = trees.find_first_common_ancestor_v2(tree_var,
+                                                              node_a,
+                                                              node_b)
+        self.assertEqual(common_ancestor.value, 3)
+
+
 if __name__ == '__main__':
     unittest.main()
