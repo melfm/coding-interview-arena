@@ -168,6 +168,13 @@ class BinaryTreeQuestionTest(unittest.TestCase):
                                                               node_b)
         self.assertEqual(common_ancestor.value, 6)
 
+        node_a = tree_var.right
+        node_b = tree_var.right.right
+        common_ancestor = trees.find_first_common_ancestor_v2(tree_var,
+                                                              node_a,
+                                                              node_b)
+        # The common ancestor is one of the nodes itself
+        self.assertEqual(common_ancestor.value, 6)
 
         array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 
