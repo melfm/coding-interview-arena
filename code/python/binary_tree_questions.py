@@ -58,6 +58,24 @@ class TreeNode:
         self.traverse_postorder(node.right, children_list)
         children_list.append(node.value)
 
+    def traverse_bfs(self, node, children_list=[]):
+        # Breadth-first search for binary tree
+
+        if node is None:
+            return
+
+        queue = []
+        queue.append(node)
+
+        while(len(queue) > 0):
+            curr_node = queue.pop(0)
+            children_list.append(curr_node.value)
+
+            if curr_node.left is not None:
+                queue.append(curr_node.left)
+            if curr_node.right is not None:
+                queue.append(curr_node.right)
+
     def max_depth(self, node):
         # Find the max depth of a binary tree
         if node is None:
@@ -87,3 +105,47 @@ class TreeNode:
         else:
             return self.is_tree_balanced(node.left) and\
                 self.is_tree_balanced(node.right)
+
+
+def create_tree_from_sorted_array(array):
+    """Q: Given a sorted (increasing order) array, write an algorithm to
+    create a binary tree with
+    minimal height.
+    """
+
+    def add_to_tree(array, start, end):
+
+        if end < start:
+            return
+
+        middle = int((start + end) / 2)
+        node = TreeNode(array[middle])
+        node.left = add_to_tree(array, start, middle - 1)
+        node.right = add_to_tree(array, middle + 1, end)
+        return node
+
+    return add_to_tree(array, 0, len(array) - 1)
+
+
+def find_first_common_ancestor(tree, node_a, node_b):
+    """Design an algorithm and write code to find the first common ancestor
+    of two nodes in a binary tree. Avoid storing additional nodes in a data
+    structure. NOTE: This is not necessarily a binary *search* tree.
+    """
+    def covers(tree, node):
+
+        if tree is None:
+            return False
+
+        if (tree == node):
+            return True
+
+        return covers(tree.left, node) or covers(tree.right, node)
+
+    if (covers(tree.left, node_a) and covers(tree.left, node_b)):
+        return find_first_common_ancestor(tree.left, node_a, node_b)
+
+    if (covers(tree.right, node_a) and covers(tree.right, node_b)):
+        return find_first_common_ancestor(tree.right, node_a, node_b)
+
+    return tree

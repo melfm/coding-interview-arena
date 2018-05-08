@@ -1,3 +1,4 @@
+import numpy as np
 import unittest
 
 import binary_tree_questions as trees
@@ -5,7 +6,7 @@ import binary_tree_questions as trees
 
 class BinaryTreeQuestionTest(unittest.TestCase):
 
-    dump_output = True
+    dump_output = False
 
     @classmethod
     def setUpClass(cls):
@@ -118,6 +119,38 @@ class BinaryTreeQuestionTest(unittest.TestCase):
         root.right.right.left.right = trees.TreeNode(10)
         is_balanced = root.is_tree_balanced(root)
         self.assertEqual(is_balanced, False)
+
+    def test_create_tree_from_sorted_array(self):
+
+        array = [0, 1, 2, 3, 4, 5, 6]
+
+        tree_var = trees.create_tree_from_sorted_array(array)
+
+        all_nodes = []
+        exp_nodes = [0, 1, 2, 3, 4, 5, 6]
+        tree_var.traverse_inorder(tree_var, all_nodes)
+        np.testing.assert_array_equal(all_nodes, exp_nodes)
+
+        all_nodes = []
+        exp_nodes = [3, 1, 5, 0, 2, 4, 6]
+        tree_var.traverse_bfs(tree_var, all_nodes)
+        np.testing.assert_array_equal(all_nodes, exp_nodes)
+
+    def test_find_first_common_ancestor(self):
+
+        array = [1, 2, 3, 4, 5, 6, 7, 8]
+
+        tree_var = trees.create_tree_from_sorted_array(array)
+
+        all_nodes = []
+        tree_var.traverse_bfs(tree_var, all_nodes)
+
+        node_a = tree_var.right.right.right
+        node_b = tree_var.right.left
+        common_ancestor = trees.find_first_common_ancestor(tree_var,
+                                                           node_a,
+                                                           node_b)
+        self.assertEqual(common_ancestor.value, 6)
 
 
 if __name__ == '__main__':
