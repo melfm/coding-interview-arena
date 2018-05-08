@@ -149,3 +149,73 @@ def find_first_common_ancestor(tree, node_a, node_b):
         return find_first_common_ancestor(tree.right, node_a, node_b)
 
     return tree
+
+
+#######################
+TWO_NODES_FOUND = 2
+ONE_NODE_FOUND = 1
+NO_NODE_FOUND = 0
+#######################
+
+
+def find_first_common_ancestor_v2(root, node_a, node_b):
+    """For any node r we know the following:
+        - If node_a is on one side and node_b is on the other side, r is
+        the first common ancestor.
+        - Otherwise the first common ancestor is either on the left or right.
+    """
+
+    def covers(root, node_a, node_b):
+        res = NO_NODE_FOUND
+        if root is None:
+            return res
+        if (root == node_a or root == node_b):
+            res += 1
+        res += covers(root.left, node_a, node_b)
+        if res == TWO_NODES_FOUND:
+            return res
+        res += covers(root.right, node_a, node_b)
+        return res
+
+    if (node_a == node_b and (root.left == node_a or root.right == node_a)):
+        return root
+
+    #################
+    # Check left side
+    #################
+    nodes_from_left = covers(root.left, node_a, node_b)
+
+    if nodes_from_left == TWO_NODES_FOUND:
+        if root.left == node_a or root.left == node_b:
+            return root.left
+        else:
+            return find_first_common_ancestor_v2(root.left, node_a, node_b)
+    elif nodes_from_left == ONE_NODE_FOUND:
+        if root == node_a:
+            return node_a
+        elif root == node_b:
+            return node_b
+
+    ##################
+    # Check right side
+    ##################
+    nodes_from_right = covers(root.right, node_a, node_b)
+
+    if nodes_from_right == TWO_NODES_FOUND:
+        if root.right == node_a or root.right == node_b:
+            return root.right
+        else:
+            return find_first_common_ancestor_v2(root.right, node_a, node_b)
+
+    elif nodes_from_right == ONE_NODE_FOUND:
+        if root == node_a:
+            return node_a
+        elif root == node_b:
+            return node_b
+
+    # The nodes are on each side, so the only common ancestor is the root
+    if nodes_from_left == ONE_NODE_FOUND and \
+            nodes_from_right == ONE_NODE_FOUND:
+        return root
+    else:
+        return None
