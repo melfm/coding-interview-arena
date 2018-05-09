@@ -176,6 +176,11 @@ def find_min_overlapping_ranges(ranges):
 
 
 def chessboard_traveling(string):
+    """Q: Given the input as the location of a space on a standard 8x8
+    chess board, determine how many ways there are of traveling from
+    (x y) on the board to (a b), moving only up and to the right (as you
+    would in a chess game).
+    """
 
     x, y = (string.split(')(')[0])[1:].split(' ')
     a, b = (string.split(')(')[1])[:-1].split(' ')
@@ -187,7 +192,6 @@ def chessboard_traveling(string):
 
         if (i == a) and (j == b):
             return 1
-
         return explore_board(i+1, j, a, b) + explore_board(i, j+1, a, b)
 
     return explore_board(int(x), int(y), int(a), int(b))
