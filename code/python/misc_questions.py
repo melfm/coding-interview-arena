@@ -173,3 +173,21 @@ def find_min_overlapping_ranges(ranges):
             first_ptr += 1
 
     return ranges
+
+
+def chessboard_traveling(string):
+
+    x, y = (string.split(')(')[0])[1:].split(' ')
+    a, b = (string.split(')(')[1])[:-1].split(' ')
+
+    def explore_board(i, j, a, b):
+
+        if (i > a) or (j > b):
+            return 0
+
+        if (i == a) and (j == b):
+            return 1
+
+        return explore_board(i+1, j, a, b) + explore_board(i, j+1, a, b)
+
+    return explore_board(int(x), int(y), int(a), int(b))
