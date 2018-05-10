@@ -127,6 +127,23 @@ class MiscQuestionsTest(unittest.TestCase):
 
         self.assertEqual(possible_routes, exp_route)
 
+    def test_scale_balancing(self):
+
+        scale = [5, 9]
+        weights = [1, 2, 6, 7]
+        balancing_w = misc.scale_balancing(scale, weights)
+        self.assertEqual(balancing_w, [6, 2])
+
+        scale = [3, 4]
+        weights = [1, 2, 7, 7]
+        balancing_w = misc.scale_balancing(scale, weights)
+        self.assertEqual(balancing_w, [1, 0])
+
+        scale = [4, 3]
+        weights = [1, 2, 7, 7]
+        balancing_w = misc.scale_balancing(scale, weights)
+        self.assertEqual(balancing_w, [0, 1])
+
 
 if __name__ == '__main__':
     unittest.main()
