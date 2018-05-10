@@ -109,8 +109,7 @@ class TreeNode:
 
 def create_tree_from_sorted_array(array):
     """Q: Given a sorted (increasing order) array, write an algorithm to
-    create a binary tree with
-    minimal height.
+    create a binary tree with minimal height.
     """
 
     def add_to_tree(array, start, end):
@@ -128,9 +127,9 @@ def create_tree_from_sorted_array(array):
 
 
 def find_first_common_ancestor(tree, node_a, node_b):
-    """Design an algorithm and write code to find the first common ancestor
-    of two nodes in a binary tree. Avoid storing additional nodes in a data
-    structure. NOTE: This is not necessarily a binary *search* tree.
+    """Design an algorithm to find the first common ancestor of two nodes
+    in a binary tree. Avoid storing additional nodes in a data structure.
+    NOTE: This is not necessarily a binary *search* tree.
     """
     def covers(tree, node):
 

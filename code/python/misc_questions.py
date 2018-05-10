@@ -214,12 +214,13 @@ def scale_balancing(scale, weights):
 
         if scale_l_count == scale[1]:
             return [first_weight, 0]
+
         for j in range(len(weights)):
             second_weight = weights[j]
             scale_r_count = scale[1] + second_weight
+
             if scale_r_count == scale[0]:
                 return [0, second_weight]
-
             if scale_l_count == scale_r_count:
                 return [first_weight, second_weight]
 
