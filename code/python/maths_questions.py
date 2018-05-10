@@ -38,3 +38,29 @@ def generate_rand_7():
             (np.random.uniform(1, 5, 1) - 1)
         if num[0] < 21:
             return int(num[0] % 7 + 1)
+
+
+def sample_distribution(numbers, probabilities, num_samples):
+    """Given a list of numbers and corresponding probabilities, sample
+    'num_samples' numbers. Note that the probabilities sum to 1.
+    """
+
+    # Generate a random num between 0 - 1
+    rand_prob = np.random.random_sample((1,))
+    intervals = []
+    intervals.append(probabilities[0])
+    new_interval = probabilities[0]
+
+    for i in range(1, len(probabilities)):
+        new_interval += probabilities[i]
+        intervals.append(new_interval)
+
+    counter = 0
+    new_numbers = []
+    while counter <= num_samples:
+        for i in range(len(intervals)):
+            if rand_prob <= [intervals[i]]:
+                new_numbers.append(numbers[i])
+                counter += 1
+
+    return new_numbers

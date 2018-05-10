@@ -173,3 +173,55 @@ def find_min_overlapping_ranges(ranges):
             first_ptr += 1
 
     return ranges
+
+
+def chessboard_traveling(string):
+    """Q: Given the input as the location of a space on a standard 8x8
+    chess board, determine how many ways there are of traveling from
+    (x y) on the board to (a b), moving only up and to the right (as you
+    would in a chess game).
+    """
+
+    x, y = (string.split(')(')[0])[1:].split(' ')
+    a, b = (string.split(')(')[1])[:-1].split(' ')
+
+    def explore_board(i, j, a, b):
+
+        if (i > a) or (j > b):
+            return 0
+
+        if (i == a) and (j == b):
+            return 1
+        return explore_board(i+1, j, a, b) + explore_board(i, j+1, a, b)
+
+    return explore_board(int(x), int(y), int(a), int(b))
+
+
+def scale_balancing(scale, weights):
+    """Q: Given two elements, the first being the two positive integer weights
+    on a balance scale (left and right sides) and the second element being a
+    list of available weights as positive integers, determine if you can balance
+    the scale by using the least amount of weights from the list, but using at
+    most only 2 weights.
+    """
+
+    if scale[0] == scale[1]:
+        return [0, 0]
+
+    for i in range(len(weights)):
+        first_weight = weights[i]
+        scale_l_count = scale[0] + first_weight
+
+        if scale_l_count == scale[1]:
+            return [first_weight, 0]
+
+        for j in range(len(weights)):
+            second_weight = weights[j]
+            scale_r_count = scale[1] + second_weight
+
+            if scale_r_count == scale[0]:
+                return [0, second_weight]
+            if scale_l_count == scale_r_count:
+                return [first_weight, second_weight]
+
+    return 'No match found'

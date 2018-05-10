@@ -26,7 +26,6 @@ class MiscQuestionsTest(unittest.TestCase):
         sum_k = 6
         self.assertFalse(misc.two_sum(array, sum_k))
 
-
     def test_find_top_k_min_distance(self):
 
         top_k = 5
@@ -54,7 +53,6 @@ class MiscQuestionsTest(unittest.TestCase):
         if self.dump_output:
             print('Closest points:')
             print(closest_points)
-
 
     def test_find_min_overlapping_ranges(self):
 
@@ -108,6 +106,44 @@ class MiscQuestionsTest(unittest.TestCase):
         if self.dump_output:
             print('Original range-> ', ranges)
             print('New range-> ', min_ranges)
+
+    def test_chessboard_traveling(self):
+
+        input_string = "(1 1)(2 2)"
+        exp_route = 2
+        possible_routes = misc.chessboard_traveling(input_string)
+
+        self.assertEqual(possible_routes, exp_route)
+
+        input_string = "(1 1)(3 3)"
+        exp_route = 6
+        possible_routes = misc.chessboard_traveling(input_string)
+
+        self.assertEqual(possible_routes, exp_route)
+
+        input_string = "(2 2)(4 3)"
+        exp_route = 3
+        possible_routes = misc.chessboard_traveling(input_string)
+
+        self.assertEqual(possible_routes, exp_route)
+
+    def test_scale_balancing(self):
+
+        scale = [5, 9]
+        weights = [1, 2, 6, 7]
+        balancing_w = misc.scale_balancing(scale, weights)
+        self.assertEqual(balancing_w, [6, 2])
+
+        scale = [3, 4]
+        weights = [1, 2, 7, 7]
+        balancing_w = misc.scale_balancing(scale, weights)
+        self.assertEqual(balancing_w, [1, 0])
+
+        scale = [4, 3]
+        weights = [1, 2, 7, 7]
+        balancing_w = misc.scale_balancing(scale, weights)
+        self.assertEqual(balancing_w, [0, 1])
+
 
 if __name__ == '__main__':
     unittest.main()
