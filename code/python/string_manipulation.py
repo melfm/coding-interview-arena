@@ -285,5 +285,4 @@ def find_matching_brackets(input_string):
                     # just before when you saw the first '('.
                     char_stack.append(i)
 
-    # Count both the opening and closing brackets
     return result
