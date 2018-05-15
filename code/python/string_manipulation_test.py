@@ -107,5 +107,21 @@ class StringManipulationTest(unittest.TestCase):
                                       np.asarray(exp_str))
 
 
+    def test_find_matching_brackets(self):
+
+        input_string = '()(())'
+        long_match = str_manip.find_matching_brackets(input_string)
+        self.assertEqual(long_match, 4)
+
+        input_string = ')()((())(()'
+        long_match = str_manip.find_matching_brackets(input_string)
+        self.assertEqual(long_match, 4)
+
+        input_string = ')()((()))(()'
+        long_match = str_manip.find_matching_brackets(input_string)
+        self.assertEqual(long_match, 6)
+
+
+
 if __name__ == '__main__':
     unittest.main()

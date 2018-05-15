@@ -257,3 +257,33 @@ def flatten(coll):
                 yield subc
         else:
             yield i
+
+
+def find_matching_brackets(input_string):
+    """Given a string of brackets, find the longest matching
+    brackets. For instance '()(())' -> 4
+    """
+
+    input_array = str(input_string)
+    char_stack = []
+    result = 0
+    for i in range(len(input_array)):
+        if input_array[i] == '(':
+            char_stack.append(i)
+        elif input_array[i] == ')':
+            if char_stack:
+                char_stack.pop()
+                if len(char_stack) != 0:
+                    # If stack is not empty, find the length of current valid
+                    # substring by taking difference between current index and
+                    # top of the stack.
+                    result = max(result, i - char_stack[-1])
+                else:
+                    # If stack is empty, push current index as base for next
+                    # valid substring. Think of this as when you calculate the
+                    # max above, you would subtract last index from the index
+                    # just before when you saw the first '('.
+                    char_stack.append(i)
+
+    # Count both the opening and closing brackets
+    return result
