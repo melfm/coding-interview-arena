@@ -76,3 +76,29 @@ def add_one(array):
         result = np.insert(result, 0, 1)
 
     return result
+
+
+def find_smallest_pos(input_array):
+    """Given an array input_array of N integers, return the
+    smallest positive integer (greater than 0)
+    that does not occur in input_array.
+    """
+
+    possible_sol = np.arange(1, abs(max(input_array)) + 2)
+
+    for i in possible_sol:
+        if i not in input_array:
+            return i
+
+    return -1
+
+
+def find_smallest_pos_v2(input_array):
+
+    missing = 1
+    for elem in sorted(input_array):
+        if elem == missing:
+            missing += 1
+        if elem > missing:
+            break
+    return missing
