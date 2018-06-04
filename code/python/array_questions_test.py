@@ -156,6 +156,13 @@ class ArraysTest(unittest.TestCase):
         small_odd_occur = array_qs.smallest_odd_occurrence(input_array)
         self.assertEqual(small_odd_occur, 10)
 
+    def test_combine_sum_pieces(self):
+
+        input_array = [6, 2, 9]
+        sum_array = [1, 4, 17, 3]
+        combinations = array_qs.combine_sum_pieces("abc")
+        #self.assertEqual(combinations, 2)
+
 
 if __name__ == '__main__':
     unittest.main()

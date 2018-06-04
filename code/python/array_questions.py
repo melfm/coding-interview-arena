@@ -158,3 +158,16 @@ def smallest_odd_occurrence(input_array):
                 count = 1
 
     return -1
+
+
+def combine_sum_pieces(array_p, array_s):
+    """Given two arrays, one representing pieces and second possible
+    sum of these pieces, return the number of pieces from array_s that
+    is possible to sum using the available elements from array_p.
+        Input: [6, 2, 9], [1, 4, 17, 3]
+        Output: 2
+    In the case above, we need 2 pieces (6 + 9) = 17 while the other
+    combinations are not possible.
+    """
+
+    pass

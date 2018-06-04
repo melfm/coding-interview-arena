@@ -286,3 +286,37 @@ def find_matching_brackets(input_string):
                     char_stack.append(i)
 
     return result
+
+
+def combine_and_permute(str_list):
+    """Given a list of characters, generate all possible combinations.
+    For instance given [a, b, c] -> {[a], [a, b], [a, b, c],
+                                     [b], [b, a], [b, a, c] ...}
+    You need to find the permutation of this and then the permutation of all
+    possible combinations. Also note that [a, b] != [b, a] so you want to return
+    all these combinations.
+    """
+
+    def permute(data, start, combs):
+        if start == len(data):
+            combs.append(data)
+            return
+
+        data = list(data)
+        for i in range(start, len(data)):
+            data[start], data[i] = data[i], data[start]
+            permute(data, start + 1, combs)
+            data[start], data[i] = data[i], data[start]
+
+    def combinate(prefix, data, perm_combs):
+        data = list(data)
+        # Here instead of custom permute, could also use:
+        # list(itertools.permutations(data))
+        permute(list(prefix), 0, perm_combs)
+        for i in range(0, len(data)):
+            combinate(prefix + data[i],
+                      data[i + 1:], perm_combs)
+
+    perm_combs = []
+    combinate("", str_list, perm_combs)
+    return perm_combs[1:]
