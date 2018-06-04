@@ -142,6 +142,20 @@ class ArraysTest(unittest.TestCase):
         shuffled = array_qs.shuffle_cards(input_array)
         self.assertEqual(shuffled, exp_shuffled)
 
+    def test_smallest_odd_occurrence(self):
+
+        input_array = [1, 1, 2, 2, 3, 4, 5, 6, 6, 5, 4]
+        small_odd_occur = array_qs.smallest_odd_occurrence(input_array)
+        self.assertEqual(small_odd_occur, 3)
+
+        input_array = [2, 3, 2, 2, -4, -4]
+        small_odd_occur = array_qs.smallest_odd_occurrence(input_array)
+        self.assertEqual(small_odd_occur, 2)
+
+        input_array = [20, -10, -10, 30, 10]
+        small_odd_occur = array_qs.smallest_odd_occurrence(input_array)
+        self.assertEqual(small_odd_occur, 10)
+
 
 if __name__ == '__main__':
     unittest.main()

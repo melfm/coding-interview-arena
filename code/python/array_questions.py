@@ -136,3 +136,25 @@ def shuffle_cards(input_array):
         shuffled_array.append(deck_2[-1])
 
     return shuffled_array
+
+
+def smallest_odd_occurrence(input_array):
+    """Given an array return the smallest number that has an odd
+    number of occurrences.
+        Input: [1, 1, 2, 2, 3, 4, 5, 6, 6, 5, 4]
+        Output: 3
+    """
+
+    # Start the counter from 1 to include the current
+    count = 1
+    input_array = sorted(input_array)
+    for i in range(len(input_array) - 1):
+        if input_array[i] == input_array[i+1]:
+            count += 1
+        else:
+            if count % 2 != 0:
+                return input_array[i]
+            else:
+                count = 1
+
+    return -1
