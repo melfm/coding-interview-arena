@@ -8,7 +8,7 @@ import array_questions as array_qs
 class ArraysTest(unittest.TestCase):
 
     dump_output = True
-    test_runtime = True
+    test_runtime = False
 
     def test_find_largest_sub_input_array_sum(self):
 
@@ -121,7 +121,7 @@ class ArraysTest(unittest.TestCase):
         self.assertEqual(small_pos, 5)
 
         if self.test_runtime:
-
+            print('Running runtime test ....')
             array = np.random.randint(0, 100000, size=1000000)
             start = time.time()
             small_pos = array_qs.find_smallest_pos(array)
@@ -129,6 +129,18 @@ class ArraysTest(unittest.TestCase):
             start = time.time()
             small_pos = array_qs.find_smallest_pos_v2(array)
             print('find_smallest_pos_v2 took ', time.time() - start)
+
+    def test_shuffle_cards(self):
+
+        input_array = [1, 2, 3, 4, 5, 6]
+        exp_shuffled = [4, 1, 5, 2, 6, 3]
+        shuffled = array_qs.shuffle_cards(input_array)
+        self.assertEqual(shuffled, exp_shuffled)
+
+        input_array = [1, 2, 3, 4, 5]
+        exp_shuffled = [3, 1, 4, 2, 5]
+        shuffled = array_qs.shuffle_cards(input_array)
+        self.assertEqual(shuffled, exp_shuffled)
 
 
 if __name__ == '__main__':

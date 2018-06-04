@@ -94,6 +94,8 @@ def find_smallest_pos(input_array):
 
 
 def find_smallest_pos_v2(input_array):
+    """This version avoids creating a separate array.
+    """
 
     missing = 1
     for elem in sorted(input_array):
@@ -102,3 +104,35 @@ def find_smallest_pos_v2(input_array):
         if elem > missing:
             break
     return missing
+
+
+def shuffle_cards(input_array):
+    """Given an array of cards, shuffle them according to the following:
+        Input: [1, 2, 3, 4, 5, 6]
+        Output: [4, 1, 5, 2, 6, 3]
+
+    Shuffling works by splitting the deck of cards into two and taking cards
+    from each deck one at a time starting with second deck.
+    """
+
+    input_size = len(input_array)
+
+    # Takes care of input with an odd size
+    odd_size = False
+    if input_size % 2 != 0:
+        odd_size = True
+
+    mid_point = int(len(input_array) / 2)
+
+    deck_1 = input_array[0: mid_point]
+    deck_2 = input_array[mid_point:]
+
+    shuffled_array = []
+    for i in range(len(deck_1)):
+        shuffled_array.append(deck_2[i])
+        shuffled_array.append(deck_1[i])
+    if odd_size:
+        # Append the missing last element
+        shuffled_array.append(deck_2[-1])
+
+    return shuffled_array
