@@ -164,6 +164,14 @@ class ArraysTest(unittest.TestCase):
         combinations = array_qs.combine_sum_pieces(input_array, sum_array)
         self.assertEqual(combinations, exp_combos)
 
+        input_array = [4, 5, 6, 1, 3]
+        sum_array = [9, 15, 12, 8]
+        exp_combos = [[4, 4], [4, 5], [4, 5, 6], [4, 5, 3],
+                      [4, 1, 3], [5, 6, 1], [5, 6, 1, 3],
+                      [5, 1, 3], [5, 3], [6, 6], [6, 3]]
+        combinations = array_qs.combine_sum_pieces(input_array, sum_array)
+        self.assertEqual(combinations, exp_combos)
+
 
 if __name__ == '__main__':
     unittest.main()

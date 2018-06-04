@@ -170,6 +170,9 @@ def combine_sum_pieces(array_p, array_s):
         Output: 2
     In the case above, we need 2 pieces (6 + 9) = 17 while the other
     combinations are not possible.
+    Note: This implementation does not handle self element repeats,
+    so for instance if 6 * 3 can also make a up sum or 6 + (9*2).
+    The only edge case handled here is element * 2.
     """
 
     def combine_and_permute_order_free(input_array):
@@ -195,7 +198,7 @@ def combine_sum_pieces(array_p, array_s):
 
     combinations = combine_and_permute_order_free(array_p)
 
-    print('Possible combinations ', combinations)
+    # print('Possible combinations ', combinations)
 
     all_combos = []
     for comb in combinations:
