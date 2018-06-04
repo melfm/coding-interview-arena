@@ -1,4 +1,5 @@
 import numpy as np
+import time
 import unittest
 
 import array_questions as array_qs
@@ -7,6 +8,7 @@ import array_questions as array_qs
 class ArraysTest(unittest.TestCase):
 
     dump_output = True
+    test_runtime = False
 
     def test_find_largest_sub_input_array_sum(self):
 
@@ -80,7 +82,6 @@ class ArraysTest(unittest.TestCase):
             print("Max so far {} with indices {},{} ".format(
                     max_sum, start, end))
 
-
     def test_add_one(self):
 
         array = [1, 2, 3, 4]
@@ -90,17 +91,86 @@ class ArraysTest(unittest.TestCase):
         np.testing.assert_array_equal(answer, exp_ans)
 
         array = [1, 9, 9]
-        exp_ans = [2, 0 ,0]
+        exp_ans = [2, 0, 0]
 
         answer = array_qs.add_one(array)
         np.testing.assert_array_equal(answer, exp_ans)
-
 
         array = [9, 9, 9]
-        exp_ans = [1, 0 ,0, 0]
+        exp_ans = [1, 0, 0, 0]
 
         answer = array_qs.add_one(array)
         np.testing.assert_array_equal(answer, exp_ans)
+
+    def test_solution(self):
+
+        array = [0, 1, 3, 6, 4, 1, 2]
+        small_pos = array_qs.find_smallest_pos(array)
+        self.assertEqual(small_pos, 5)
+
+        array = [1, 2, 3]
+        small_pos = array_qs.find_smallest_pos(array)
+        self.assertEqual(small_pos, 4)
+
+        array = [-1, -3]
+        small_pos = array_qs.find_smallest_pos(array)
+        self.assertEqual(small_pos, 1)
+
+        array = [0, 1, 3, 6, 4, 1, 2]
+        small_pos = array_qs.find_smallest_pos_v2(array)
+        self.assertEqual(small_pos, 5)
+
+        if self.test_runtime:
+            print('Running runtime test ....')
+            array = np.random.randint(0, 100000, size=1000000)
+            start = time.time()
+            small_pos = array_qs.find_smallest_pos(array)
+            print('find_smallest_pos took ', time.time() - start)
+            start = time.time()
+            small_pos = array_qs.find_smallest_pos_v2(array)
+            print('find_smallest_pos_v2 took ', time.time() - start)
+
+    def test_shuffle_cards(self):
+
+        input_array = [1, 2, 3, 4, 5, 6]
+        exp_shuffled = [4, 1, 5, 2, 6, 3]
+        shuffled = array_qs.shuffle_cards(input_array)
+        self.assertEqual(shuffled, exp_shuffled)
+
+        input_array = [1, 2, 3, 4, 5]
+        exp_shuffled = [3, 1, 4, 2, 5]
+        shuffled = array_qs.shuffle_cards(input_array)
+        self.assertEqual(shuffled, exp_shuffled)
+
+    def test_smallest_odd_occurrence(self):
+
+        input_array = [1, 1, 2, 2, 3, 4, 5, 6, 6, 5, 4]
+        small_odd_occur = array_qs.smallest_odd_occurrence(input_array)
+        self.assertEqual(small_odd_occur, 3)
+
+        input_array = [2, 3, 2, 2, -4, -4]
+        small_odd_occur = array_qs.smallest_odd_occurrence(input_array)
+        self.assertEqual(small_odd_occur, 2)
+
+        input_array = [20, -10, -10, 30, 10]
+        small_odd_occur = array_qs.smallest_odd_occurrence(input_array)
+        self.assertEqual(small_odd_occur, 10)
+
+    def test_combine_sum_pieces(self):
+
+        input_array = [6, 2, 9]
+        sum_array = [1, 4, 17, 3]
+        exp_combos = [[6, 2, 9], [2, 2]]
+        combinations = array_qs.combine_sum_pieces(input_array, sum_array)
+        self.assertEqual(combinations, exp_combos)
+
+        input_array = [4, 5, 6, 1, 3]
+        sum_array = [9, 15, 12, 8]
+        exp_combos = [[4, 4], [4, 5], [4, 5, 6], [4, 5, 3],
+                      [4, 1, 3], [5, 6, 1], [5, 6, 1, 3],
+                      [5, 1, 3], [5, 3], [6, 6], [6, 3]]
+        combinations = array_qs.combine_sum_pieces(input_array, sum_array)
+        self.assertEqual(combinations, exp_combos)
 
 
 if __name__ == '__main__':

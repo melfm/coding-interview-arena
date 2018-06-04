@@ -10,31 +10,35 @@ class MatrixQuestionsTest(unittest.TestCase):
 
     def test_rotate_matrix(self):
 
-        dummy_matrix = np.random.rand(5, 5)
-        print('Original matrix')
-        print(dummy_matrix)
+        if self.dump_output:
 
-        rotated_matrix = matrix_q.rotate_matrix(dummy_matrix)
-        print('Rotated matrix by 90')
-        print(rotated_matrix)
+            dummy_matrix = np.random.rand(5, 5)
+            print('Original matrix')
+            print(dummy_matrix)
 
-        dummy_matrix = np.random.rand(5, 6)
-        print('Original matrix')
-        print(dummy_matrix)
+            rotated_matrix = matrix_q.rotate_matrix(dummy_matrix)
+            print('Rotated matrix by 90')
+            print(rotated_matrix)
 
-        rotated_matrix = matrix_q.rotate_matrix(dummy_matrix)
-        print('Rotated matrix by 90')
-        print(rotated_matrix)
+            dummy_matrix = np.random.rand(5, 6)
+            print('Original matrix')
+            print(dummy_matrix)
+
+            rotated_matrix = matrix_q.rotate_matrix(dummy_matrix)
+            print('Rotated matrix by 90')
+            print(rotated_matrix)
 
     def test_rotate_matrix_in_place(self):
 
-        dummy_matrix = np.random.rand(5, 5)
-        print('Original matrix')
-        print(dummy_matrix)
+        if self.dump_output:
 
-        rotated_matrix = matrix_q.rotate_matrix_in_place(dummy_matrix, 5)
-        print('Rotated matrix by 90')
-        print(rotated_matrix)
+            dummy_matrix = np.random.rand(5, 5)
+            print('Original matrix')
+            print(dummy_matrix)
+
+            rotated_matrix = matrix_q.rotate_matrix_in_place(dummy_matrix, 5)
+            print('Rotated matrix by 90')
+            print(rotated_matrix)
 
     def test_map_matrix_island_color(self):
 
@@ -100,6 +104,28 @@ class MatrixQuestionsTest(unittest.TestCase):
         mat_out = matrix_q.set_matrix_row_col_all_zeros(matrix)
         np.testing.assert_array_equal(mat_out,
                                       exp_matrix)
+
+    def test_map_matrix_island_string_version(self):
+
+        connected_xs = matrix_q.map_matrix_island_string_version(
+            6, 4, '.....xx..x........x.....')
+        self.assertEqual(connected_xs, 2)
+
+        input_string = '........' \
+                       '..x...x.' \
+                       '.xxx..x.' \
+                       '.....xx.' \
+                       '.x..xx..' \
+                       '...xx...' \
+                       '.xxx..x.' \
+                       '........'
+        connected_xs = matrix_q.map_matrix_island_string_version(
+            8, 8, input_string)
+        self.assertEqual(connected_xs, 4)
+
+        connected_xs = matrix_q.map_matrix_island_string_version(
+            3, 3, '.........')
+        self.assertEqual(connected_xs, 0)
 
 
 if __name__ == '__main__':

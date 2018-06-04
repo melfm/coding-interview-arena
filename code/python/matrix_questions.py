@@ -108,6 +108,58 @@ def map_matrix_island_color_recursive(matrix):
     return num_of_visited_countries
 
 
+def map_matrix_island_string_version(row, col, input_string):
+    """Similar idea to 'map_matrix_island_color', however in this case
+    we are given the size of the grid, and an input string in the following
+    format:
+        Input: 6,4, '.....xx..x........x.....'
+        Output: 2
+    The task is to format this string into a matrix and count the number of
+    x regions that are connected.
+        ....
+        .xx.
+        .x..
+        ....
+        ..x.
+        ....
+    """
+    string_list = list(input_string)
+
+    # Break-up the string into chunks of size row and col
+    chunks, chunk_size = len(string_list), col
+    str_matrix = [string_list[i: i + chunk_size]
+                  for i in range(0, chunks, chunk_size)]
+
+    matrix = np.zeros((row, col))
+
+    for i in range(0, row):
+        for j in range(0, col):
+
+            if str_matrix[i][j] == 'x':
+                matrix[i][j] = -1
+
+    # The rest of the code is as before
+    visit_map = np.ones_like(matrix)
+    num_of_visited_x = 0
+
+    row_len = matrix.shape[0]
+    col_len = matrix.shape[1]
+
+    # Visit the cells
+    for i in range(0, row_len):
+        for j in range(0, col_len):
+            if visit_map[i][j] == 0:
+                continue
+            # Only count X's
+            if matrix[i][j] != 0:
+                num_of_visited_x += 1
+            check_neighbourhood(matrix[i][j],
+                                visit_map,
+                                matrix,
+                                i, j)
+    return num_of_visited_x
+
+
 def shorted_path_bin_maze(maze, start, end):
     """Shortest path in a Binary Maze.
     Given a MxN matrix where each element can either be 0 or 1.

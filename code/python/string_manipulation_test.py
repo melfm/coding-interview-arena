@@ -96,7 +96,6 @@ class StringManipulationTest(unittest.TestCase):
         np.testing.assert_array_equal(np.asarray(answer),
                                       np.asarray(exp_str))
 
-
         test_str = 'Hey blahblahblah-long named, your uber is arriving now'
 
         exp_str = ['Hey', 'blahblahbl', 'ah-long', 'named, your uber',
@@ -105,7 +104,6 @@ class StringManipulationTest(unittest.TestCase):
         answer = str_manip.breakup_sentence(test_str, 10)
         np.testing.assert_array_equal(np.asarray(answer),
                                       np.asarray(exp_str))
-
 
     def test_find_matching_brackets(self):
 
@@ -120,6 +118,25 @@ class StringManipulationTest(unittest.TestCase):
         input_string = ')()((()))(()'
         long_match = str_manip.find_matching_brackets(input_string)
         self.assertEqual(long_match, 6)
+
+    def test_combine_and_permute(self):
+
+        input_string = ['a', 'b', 'c']
+        exp_combinations = [['a'], ['a', 'b'], ['b', 'a'], ['a', 'b', 'c'],
+                            ['a', 'c', 'b'], ['b', 'a', 'c'], ['b', 'c', 'a'],
+                            ['c', 'b', 'a'], ['c', 'a', 'b'], ['a', 'c'],
+                            ['c', 'a'], ['b'], ['b', 'c'], ['c', 'b'], ['c']]
+        combinations = str_manip.combine_and_permute(input_string)
+        self.assertEqual(combinations, exp_combinations)
+        if self.dump_output:
+            print('Permutation combinations -> \n', combinations)
+
+    def test_combine_and_permute_order_free(self):
+
+        input_string = ['a', 'b', 'c']
+        exp_combinations = ['a', 'ab', 'abc', 'ac', 'b', 'bc', 'c']
+        combinations = str_manip.combine_and_permute_order_free_str(input_string)
+        self.assertEqual(combinations, exp_combinations)
 
 
 
