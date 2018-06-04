@@ -160,8 +160,9 @@ class ArraysTest(unittest.TestCase):
 
         input_array = [6, 2, 9]
         sum_array = [1, 4, 17, 3]
-        combinations = array_qs.combine_sum_pieces("abc")
-        #self.assertEqual(combinations, 2)
+        exp_combos = [[6, 2, 9], [2, 2]]
+        combinations = array_qs.combine_sum_pieces(input_array, sum_array)
+        self.assertEqual(combinations, exp_combos)
 
 
 if __name__ == '__main__':

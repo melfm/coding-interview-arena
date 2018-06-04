@@ -2,6 +2,8 @@
 
 import numpy as np
 
+import string_manipulation as str_manip
+
 
 def find_largest_sub_array_sum(array):
     """Returns the largest sum of subset array.
@@ -170,4 +172,45 @@ def combine_sum_pieces(array_p, array_s):
     combinations are not possible.
     """
 
-    pass
+    def combine_and_permute_order_free(input_array):
+
+        def combinate(prefix, input_array, combos=[]):
+            if input_array:
+                if prefix:
+                    new_combo = [prefix, input_array[0]]
+                else:
+                    new_combo = input_array[0]
+                combos.append(new_combo)
+                # This [1:] slicing is the magic here
+                if prefix:
+                    combinate([prefix, input_array[0]], input_array[1:], combos)
+                else:
+                    combinate(input_array[0], input_array[1:], combos)
+                combinate(prefix, input_array[1:], combos)
+
+        combos = []
+        combinate([], input_array, combos)
+        combos = [x for x in combos if x != []]
+        return combos
+
+    combinations = combine_and_permute_order_free(array_p)
+
+    print('Possible combinations ', combinations)
+
+    all_combos = []
+    for comb in combinations:
+        if isinstance(comb, int):
+            if (comb + comb) in array_s:
+                all_combos.append([comb, comb])
+
+        else:
+            flattened = str_manip.flatten(comb)
+            flat_list = []
+            for el in flattened:
+                flat_list.append(el)
+
+            sum_comb = sum(flat_list)
+            if sum_comb in array_s:
+                all_combos.append(flat_list)
+
+    return all_combos

@@ -6,7 +6,7 @@ import string_manipulation as str_manip
 
 class StringManipulationTest(unittest.TestCase):
 
-    dump_output = True
+    dump_output = False
 
     def test_rever_str(self):
 
@@ -130,6 +130,14 @@ class StringManipulationTest(unittest.TestCase):
         self.assertEqual(combinations, exp_combinations)
         if self.dump_output:
             print('Permutation combinations -> \n', combinations)
+
+    def test_combine_and_permute_order_free(self):
+
+        input_string = ['a', 'b', 'c']
+        exp_combinations = ['a', 'ab', 'abc', 'ac', 'b', 'bc', 'c']
+        combinations = str_manip.combine_and_permute_order_free_str(input_string)
+        self.assertEqual(combinations, exp_combinations)
+
 
 
 if __name__ == '__main__':

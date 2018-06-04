@@ -290,8 +290,8 @@ def find_matching_brackets(input_string):
 
 def combine_and_permute(str_list):
     """Given a list of characters, generate all possible combinations.
-    For instance given [a, b, c] -> {[a], [a, b], [a, b, c],
-                                     [b], [b, a], [b, a, c] ...}
+    For instance given [a, b, c] -> [[a], [a, b], [a, b, c],
+                                     [b], [b, a], [b, a, c] ... ]
     You need to find the permutation of this and then the permutation of all
     possible combinations. Also note that [a, b] != [b, a] so you want to return
     all these combinations.
@@ -320,3 +320,19 @@ def combine_and_permute(str_list):
     perm_combs = []
     combinate("", str_list, perm_combs)
     return perm_combs[1:]
+
+
+def combine_and_permute_order_free_str(str_list):
+    """Given a list of characters, generate all possible unordered combinations.
+    For instance given [a, b, c] -> ['a', 'ab', 'abc', 'ac', 'b', 'bc', 'c']
+    """
+
+    def combinate(prefix, input_array, combos=[]):
+        if input_array:
+            combos.append(prefix + input_array[0])
+            combinate(prefix + input_array[0], input_array[1:], combos)
+            combinate(prefix, input_array[1:], combos)
+
+    combos = []
+    combinate("", str_list, combos)
+    return combos
