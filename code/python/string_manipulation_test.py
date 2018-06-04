@@ -6,7 +6,7 @@ import string_manipulation as str_manip
 
 class StringManipulationTest(unittest.TestCase):
 
-    dump_output = False
+    dump_output = True
 
     def test_rever_str(self):
 

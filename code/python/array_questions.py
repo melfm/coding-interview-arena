@@ -92,7 +92,7 @@ def find_smallest_pos(input_array):
         if i not in input_array:
             return i
 
-    return -1
+    return 1
 
 
 def find_smallest_pos_v2(input_array):
