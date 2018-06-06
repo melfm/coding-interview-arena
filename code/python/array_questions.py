@@ -108,6 +108,39 @@ def find_smallest_pos_v2(input_array):
     return missing
 
 
+def max_frequent_number(input_array):
+    """Find maximum frequent numbers in an array.
+    If there are more numbers with maximum frequency,
+    they display all numbers in ascending order.
+    Ascending order is important.
+    """
+
+    sorted_array = sorted(input_array)
+
+    max_so_far = 1
+    counter = 1
+    max_nums = {}
+    for i in range(len(sorted_array) - 1):
+
+        p1 = sorted_array[i]
+        p2 = sorted_array[i + 1]
+
+        if p1 == p2:
+            counter += 1
+            if counter == max_so_far:
+                max_nums[p1] = counter
+            elif counter > max_so_far:
+
+                max_so_far = counter
+                max_nums = {}
+                max_nums[p1] = counter
+
+        else:
+            counter = 1
+
+    return max_nums
+
+
 def shuffle_cards(input_array):
     """Given an array of cards, shuffle them according to the following:
         Input: [1, 2, 3, 4, 5, 6]

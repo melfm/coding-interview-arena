@@ -94,3 +94,29 @@ class LinkedList:
             if slow_pointer == fast_pointer:
                 return True
         return False
+
+
+def multiply_two_nums(first, second):
+    """Multiply two numbers represented by Linked Lists.
+        Input : 3->2->1
+                1->2
+        Output : (321 * 12) = 3852
+    """
+
+    num_first = 0
+    num_snd = 0
+
+    first_p = first.head
+    second_p = second.head
+
+    while(first_p or second_p):
+
+        if first_p:
+            num_first = num_first * 10 + first_p.value
+            first_p = first_p.next
+
+        if second_p:
+            num_snd = num_snd * 10 + second_p.value
+            second_p = second_p.next
+
+    return num_first * num_snd

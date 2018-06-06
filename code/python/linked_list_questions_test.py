@@ -48,6 +48,39 @@ class LinkedListQuestionsTest(unittest.TestCase):
         self.assertTrue(test_list.detect_cycle())
         self.assertTrue(test_list.detect_cycle_v2())
 
+    def test_multiply_two_nums(self):
+        first_list = linked_list.LinkedList()
+        # Note: Since this is a SLL, we need to add
+        # the numbers in reverse. The list we want is
+        # [3, 2, 1]. Could use DLL.insert_at_end instead to
+        # preserve the order.
+        first_list.push(1)
+        first_list.push(2)
+        first_list.push(3)
+
+        second_list = linked_list.LinkedList()
+        second_list.push(2)
+        second_list.push(1)
+
+        mult_res = linked_list.multiply_two_nums(first_list,
+                                                 second_list)
+
+        self.assertEqual(mult_res, 3852)
+
+        first_list = linked_list.LinkedList()
+        first_list.push(6)
+        first_list.push(4)
+        first_list.push(9)
+
+        second_list = linked_list.LinkedList()
+        second_list.push(4)
+        second_list.push(8)
+
+        mult_res = linked_list.multiply_two_nums(first_list,
+                                                 second_list)
+
+        self.assertEqual(mult_res, 79464)
+
 
 if __name__ == '__main__':
     unittest.main()

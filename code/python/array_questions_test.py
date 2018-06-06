@@ -102,7 +102,7 @@ class ArraysTest(unittest.TestCase):
         answer = array_qs.add_one(array)
         np.testing.assert_array_equal(answer, exp_ans)
 
-    def test_solution(self):
+    def test_find_smallest_pos(self):
 
         array = [0, 1, 3, 6, 4, 1, 2]
         small_pos = array_qs.find_smallest_pos(array)
@@ -129,6 +129,27 @@ class ArraysTest(unittest.TestCase):
             start = time.time()
             small_pos = array_qs.find_smallest_pos_v2(array)
             print('find_smallest_pos_v2 took ', time.time() - start)
+
+    def test_max_frequent_number(self):
+
+        input_array = [1, 1, 2, 2, 3, 3, 3]
+        exp_output = {3: 3}
+
+        max_nums = array_qs.max_frequent_number(input_array)
+        self.assertDictEqual(max_nums, exp_output)
+
+        input_array = [1, 1, 2, 2, 3, 4]
+        exp_output = {1: 2, 2: 2}
+
+        max_nums = array_qs.max_frequent_number(input_array)
+        self.assertDictEqual(max_nums, exp_output)
+
+        input_array = [11, 9, 8, 5, 5, 6, 5]
+        exp_output = {5: 3}
+
+        max_nums = array_qs.max_frequent_number(input_array)
+        self.assertDictEqual(max_nums, exp_output)
+
 
     def test_shuffle_cards(self):
 
