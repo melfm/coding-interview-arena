@@ -95,27 +95,28 @@ class LinkedList:
                 return True
         return False
 
-    def multiply_two_nums(self, first, second):
-        """Multiply two numbers represented by Linked Lists.
-            Input : 3->2->1
-                    1->2
-            Output : (321 * 12) = 3852
-        """
 
-        num_first = 0
-        num_snd = 0
+def multiply_two_nums(first, second):
+    """Multiply two numbers represented by Linked Lists.
+        Input : 3->2->1
+                1->2
+        Output : (321 * 12) = 3852
+    """
 
-        first_p = first.head
-        second_p = second.head
+    num_first = 0
+    num_snd = 0
 
-        while(first_p or second_p):
+    first_p = first.head
+    second_p = second.head
 
-            if first_p:
-                num_first = num_first * 10 + first_p.value
-                first_p = first_p.next
+    while(first_p or second_p):
 
-            if second_p:
-                num_snd = num_snd * 10 + second_p.value
-                second_p = second_p.next
+        if first_p:
+            num_first = num_first * 10 + first_p.value
+            first_p = first_p.next
 
-        return num_first * num_snd
+        if second_p:
+            num_snd = num_snd * 10 + second_p.value
+            second_p = second_p.next
+
+    return num_first * num_snd

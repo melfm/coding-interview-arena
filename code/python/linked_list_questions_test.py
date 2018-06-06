@@ -52,7 +52,8 @@ class LinkedListQuestionsTest(unittest.TestCase):
         first_list = linked_list.LinkedList()
         # Note: Since this is a SLL, we need to add
         # the numbers in reverse. The list we want is
-        # [3, 2, 1]
+        # [3, 2, 1]. Could use DLL.insert_at_end instead to
+        # preserve the order.
         first_list.push(1)
         first_list.push(2)
         first_list.push(3)
@@ -61,8 +62,8 @@ class LinkedListQuestionsTest(unittest.TestCase):
         second_list.push(2)
         second_list.push(1)
 
-        mult_res = first_list.multiply_two_nums(first_list,
-                                                second_list)
+        mult_res = linked_list.multiply_two_nums(first_list,
+                                                 second_list)
 
         self.assertEqual(mult_res, 3852)
 
@@ -75,8 +76,8 @@ class LinkedListQuestionsTest(unittest.TestCase):
         second_list.push(4)
         second_list.push(8)
 
-        mult_res = first_list.multiply_two_nums(first_list,
-                                                second_list)
+        mult_res = linked_list.multiply_two_nums(first_list,
+                                                 second_list)
 
         self.assertEqual(mult_res, 79464)
 
