@@ -336,3 +336,47 @@ def combine_and_permute_order_free_str(str_list):
     combos = []
     combinate("", str_list, combos)
     return combos
+
+
+def remove_str_mask_char(input_str, str_mask):
+    """Remove characters from the first string which are present
+    in the second string.
+    """
+
+    str_list = input_str.lower()
+
+    masked_str = []
+    for char in str_list:
+        match_found = False
+        for m in str_mask:
+
+            if char == m:
+                match_found = True
+                break
+
+        if not match_found:
+            masked_str.append(char)
+
+    return ''.join(masked_str)
+
+
+def remove_str_mask_char_v2(input_str, str_mask):
+    """Use a hash-table instead of two loops.
+    """
+
+    input_str = input_str.lower()
+    hash_table = {}
+    for m in str_mask:
+        hash_table.update({m: 1})
+
+    str_idx = 0
+    end_of_str = False
+    while not end_of_str:
+        s = input_str[str_idx]
+        if s in hash_table:
+            input_str = input_str[:str_idx] + input_str[str_idx+1:]
+        str_idx += 1
+        if str_idx >= len(input_str):
+            end_of_str = True
+
+    return input_str

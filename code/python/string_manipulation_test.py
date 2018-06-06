@@ -28,16 +28,16 @@ class StringManipulationTest(unittest.TestCase):
         word = 'Mum'
         palin_answer = str_manip.is_palindrome(word)
         if self.dump_output:
-            print('Is {} palindrome?'.format(word))
-            print('Answer ', palin_answer)
+            print('Is {} palindrome?'.format(word),
+                  ' -> Answer: ', palin_answer)
 
         self.assertTrue(palin_answer)
 
         word = 'Egg'
         palin_answer = str_manip.is_palindrome(word)
         if self.dump_output:
-            print('Is {} palindrome?'.format(word))
-            print('Answer ', palin_answer)
+            print('Is {} palindrome?'.format(word),
+                  ' -> Answer: ', palin_answer)
 
         self.assertFalse(palin_answer)
 
@@ -46,8 +46,8 @@ class StringManipulationTest(unittest.TestCase):
         exp_subset = 'xoox'
         palin_subset = str_manip.return_palindrome_subset(word)
         if self.dump_output:
-            print('Palindrome subset of {}:'.format(word))
-            print('Answer ', palin_subset)
+            print('Palindrome subset of {}:'.format(word),
+                  '-> Answer ', palin_subset)
 
         self.assertEqual(palin_subset, exp_subset)
 
@@ -135,9 +135,34 @@ class StringManipulationTest(unittest.TestCase):
 
         input_string = ['a', 'b', 'c']
         exp_combinations = ['a', 'ab', 'abc', 'ac', 'b', 'bc', 'c']
-        combinations = str_manip.combine_and_permute_order_free_str(input_string)
+        combinations = str_manip.combine_and_permute_order_free_str(
+                                                                    input_string)
         self.assertEqual(combinations, exp_combinations)
 
+    def test_remove_str_mask_char(self):
+
+        input_string = "Samplestring"
+        str_mask = "msg"
+        exp_string = "apletrin"
+
+        output = str_manip.remove_str_mask_char(input_string, str_mask)
+        self.assertEqual(output, exp_string)
+
+    def test_remove_str_mask_char_v2(self):
+
+        input_string = "Samplestring"
+        str_mask = "msg"
+        exp_string = "apletrin"
+
+        output = str_manip.remove_str_mask_char_v2(input_string, str_mask)
+        self.assertEqual(output, exp_string)
+
+        input_string = "This is a setence containing stuff!"
+        str_mask = "msffc"
+        exp_string = "thi i a etene ontaining tuf!"
+
+        output = str_manip.remove_str_mask_char_v2(input_string, str_mask)
+        self.assertEqual(output, exp_string)
 
 
 if __name__ == '__main__':
