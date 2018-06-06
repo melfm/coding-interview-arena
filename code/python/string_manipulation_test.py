@@ -1,4 +1,7 @@
 import numpy as np
+import random
+import string
+import time
 import unittest
 
 import string_manipulation as str_manip
@@ -7,6 +10,7 @@ import string_manipulation as str_manip
 class StringManipulationTest(unittest.TestCase):
 
     dump_output = True
+    test_runtime = True
 
     def test_rever_str(self):
 
@@ -159,10 +163,27 @@ class StringManipulationTest(unittest.TestCase):
 
         input_string = "This is a setence containing stuff!"
         str_mask = "msffc"
-        exp_string = "thi i a etene ontaining tuf!"
+        exp_string = "thi i a etene ontaining tu!"
 
         output = str_manip.remove_str_mask_char_v2(input_string, str_mask)
         self.assertEqual(output, exp_string)
+
+        if self.test_runtime:
+
+            count = 100000
+            random_str = ''.join(random.choice(string.ascii_lowercase)
+                                 for x in range(count))
+            random_mask = ''.join(
+                random.choice(
+                    string.ascii_lowercase) for x in range(10))
+
+            start = time.time()
+            output = str_manip.remove_str_mask_char(random_str, random_mask)
+            print('\nremove_str_mask_char took ', time.time() - start)
+
+            start = time.time()
+            output = str_manip.remove_str_mask_char_v2(random_str, random_mask)
+            print('\nremove_str_mask_char_v2 took ', time.time() - start)
 
 
 if __name__ == '__main__':

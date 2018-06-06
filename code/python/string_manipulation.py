@@ -366,17 +366,16 @@ def remove_str_mask_char_v2(input_str, str_mask):
 
     input_str = input_str.lower()
     hash_table = {}
+    # The values in the map are irrelevant.
     for m in str_mask:
         hash_table.update({m: 1})
 
-    str_idx = 0
-    end_of_str = False
-    while not end_of_str:
-        s = input_str[str_idx]
-        if s in hash_table:
-            input_str = input_str[:str_idx] + input_str[str_idx+1:]
-        str_idx += 1
-        if str_idx >= len(input_str):
-            end_of_str = True
+    # You could also change the string in-place with a while loop
+    # and a flag as when the end of string is reached, but this is
+    # faster.
+    new_string = ""
+    for s in input_str:
+        if s not in str_mask:
+            new_string += s
 
-    return input_str
+    return new_string
