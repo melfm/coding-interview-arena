@@ -120,6 +120,28 @@ class BinaryTreeQuestionTest(unittest.TestCase):
         is_balanced = root.is_tree_balanced(root)
         self.assertEqual(is_balanced, False)
 
+    def test_is_tree_BST(self):
+        root = trees.TreeNode(4)
+
+        root.left = trees.TreeNode(2)
+        root.right = trees.TreeNode(5)
+
+        root.left.left = trees.TreeNode(1)
+        root.left.right = trees.TreeNode(3)
+
+        self.assertTrue(root.is_tree_BST(root))
+
+        root = trees.TreeNode(3)
+
+        root.left = trees.TreeNode(2)
+        root.right = trees.TreeNode(5)
+
+        root.left.left = trees.TreeNode(1)
+        root.left.right = trees.TreeNode(4)
+
+        self.assertFalse(root.is_tree_BST(root))
+
+
     def test_create_tree_from_sorted_array(self):
 
         array = [0, 1, 2, 3, 4, 5, 6]
