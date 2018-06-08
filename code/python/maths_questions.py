@@ -1,5 +1,6 @@
 """Maths & Probability Questions."""
 
+import math
 import numpy as np
 
 
@@ -64,3 +65,26 @@ def sample_distribution(numbers, probabilities, num_samples):
                 counter += 1
 
     return new_numbers
+
+
+def factorial_trailing_zero(n):
+    """Given an integer n, return the number of trailing zeroes in n!.
+    A simple method is to first calculate factorial of n, then count
+    trailing 0s in the result. But this can cause overflow for a big
+    numbers as the factorial becomes large.
+    Instead consider prime factors, a trailing zero is produced by 2
+    and 5. It turns out the number of 2s in prime factors is always
+    more than or equal to the number of 5s, so we just need to count 5s.
+    Finally, we also need to consider numbers like 25, 125 etc that have
+    more than one 5 (consider 28!). To handle this, we start by dividing
+    by 5, and then multiples of 5, like 25 and so on.
+    The formula becomes: floor(n/5) + floor(n/25) + floor(n/125) ....
+    """
+
+    count = 0
+    idx = 5
+    while(n/idx >= 1):
+        count += math.floor(n/idx)
+        idx *= 5
+
+    return count

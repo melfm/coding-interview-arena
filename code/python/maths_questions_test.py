@@ -28,6 +28,17 @@ class MathsQuestionsTest(unittest.TestCase):
                                                10)
         print('New samples ->', new_nums)
 
+    def test_factorial_trailing_zero(self):
+
+        zero_count = maths_q.factorial_trailing_zero(5)
+        self.assertEqual(zero_count, 1)
+
+        zero_count = maths_q.factorial_trailing_zero(28)
+        self.assertEqual(zero_count, 6)
+
+        zero_count = maths_q.factorial_trailing_zero(200)
+        self.assertEqual(zero_count, 49)
+
 
 if __name__ == '__main__':
     unittest.main()
