@@ -39,6 +39,30 @@ class MathsQuestionsTest(unittest.TestCase):
         zero_count = maths_q.factorial_trailing_zero(200)
         self.assertEqual(zero_count, 49)
 
+    def test_closest_palindrome_number(self):
+
+        closest_pal = maths_q.closest_palindrome_number(1234)
+        self.assertEqual(closest_pal, 1221)
+
+        closest_pal = maths_q.closest_palindrome_number(99)
+        self.assertEqual(closest_pal, 101)
+
+        closest_pal = maths_q.closest_palindrome_number(90)
+        self.assertEqual(closest_pal, 88)
+
+        closest_pal = maths_q.closest_palindrome_number(121)
+        self.assertEqual(closest_pal, [131, 111])
+
+
+        closest_pal = maths_q.closest_palindrome_number(911)
+        self.assertEqual(closest_pal, 909)
+
+
+        closest_pal = maths_q.closest_palindrome_number(502)
+        self.assertEqual(closest_pal, 505)
+
+
+
 
 if __name__ == '__main__':
     unittest.main()
