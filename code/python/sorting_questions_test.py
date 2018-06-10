@@ -42,6 +42,28 @@ class SortingTest(unittest.TestCase):
         np.testing.assert_array_equal(sorted_array,
                                       exp_array)
 
+    def test_sort_in_lexicographic_order(self):
+
+        input_string = ['a1 b2', 'a0 z6', 'x5 rt', 's2 r1']
+        exp_sorted = ['a0 z6', 'a1 b2', 's2 r1', 'x5 rt']
+
+        sorted_str = sorting.sort_in_lexicographic_order(input_string)
+        self.assertEqual(sorted_str, exp_sorted)
+
+        input_string = ['t1 ao2', 'mi1 mi2', 'm1 mi2',
+                        'mxz4 5 4', 'xi xi2', 'x4 45 34 3',
+                        'w1 has uni gry', 'b4 3 3',
+                        'x2 45 34 3', 'x2 22 34 3']
+
+        exp_sorted = ['b4 3 3', 'm1 mi2', 'mi1 mi2',
+                      'mxz4 5 4', 't1 ao2', 'w1 has uni gry',
+                      'x2 22 34 3', 'x2 45 34 3', 'x4 45 34 3',
+                      'xi xi2']
+
+        sorted_str = sorting.sort_in_lexicographic_order(input_string)
+
+        self.assertEqual(sorted_str, exp_sorted)
+
 
 if __name__ == '__main__':
     unittest.main()

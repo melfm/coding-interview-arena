@@ -109,7 +109,7 @@ d.Foo(); // no longer ambiguous
 - Assignment to a pointer changes the pointer's value (not the pointed-to value).
 - To get a pointer you need to use **new** or **&**.
     - A pointer needs to be dereferenced with * to access the memory location it points to whereas a reference can be used directly. A pointer to a class/struct uses `->` to access its members whereas a reference uses `.`.
-- To access an object pointed to by a pointer you use **\*\** or **[]**.
+- To access an object pointed to by a pointer you use **\*** or **[]**.
 - Assignment to a reference changes the value of the object referred to (not the reference itself)
 - You cannot make a reference to a different object after initialization, i.e. a pointer can be reassigned, a reference cannot and must be assigned at initialization.
 - You can have pointers to pointers to pointers offering levels of indirection. Whereas references only offer one level of indirection.
