@@ -1,4 +1,5 @@
 // Implement a Vector class data-structure in C++
+// Work in progress ...
 
 class vector {
 
