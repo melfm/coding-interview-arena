@@ -96,3 +96,18 @@ def heap_sort(array):
         heapify(array, i, 0)
 
     return array
+
+
+def sort_in_lexicographic_order(str_lst):
+    """Given a list of strings, sort them lexicographically. Note that
+    the strings need to be sorted alphabetically as well as the numbers
+    that are intermixed with the characters.
+        Input: ['a1 b2', 'a0 z6', 'x5 rt', 's2 r1']
+        Output: ['a0 z6', 'a1 b2', 's2 r1', 'x5 rt']
+    """
+
+    # TODO: Implement this using a different sorting approach.
+
+    # Python's built-in sorted function already does this
+    # https://github.com/TheAlgorithms/Python/blob/master/sorts/timsort.py
+    return sorted(str_lst)

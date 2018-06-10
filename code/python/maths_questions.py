@@ -1,6 +1,8 @@
 """Maths & Probability Questions."""
 
+import math
 import numpy as np
+import sys
 
 
 def divisible_by_r(m, n):
@@ -64,3 +66,128 @@ def sample_distribution(numbers, probabilities, num_samples):
                 counter += 1
 
     return new_numbers
+
+
+def factorial_trailing_zero(n):
+    """Given an integer n, return the number of trailing zeroes in n!.
+    A simple method is to first calculate factorial of n, then count
+    trailing 0s in the result. But this can cause overflow for a big
+    numbers as the factorial becomes large.
+    Instead consider prime factors, a trailing zero is produced by 2
+    and 5. It turns out the number of 2s in prime factors is always
+    more than or equal to the number of 5s, so we just need to count 5s.
+    Finally, we also need to consider numbers like 25, 125 etc that have
+    more than one 5 (consider 28!). To handle this, we start by dividing
+    by 5, and then multiples of 5, like 25 and so on.
+    The formula becomes: floor(n/5) + floor(n/25) + floor(n/125) ....
+    """
+
+    count = 0
+    idx = 5
+    while(n/idx >= 1):
+        count += math.floor(n/idx)
+        idx *= 5
+
+    return count
+
+
+def closest_palindrome_number(number):
+    """Given a number, find the closest Palindrome number whose absolute
+    difference with given number is minimum and absolute difference must
+    be greater than 0.
+        Input: 121
+        Output: [131, 111]
+
+        Input: 1234
+        Outpyt: 1221
+    The trick here to mirror the first half of the digit onto the second half.
+    Turns out this will always give you the shortest distane you need to the
+    number, and obviously we would not want to mirror the second half for this
+    reason. Once we mirror, say 121 stays 121, then out next options are adding
+    and subtracting one from this middle number to get 111 and 131. We can
+    then check for min distance.
+    """
+
+    def check_all_9(number):
+
+        for n in number:
+            if n != 9:
+                return False
+        return True
+
+    num_list = [int(i) for i in str(number)]
+
+    num_size = len(num_list)
+
+    if check_all_9(num_list):
+        return number + 2
+
+    mid_point = int(num_size/2)
+
+    def list_to_int(nums): return int(''.join(str(i) for i in nums))
+
+    def check_palindromes(all_palindromes, number):
+        min_found = sys.maxsize
+        pal_found = 0
+        multiple_pals = []
+
+        for i in all_palindromes:
+            pal = list_to_int(i)
+            distance = abs(number - pal)
+            if distance <= min_found and distance != 0:
+                if distance == min_found:
+                    multiple_pals.append(i)
+                else:
+                    multiple_pals = []
+                    min_found = distance
+                    pal_found = i
+                    multiple_pals.append(i)
+
+        if len(multiple_pals) == 1:
+            return list_to_int(pal_found)
+        else:
+            numbers = []
+            for i in multiple_pals:
+                number = list_to_int(i)
+                numbers.append(number)
+            return numbers
+
+    if num_size % 2 == 0:
+
+        # Even number
+        splitted = num_list[0: mid_point]
+        mirrored = splitted + splitted[::-1]
+
+        all_palindromes = []
+        all_palindromes.append(mirrored)
+
+        if splitted[-1] != 9:
+            split_add_one = list(splitted)
+            split_add_one[-1] += 1
+            split_add_one = all_palindromes.append(
+                split_add_one + split_add_one[::-1])
+
+        if splitted[-1] != 0:
+            split_sub_one = list(splitted)
+            split_sub_one[-1] -= 1
+            split_sub_one = all_palindromes.append(
+                split_sub_one + split_sub_one[::-1])
+
+    else:
+        # Odd number
+        splitted = num_list[0: mid_point]
+        middle_num = num_list[mid_point]
+
+        all_palindromes = []
+        all_palindromes.append(
+            splitted + [middle_num] + splitted[::-1])
+
+        if middle_num != 9:
+            all_palindromes.append(
+                splitted + [middle_num + 1] + splitted[::-1])
+
+        if middle_num != 0:
+            all_palindromes.append(
+                splitted + [middle_num - 1] + splitted[::-1])
+
+    return check_palindromes(all_palindromes, number)

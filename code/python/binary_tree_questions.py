@@ -106,6 +106,45 @@ class TreeNode:
             return self.is_tree_balanced(node.left) and\
                 self.is_tree_balanced(node.right)
 
+    def is_tree_BST(self, node):
+        """Check if a binary tree is BST or not. A BST satisfies the following
+        conditions:
+        • Left subtree contains only nodes with keys less than node.
+        • Right subtree contains only nodes with keys greater than node.
+        • Both the left and right subtrees must also be binary search trees.
+
+        The following code traverses the tree while keeping track of min and max
+        on each branch. Consider what happens in the following tree:
+                                    3
+                                  /   \
+                                 2     5
+                                / \
+                               1   4
+        We call the following recursive functions :
+            node(3, MIN, MAX)
+                node(2, MIN, 3)
+                    node(1, MIN, 2)
+                    node(4, 2, 3)  -----> Note the condition is broken here.
+                node(5, 3, MAX)
+
+        """
+        import sys
+
+        min_val = -sys.maxsize - 1
+        max_val = sys.maxsize
+
+        def is_valid_BST(node, min_val, max_val):
+
+            if node is None:
+                return True
+
+            return node.value > min_val and \
+                node.value < max_val and \
+                is_valid_BST(node.left, min_val, node.value) and \
+                is_valid_BST(node.right, node.value, max_val)
+
+        return is_valid_BST(node, min_val, max_val)
+
 
 def create_tree_from_sorted_array(array):
     """Q: Given a sorted (increasing order) array, write an algorithm to
