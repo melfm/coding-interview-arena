@@ -1,5 +1,36 @@
 # C++ Concepts
 
+## Copy Constructors
+- Defined to take as its argument a reference to the object from which to copy.
+```
+vector(const vector&);
+```
+- We pass by **const** reference because we don't want to modify out argument.
+
+## Copy Assignment
+- Can also copy by assignment, if not defined, the default assignment is used.
+```
+vector& vector::operator=(const vector& a);
+```
+
+## Shallow vs Deep Copy
+- ```Shallow copy``` copies a pointer so that the two pointers refer to the same object.
+- ```Deep copy``` copies the content of a pointer so that the two pointers refer to distinct objects.
+
+```
+// Example of shallow copy
+int* p = new int(77);
+int* q = p; // copy the pointer p
+*p = 88;    // change the value
+```
+
+```
+// Example of deep copy
+int* p = new int(77);
+int* q = new int(p*);  // allocate a new int then copy the value of p
+*p = 88;               // change the value of p, but not q
+```
+
 ## Templates
 - Allow function and classes to have generic type. This allows a function or a class to work on many different data types without being rewritten for each one.
 
@@ -35,8 +66,6 @@ As a rule of thumb: if you have a class with a **virtual** function, it needs a 
 - If it is a base class its derived class is likely to be allocated using **new**
 - If a derived class object is allocated using **new** and manipulated through a pointer to its base
     - Then it is likely to be **deleted** through a pointer to its base.
-
-Some Markdown text with <span style="color:blue">some *blue* text</span>.
 
 ### Virtual Base Class
 - Used in virtual inheritance, a way of preventing multiple instances of a given class appearing in an inheritance hierarchy.
@@ -74,13 +103,18 @@ d.Foo(); // no longer ambiguous
 ```
 
 ## Pointer vs Reference
-A variable which stores the address of another variable is called a pointer.
-1. A pointer can be reassigned, a reference cannot and must be assigned at initialization.
-2. A pointer has its own memory address and size on the stack (4 bytes on x86) whereas a reference shares the same memory address as the original variable. Can think of reference as another name for that variable.
-3. You can have pointers to pointers to pointers offering levels of indirection. Whereas references only offer one level of indirection.
-4. Pointers can be assigned *nullptr* directly, reference cannot.
-5. A pointer needs to be dereferenced with * to access the memory location it points to whereas a reference can be used directly. A pointer to a class/struct uses `->` to access its members whereas a reference uses `.`.
-6. Finally think of reference as a constant pointer.
+- A variable which stores the address of another variable is called a pointer.
+- Think of a reference as an automatically dereferenced immutable pointer or as an alternative name for an object.
+- A pointer has its own memory address and size on the stack (4 bytes on x86) whereas a reference shares the same memory address as the original variable. Can think of reference as another name for that variable.
+- Assignment to a pointer changes the pointer's value (not the pointed-to value).
+- To get a pointer you need to use **new** or **&**.
+    - A pointer needs to be dereferenced with * to access the memory location it points to whereas a reference can be used directly. A pointer to a class/struct uses `->` to access its members whereas a reference uses `.`.
+- To access an object pointed to by a pointer you use **\*\** or **[]**.
+- Assignment to a reference changes the value of the object referred to (not the reference itself)
+- You cannot make a reference to a different object after initialization, i.e. a pointer can be reassigned, a reference cannot and must be assigned at initialization.
+- You can have pointers to pointers to pointers offering levels of indirection. Whereas references only offer one level of indirection.
+- Pointers can be assigned *nullptr* directly, reference cannot. (Beware of null pointers)
+- Assignment of references does deep copy; assignment of pointers does not.
 
 ## Const pointers
 - Read backwards
