@@ -30,6 +30,14 @@ k = GetMax<int>(i, j);
 - Allows deleting a derived class object using a pointer to a base class (otherwise results to undefined behaviour)
 - Making the base class destructor virtual guarantees that the object of the derived class is destructed properly.
 
+As a rule of thumb: if you have a class with a **virtual** function, it needs a **virtual** destructor.
+- If a class has a **virtual** function it is likely to be used as a base class
+- If it is a base class its derived class is likely to be allocated using **new**
+- If a derived class object is allocated using **new** and manipulated through a pointer to its base
+    - Then it is likely to be **deleted** through a pointer to its base.
+
+Some Markdown text with <span style="color:blue">some *blue* text</span>.
+
 ### Virtual Base Class
 - Used in virtual inheritance, a way of preventing multiple instances of a given class appearing in an inheritance hierarchy.
 
@@ -105,6 +113,17 @@ then you *dereference* the pointer.
 - The address of a variable can be obtained by preceding the name of a variable
 with an ampersand sign (&).
 - & is the address-of operator, and can be read simply as "address of"
+
+## Memory allocation using new op
+- The ``new`` operator returns a pointer to the allocated memory.
+- A pointer value is the address of the first byte of the memory.
+- A pointer points to an object of a specified type.
+- A pointer does not know how many elements it points to.
+- Remember: Allowing assignment of pointers to different types would allow type error.
+
+## Deallocation
+- ``delete p`` frees the memory for an individual object allocated by ``new``.
+- ``delete[] p`` frees the memory for an array of objects.
 
 ## Mutable
 - Used to allow a particular data member of const object to be modified.
