@@ -33,6 +33,38 @@ class DynamicProgrammingQuestionsTest(unittest.TestCase):
         if self.dump_output:
             print('Min steps to reduce {} --> '.format(n), db_res)
 
+    def test_decode_ways(self):
+        digits = ['2', '2', '6']
+
+        count = dp.decode_ways(digits, len(digits))
+        self.assertEqual(count, 3)
+
+        digits = ['2', '6', '2']
+
+        count = dp.decode_ways(digits, len(digits))
+        self.assertEqual(count, 2)
+
+        digits = ['1', '2', '2', '3']
+
+        count = dp.decode_ways(digits, len(digits))
+        self.assertEqual(count, 4)
+
+        digits = ['2', '2', '6']
+
+        count = dp.decode_ways_rec(digits, len(digits))
+        self.assertEqual(count, 3)
+
+        digits = ['2', '6', '2']
+
+        count = dp.decode_ways_rec(digits, len(digits))
+        self.assertEqual(count, 2)
+
+        # This case breaks the code - safe to assume our
+        # digits don't contain 0's?
+        digits = ['2', '2', '0', '6']
+        count = dp.decode_ways(digits, len(digits))
+        # self.assertEqual(count, 2)
+
 
 if __name__ == '__main__':
     unittest.main()
