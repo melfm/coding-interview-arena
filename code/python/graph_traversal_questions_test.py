@@ -1,3 +1,4 @@
+import numpy as np
 import unittest
 
 import graph_traversal_questions as graph
@@ -5,7 +6,7 @@ import graph_traversal_questions as graph
 
 class GraphTraversalQuestionsTest(unittest.TestCase):
 
-    dump_output = True
+    dump_output = False
 
     @classmethod
     def setUpClass(cls):
@@ -83,6 +84,50 @@ class GraphTraversalQuestionsTest(unittest.TestCase):
         path_found = graph.path_exist(
             graph_data, 1, 3, 4, [], False, [])
         self.assertFalse(path_found)
+
+    def test_island_graph_dfs(self):
+
+        graph_mat =\
+            np.array([[1, 1, 0, 0, 0],
+                      [0, 1, 0, 0, 1],
+                      [1, 0, 0, 1, 1],
+                      [0, 0, 0, 0, 0],
+                      [1, 0, 1, 0, 1]])
+
+        row = len(graph_mat)
+        col = len(graph_mat[0])
+
+        test_graph = graph.IslandGraph(row, col, graph_mat)
+        num_islands = test_graph.count_islands()
+        self.assertEqual(num_islands, 5)
+
+        graph_mat =\
+            np.array([[1, 0, 0, 0, 1],
+                      [0, 0, 0, 0, 1],
+                      [0, 0, 0, 1, 1],
+                      [0, 0, 0, 0, 0],
+                      [1, 0, 0, 0, 1]])
+
+        row = len(graph_mat)
+        col = len(graph_mat[0])
+
+        test_graph = graph.IslandGraph(row, col, graph_mat)
+        num_islands = test_graph.count_islands()
+        self.assertEqual(num_islands, 4)
+
+        graph_mat =\
+            np.array([[1, 1, 1, 1, 1],
+                      [0, 0, 0, 0, 1],
+                      [0, 0, 0, 1, 1],
+                      [0, 0, 0, 0, 0],
+                      [0, 0, 0, 0, 0]])
+
+        row = len(graph_mat)
+        col = len(graph_mat[0])
+
+        test_graph = graph.IslandGraph(row, col, graph_mat)
+        num_islands = test_graph.count_islands()
+        self.assertEqual(num_islands, 1)
 
 
 if __name__ == '__main__':
