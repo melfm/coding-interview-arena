@@ -46,9 +46,6 @@ def sample_distribution(numbers, probabilities, num_samples):
     """Given a list of numbers and corresponding probabilities, sample
     'num_samples' numbers. Note that the probabilities sum to 1.
     """
-
-    # Generate a random num between 0 - 1
-    rand_prob = np.random.random_sample((1,))
     intervals = []
     intervals.append(probabilities[0])
     new_interval = probabilities[0]
@@ -61,6 +58,9 @@ def sample_distribution(numbers, probabilities, num_samples):
     new_numbers = []
     while counter <= num_samples:
         for i in range(len(intervals)):
+            # Generate a random num between 0 - 1
+            # i.e. flip a coin.
+            rand_prob = np.random.random_sample((1,))
             if rand_prob <= [intervals[i]]:
                 new_numbers.append(numbers[i])
                 counter += 1
