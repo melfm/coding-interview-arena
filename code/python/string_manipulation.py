@@ -379,3 +379,15 @@ def remove_str_mask_char_v2(input_str, str_mask):
             new_string += s
 
     return new_string
+
+def k_palindrome(input_str, k):
+    """
+    A k-palindrome is a string which transforms into a palindrome
+    on removing at most k characters.
+    Given a string and int K, print YES or NO
+    S can be large 20,000 characters
+    0<=k<=30
+    Ideally O(N*K) complexity. Edit-Distance algorithm without this
+    k removal, would be O(N^2).
+    """
+    pass
