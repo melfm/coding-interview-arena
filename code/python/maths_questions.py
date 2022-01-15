@@ -9,6 +9,7 @@ def divisible_by_r(m, n):
     """Q: Given two numbers m and n, write a method to return the first
     number r that is divisible by both - > Least common multiple
     """
+
     def gcd(m, n):
         if n == 0:
             return m
@@ -26,7 +27,7 @@ def generate_rand_7():
     Solution based on accept-reject algorithm.
     """
 
-    while(True):
+    while (True):
         # This generates a random number uniformly distributed between 1 and 24.
         # The first term is 5 times a rand num between 1 - 4, yielding {5, 10,
         # 15, 20}. The second is a rand num between 1 - 4.
@@ -60,7 +61,7 @@ def sample_distribution(numbers, probabilities, num_samples):
         for i in range(len(intervals)):
             # Generate a random num between 0 - 1
             # i.e. flip a coin.
-            rand_prob = np.random.random_sample((1,))
+            rand_prob = np.random.random_sample((1, ))
             if rand_prob <= [intervals[i]]:
                 new_numbers.append(numbers[i])
                 counter += 1
@@ -84,8 +85,8 @@ def factorial_trailing_zero(n):
 
     count = 0
     idx = 5
-    while(n/idx >= 1):
-        count += math.floor(n/idx)
+    while (n / idx >= 1):
+        count += math.floor(n / idx)
         idx *= 5
 
     return count
@@ -122,9 +123,10 @@ def closest_palindrome_number(number):
     if check_all_9(num_list):
         return number + 2
 
-    mid_point = int(num_size/2)
+    mid_point = int(num_size / 2)
 
-    def list_to_int(nums): return int(''.join(str(i) for i in nums))
+    def list_to_int(nums):
+        return int(''.join(str(i) for i in nums))
 
     def check_palindromes(all_palindromes, number):
         min_found = sys.maxsize
@@ -155,7 +157,7 @@ def closest_palindrome_number(number):
     if num_size % 2 == 0:
 
         # Even number
-        splitted = num_list[0: mid_point]
+        splitted = num_list[0:mid_point]
         mirrored = splitted + splitted[::-1]
 
         all_palindromes = []
@@ -164,30 +166,135 @@ def closest_palindrome_number(number):
         if splitted[-1] != 9:
             split_add_one = list(splitted)
             split_add_one[-1] += 1
-            split_add_one = all_palindromes.append(
-                split_add_one + split_add_one[::-1])
+            split_add_one = all_palindromes.append(split_add_one +
+                                                   split_add_one[::-1])
 
         if splitted[-1] != 0:
             split_sub_one = list(splitted)
             split_sub_one[-1] -= 1
-            split_sub_one = all_palindromes.append(
-                split_sub_one + split_sub_one[::-1])
+            split_sub_one = all_palindromes.append(split_sub_one +
+                                                   split_sub_one[::-1])
 
     else:
         # Odd number
-        splitted = num_list[0: mid_point]
+        splitted = num_list[0:mid_point]
         middle_num = num_list[mid_point]
 
         all_palindromes = []
-        all_palindromes.append(
-            splitted + [middle_num] + splitted[::-1])
+        all_palindromes.append(splitted + [middle_num] + splitted[::-1])
 
         if middle_num != 9:
-            all_palindromes.append(
-                splitted + [middle_num + 1] + splitted[::-1])
+            all_palindromes.append(splitted + [middle_num + 1] +
+                                   splitted[::-1])
 
         if middle_num != 0:
-            all_palindromes.append(
-                splitted + [middle_num - 1] + splitted[::-1])
+            all_palindromes.append(splitted + [middle_num - 1] +
+                                   splitted[::-1])
 
     return check_palindromes(all_palindromes, number)
+
+
+"""Orientation of 3 ordered points.
+Orientation of an ordered triplet of points in the plane can be
+    - counterclockwise
+    - clockwise
+    - collinear
+"""
+
+
+class Point:
+
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def print_coord(self):
+        print('[', self.x, ',', self.y, ']')
+
+
+def orientation3ps(p1, p2, p3):
+    # Returns the following values:
+    # 0 : Collinear points
+    # 1 : Clockwise points
+    # 2 : Counterclockwise
+
+    # This is done based on a formula comparing the slope
+    # angles between points
+
+    val = (float(p2.y - p1.y) * (p3.x - p2.x)) - \
+           (float(p2.x - p1.x) * (p3.y - p2.y))
+
+    if (val > 0):
+        # Clockwise orientation
+        return 1
+    elif (val < 0):
+        # Counterclockwise orientation
+        return 2
+    else:
+        # Collinear orientation
+        return 0
+
+
+"""
+Convex Hull Question.
+Given a set of points in the plane, the convex hull of the
+set is the smallest convex polygon that contains all the
+points of it. Jarvis's Algorithm or Wrapping.
+
+Step 1) Initialize p as leftmost point.
+Step 2) The next point q is the point such that the triplet
+    (p, q, r) is counterclockwise for any other point r.
+    To find this initialize q as next point, traverse thru
+    all the points. For any point i, if its more counterclockwise
+    i.e. orientation(p, i, q) is counterclockwise then update
+    q as i. Final value of q is going to be the most
+    counterclockwise point.
+"""
+
+
+def left_index(points):
+    min_p = 0
+
+    for i in range(len(points)):
+        point = points[i]
+        if point.x < points[min_p].x:
+            min_p = i
+        elif point.x == points[min_p].x:
+            # now check Y
+            if point.y < points[min_p].y:
+                min_p = i
+    return min_p
+
+
+def convex_hull(points, n):
+
+    # Need at least 3 points
+    if n < 3: return
+
+    left_p = left_index(points)
+
+    convex_hull_ps = []
+
+    # Start from leftmost keep moving counterclockwise.
+    p = left_p
+    q = 0
+
+    while (True):
+        convex_hull_ps.append(p)
+        # Keep track of last visited most counterclockwise
+        q = (p + 1) % n
+
+        for i in range(n):
+            if (orientation3ps(points[p], points[i], points[q]) == 2):
+                q = i
+
+        # q is now the most counterclockwise, lets move on to the
+        # next set of points
+        p = q
+
+        # Back to the first point
+        if (p == left_p): break
+
+    print('Convex hull points: ')
+    for i in convex_hull_ps:
+        print(points[i].x, points[i].y)
