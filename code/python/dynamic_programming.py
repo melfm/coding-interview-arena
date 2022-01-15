@@ -8,7 +8,7 @@ def get_min_steps_mem(n):
     - Else decrement n by 1.
     Technique: Memoization"""
 
-    steps = np.full(n+1, -1)
+    steps = np.full(n + 1, -1)
     return get_min_steps(n, steps)
 
 
@@ -29,10 +29,10 @@ def get_min_steps(n, steps):
     res = get_min_steps(n - 1, steps)
 
     if n % 2 == 0:
-        res = min(res, get_min_steps(int(n/2), steps))
+        res = min(res, get_min_steps(int(n / 2), steps))
 
     if n % 3 == 0:
-        res = min(res, get_min_steps(int(n/3), steps))
+        res = min(res, get_min_steps(int(n / 3), steps))
 
     # Increment the step
     steps[n] = 1 + res
@@ -46,7 +46,7 @@ def fibonacci_dp_recursive(n, fib_array):
     if n < 0:
         print('Invalid input!')
 
-    elif (n+1) <= len(fib_array):
+    elif (n + 1) <= len(fib_array):
         print(fib_array)
         return fib_array[n]
 
@@ -92,28 +92,29 @@ def decode_ways(digits, n):
 
     # n+1 because we will store the final counter in the end once we have
     # seen all the digits
-    count_table = [0] * (n+1)
+    count_table = [0] * (n + 1)
     # Given our def, we can only use two digits to represent an alphabet
     # so lets set the first two counters to 1
     count_table[0] = 1
     count_table[1] = 1
 
     # Lets continue our iteration from 3rd position
-    for i in range(2, n+1):
+    for i in range(2, n + 1):
         count_table[i] = 0
         # If our neighbouring digit to the left is greater than 0
         # we can form a valid digit so we will set our current
         # counter to that
-        if (digits[i-1] > '0'):
+        if (digits[i - 1] > '0'):
             # Think of this as copying over what we have seen so far
-            count_table[i] = count_table[i-1]
+            count_table[i] = count_table[i - 1]
 
         # Previously we took into account for single digits
         # Lets use some prior knowledge, we can only form a digit starting
         # with 1, or 2 something, but something must be less than 7!
         # We are gonna look back two steps before to see if there was a two
         # digit possibility.
-        if (digits[i-2] == '1' or (digits[i-2] == '2' and digits[i-1] < '7')):
+        if (digits[i - 2] == '1'
+                or (digits[i - 2] == '2' and digits[i - 1] < '7')):
             # Now we accumulate
             # This is a bit confusing, maybe you can just accumulate +=1
             # but this is more intuitive in the recursive version where you
@@ -121,7 +122,7 @@ def decode_ways(digits, n):
             # Another way to think about this, is that we accumulate the count
             # of the digit to the left, which would be 1 or 2, and not the
             # count of the outer digit which may not form another valid digit.
-            count_table[i] += count_table[i-2]
+            count_table[i] += count_table[i - 2]
 
     return count_table[n]
 
@@ -143,10 +144,74 @@ def decode_ways_rec(digits, n):
         return 1
 
     count = 0
-    if digits[n-1] > '0':
-        count = decode_ways_rec(digits, n-1)
+    if digits[n - 1] > '0':
+        count = decode_ways_rec(digits, n - 1)
 
-    if (digits[n-2] == '1' or (digits[n-2] == '2' and digits[n-1] < '7')):
-        count += decode_ways_rec(digits, n-2)
+    if (digits[n - 2] == '1'
+            or (digits[n - 2] == '2' and digits[n - 1] < '7')):
+        count += decode_ways_rec(digits, n - 2)
 
     return count
+
+
+def alive_probs_check(x, y, n, step, map):
+
+    if (step == 0):
+        return 1.0
+
+    key = str(x) + "," + str(y) + "," + str(step)
+    if key in map.keys():
+        return map[key]
+
+    probability = 0.0
+
+    if (x >= 0):
+        probability += 0.25 * alive_probs_check(x - 1, y, n, step - 1, map)
+    if x < (n - 1):
+        probability += 0.25 * alive_probs_check(x + 1, y, n, step - 1, map)
+    if (y >= 0):
+        probability += 0.25 * alive_probs_check(x, y - 1, n, step - 1, map)
+    if y < (n - 1):
+        probability += 0.25 * alive_probs_check(x, y + 1, n, step - 1, map)
+
+    map[key] = probability
+
+    # print('Current map : ', len(map))
+    # for item in map:
+    #     print(item)
+
+    return probability
+
+
+def alive_probability(x, y, N):
+    """
+    There is an island represented by square matrix NxN.
+    A person is standing at a given location (x,y).
+    He can move one step up/down/left/right with equal
+    probability. If he steps outside of the grid he dies.
+    What's the probability that he is alive after n steps?
+
+    Probability of locations of a 4x4 matrix, after 1 step:
+
+        -------------------------------------
+        |        |        |        |        |
+        |  0.50  |  0.75  |  0.75  |  0.50  |
+        |        |        |        |        |
+        -------------------------------------
+        |        |        |        |        |
+        |  0.75  |  1.00  |  1.00  |  0.75  |
+        |        |        |        |        |
+        -------------------------------------
+        |        |        |        |        |
+        |  0.75  |  1.00  |  1.00  |  0.75  |
+        |        |        |        |        |
+        -------------------------------------
+        |        |        |        |        |
+        |  0.50  |  0.75  |  0.75  |  0.50  |
+        |        |        |        |        |
+        -------------------------------------
+    """
+
+    if (x < 0 or x > (N - 1) or y < 0 or y > (N - 1) or N < 1):
+        return 0.0
+    return alive_probs_check(x, y, N, N, {})
