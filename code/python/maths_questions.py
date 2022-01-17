@@ -299,3 +299,50 @@ def convex_hull(points, n):
     print('Convex hull points: ')
     for i in convex_hull_ps:
         print(points[i].x, points[i].y)
+
+
+def look_and_say(n):
+    """
+    Implement a function that outputs the Look and Say sequence.
+    1
+    11
+    21
+    1211
+    111221
+    312211
+    13112221
+    1113213211
+    31131211131221
+    13211311123113112211
+    """
+
+    # Base cases
+    if (n == 1):
+        return "1"
+    if (n == 2):
+        return "11"
+
+    prev_term = "11"
+
+    for i in range(3, n + 1):
+        # Add a dummy character to allow extra iteration
+        # without this, your very first loop will exit
+        prev_term += '$'
+        seq_end = len(prev_term)
+
+        count = 1
+        seq_n = ''
+
+        for j in range(1, seq_end):
+            if (prev_term[j] != prev_term[j - 1]):
+                seq_n += str(count)
+                seq_n += prev_term[j - 1]
+                count = 1
+            else:
+                count += 1
+
+        print('\n LNS: ', seq_n)
+        prev_term = seq_n
+
+    print('\n')
+    return prev_term

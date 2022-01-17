@@ -111,6 +111,10 @@ class MathsQuestionsTest(unittest.TestCase):
         # answer = [[0,0], [3,0], [5,5], [3,7]]
         maths_q.convex_hull(points, len(points))
 
+    def test_look_and_say(self):
+
+        maths_q.look_and_say(5)
+
 
 if __name__ == '__main__':
     unittest.main()
