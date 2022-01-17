@@ -282,6 +282,7 @@ def convex_hull(points, n):
     while (True):
         convex_hull_ps.append(p)
         # Keep track of last visited most counterclockwise
+        # mod n stops it from going outside of bound of set
         q = (p + 1) % n
 
         for i in range(n):

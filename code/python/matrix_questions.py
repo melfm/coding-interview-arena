@@ -101,10 +101,7 @@ def map_matrix_island_color_recursive(matrix):
             if visit_map[i][j] == 0:
                 continue
             num_of_visited_countries += 1
-            check_neighbourhood(matrix[i][j],
-                                visit_map,
-                                matrix,
-                                i, j)
+            check_neighbourhood(matrix[i][j], visit_map, matrix, i, j)
     return num_of_visited_countries
 
 
@@ -127,8 +124,9 @@ def map_matrix_island_string_version(row, col, input_string):
 
     # Break-up the string into chunks of size row and col
     chunks, chunk_size = len(string_list), col
-    str_matrix = [string_list[i: i + chunk_size]
-                  for i in range(0, chunks, chunk_size)]
+    str_matrix = [
+        string_list[i:i + chunk_size] for i in range(0, chunks, chunk_size)
+    ]
 
     matrix = np.zeros((row, col))
 
@@ -153,10 +151,7 @@ def map_matrix_island_string_version(row, col, input_string):
             # Only count X's
             if matrix[i][j] != 0:
                 num_of_visited_x += 1
-            check_neighbourhood(matrix[i][j],
-                                visit_map,
-                                matrix,
-                                i, j)
+            check_neighbourhood(matrix[i][j], visit_map, matrix, i, j)
     return num_of_visited_x
 
 
@@ -238,5 +233,63 @@ def set_matrix_row_col_all_zeros(matrix):
         for j in range(col_length):
             if (rows[i] == 1 or cols[j] == 1):
                 matrix[i][j] = 0
+
+    return matrix
+
+
+def isInvalidMatrixSpiral(matrix, r, c):
+    mat_len = matrix.shape[0]
+    if r < 0 or c < 0 or r >= mat_len or c >= mat_len or matrix[r][c] != 0:
+        return True
+    return False
+
+
+def spiral(n):
+    """
+    Find the pattern and implement the function.
+    input = 3
+    1 2 3
+    8 9 4
+    7 6 5
+
+    input = 4
+    01 02 03 04
+    12 13 14 05
+    11 16 15 06
+    10 09 08 07
+
+    input = 8
+    1 2 3 4 5 6 7 8
+    28 29 30 31 32 33 34 9
+    27 48 49 50 51 52 35 10
+    26 47 60 61 62 53 36 11
+    25 46 59 64 63 54 37 12
+    24 45 58 57 56 55 38 13
+    23 44 43 42 41 40 39 14
+    22 21 20 19 18 17 16 15
+    """
+
+    dc = [1, 0, -1, 0]
+    dr = [0, 1, 0, -1]
+    matrix = np.zeros((n, n))
+
+    dir = 0
+    val = 1
+    r = 0
+    c = 0
+    limit = n * n
+
+    while (val <= limit):
+        matrix[r][c] = val
+        r += dr[dir]
+        c += dc[dir]
+
+        if (isInvalidMatrixSpiral(matrix, r, c)):
+            r -= dr[dir]
+            c -= dc[dir]
+            dir = (dir + 1) % 4
+            r += dr[dir]
+            c += dc[dir]
+        val += 1
 
     return matrix

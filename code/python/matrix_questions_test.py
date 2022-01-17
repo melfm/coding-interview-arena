@@ -127,6 +127,11 @@ class MatrixQuestionsTest(unittest.TestCase):
             3, 3, '.........')
         self.assertEqual(connected_xs, 0)
 
+    def test_spiral(self):
+
+        out_mat = matrix_q.spiral(4)
+        print('Spiral Matrix \n', out_mat)
+
 
 if __name__ == '__main__':
     unittest.main()
