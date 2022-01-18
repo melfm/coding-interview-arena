@@ -12,7 +12,7 @@ class MatrixQuestionsTest(unittest.TestCase):
 
         if self.dump_output:
 
-            dummy_matrix = np.random.rand(5, 5)
+            dummy_matrix = np.round(np.random.rand(5, 5), 2)
             print('Original matrix')
             print(dummy_matrix)
 
@@ -32,7 +32,7 @@ class MatrixQuestionsTest(unittest.TestCase):
 
         if self.dump_output:
 
-            dummy_matrix = np.random.rand(5, 5)
+            dummy_matrix = np.round(np.random.rand(5, 5), 2)
             print('Original matrix')
             print(dummy_matrix)
 
