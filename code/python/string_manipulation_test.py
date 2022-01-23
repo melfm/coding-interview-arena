@@ -19,8 +19,7 @@ class StringManipulationTest(unittest.TestCase):
 
         reversed_str = str_manip.reverse_string_py(input_str)
 
-        self.assertEqual(str_manip.reverse_string(input_str),
-                         exp_str)
+        self.assertEqual(str_manip.reverse_string(input_str), exp_str)
         if self.dump_output:
             print('Original string -> {}'.format(input_str))
             print('Reversed string -> ', reversed_str)
@@ -32,16 +31,16 @@ class StringManipulationTest(unittest.TestCase):
         word = 'Mum'
         palin_answer = str_manip.is_palindrome(word)
         if self.dump_output:
-            print('Is {} palindrome?'.format(word),
-                  ' -> Answer: ', palin_answer)
+            print('Is {} palindrome?'.format(word), ' -> Answer: ',
+                  palin_answer)
 
         self.assertTrue(palin_answer)
 
         word = 'Egg'
         palin_answer = str_manip.is_palindrome(word)
         if self.dump_output:
-            print('Is {} palindrome?'.format(word),
-                  ' -> Answer: ', palin_answer)
+            print('Is {} palindrome?'.format(word), ' -> Answer: ',
+                  palin_answer)
 
         self.assertFalse(palin_answer)
 
@@ -50,8 +49,8 @@ class StringManipulationTest(unittest.TestCase):
         exp_subset = 'xoox'
         palin_subset = str_manip.return_palindrome_subset(word)
         if self.dump_output:
-            print('Palindrome subset of {}:'.format(word),
-                  '-> Answer ', palin_subset)
+            print('Palindrome subset of {}:'.format(word), '-> Answer ',
+                  palin_subset)
 
         self.assertEqual(palin_subset, exp_subset)
 
@@ -97,17 +96,17 @@ class StringManipulationTest(unittest.TestCase):
 
         answer = str_manip.breakup_sentence(test_str, 20)
 
-        np.testing.assert_array_equal(np.asarray(answer),
-                                      np.asarray(exp_str))
+        np.testing.assert_array_equal(np.asarray(answer), np.asarray(exp_str))
 
         test_str = 'Hey blahblahblah-long named, your uber is arriving now'
 
-        exp_str = ['Hey', 'blahblahbl', 'ah-long', 'named, your uber',
-                   'is arriving', 'now']
+        exp_str = [
+            'Hey', 'blahblahbl', 'ah-long', 'named, your uber', 'is arriving',
+            'now'
+        ]
 
         answer = str_manip.breakup_sentence(test_str, 10)
-        np.testing.assert_array_equal(np.asarray(answer),
-                                      np.asarray(exp_str))
+        np.testing.assert_array_equal(np.asarray(answer), np.asarray(exp_str))
 
     def test_find_matching_brackets(self):
 
@@ -140,7 +139,7 @@ class StringManipulationTest(unittest.TestCase):
         input_string = ['a', 'b', 'c']
         exp_combinations = ['a', 'ab', 'abc', 'ac', 'b', 'bc', 'c']
         combinations = str_manip.combine_and_permute_order_free_str(
-                                                                    input_string)
+            input_string)
         self.assertEqual(combinations, exp_combinations)
 
     def test_remove_str_mask_char(self):
@@ -171,11 +170,10 @@ class StringManipulationTest(unittest.TestCase):
         if self.test_runtime:
 
             count = 100000
-            random_str = ''.join(random.choice(string.ascii_lowercase)
-                                 for x in range(count))
+            random_str = ''.join(
+                random.choice(string.ascii_lowercase) for x in range(count))
             random_mask = ''.join(
-                random.choice(
-                    string.ascii_lowercase) for x in range(10))
+                random.choice(string.ascii_lowercase) for x in range(10))
 
             start = time.time()
             output = str_manip.remove_str_mask_char(random_str, random_mask)
@@ -184,6 +182,47 @@ class StringManipulationTest(unittest.TestCase):
             start = time.time()
             output = str_manip.remove_str_mask_char_v2(random_str, random_mask)
             print('\nremove_str_mask_char_v2 took ', time.time() - start)
+
+    def test_isEditDistanceOne(self):
+        str1 = "cat"
+        str2 = "cats"
+
+        output = str_manip.isEditDistanceOne(str1, str2)
+        self.assertTrue(output)
+
+        str1 = "cat"
+        str2 = "at"
+
+        output = str_manip.isEditDistanceOne(str1, str2)
+        self.assertTrue(output)
+
+        str1 = "cat"
+        str2 = "dog"
+        output = str_manip.isEditDistanceOne(str1, str2)
+        self.assertFalse(output)
+
+        str1 = "cat"
+        str2 = "cut"
+
+        output = str_manip.isEditDistanceOne(str1, str2)
+        self.assertTrue(output)
+
+    def test_k_palindrome(self):
+
+        input_str = "abxa"
+        k = 1
+        output = str_manip.k_palindrome(input_str, k)
+        self.assertTrue(output)
+
+        input_str = "abdxa"
+        k = 1
+        output = str_manip.k_palindrome(input_str, k)
+        self.assertFalse(output)
+
+        input_str = "abxwza"
+        k = 3
+        output = str_manip.k_palindrome(input_str, k)
+        self.assertTrue(output)
 
 
 if __name__ == '__main__':

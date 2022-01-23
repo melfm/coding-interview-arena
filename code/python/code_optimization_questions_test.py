@@ -2,7 +2,7 @@ import time
 import unittest
 import numpy as np
 
-import optimization_questions as opt_q
+import code_optimization_questions as opt_q
 
 
 class OptimizationQTest(unittest.TestCase):

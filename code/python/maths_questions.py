@@ -1,3 +1,4 @@
+#!/bin/python3
 """Maths & Probability Questions."""
 
 import math
@@ -346,3 +347,42 @@ def look_and_say(n):
 
     print('\n')
     return prev_term
+
+
+def get_key_from_value(d, val):
+    keys = [k for k, v in d.items() if v == val]
+    if keys:
+        return keys[0]
+    return None
+
+
+def ice_cream_parlor(m, cost):
+
+    cost_map = {}
+    index_x = index_y = None
+
+    for i in range(len(cost)):
+
+        x = cost[i]
+        y_sol = -x + m
+
+        if y_sol in cost_map.values():
+            index_x = i
+            index_y = get_key_from_value(cost_map, y_sol)
+            output = [index_x, index_y]
+            return output
+        else:
+            # If the solution doesn't already exist
+            # check for multiples of y
+            for any_y in cost_map.values():
+                if y_sol > 0 and y_sol % any_y == 0:
+                    index_x = i
+                    index_y = get_key_from_value(cost_map, any_y)
+                    output = [index_x, index_y]
+                    return output
+
+        cost_map.update({i: x})
+
+    # Solution not found
+    output = [index_x, index_y]
+    return output

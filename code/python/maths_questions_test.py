@@ -115,6 +115,28 @@ class MathsQuestionsTest(unittest.TestCase):
 
         maths_q.look_and_say(5)
 
+    def test_ice_cream_parlor(self):
+
+        m = 4
+        cost = [1, 2, 3, 5]
+        output = maths_q.ice_cream_parlor(m, cost)
+        exp_output = [1, 0]
+
+        self.assertListEqual(sorted(output), sorted(exp_output))
+
+        m = 4
+        cost = [1, 6, 4, 5, 2]
+        output = maths_q.ice_cream_parlor(m, cost)
+        exp_output = [4, 0]
+        self.assertListEqual(sorted(output), sorted(exp_output))
+
+        m = 4
+        cost = [4, 6, 4, 1, 2]
+        output = maths_q.ice_cream_parlor(m, cost)
+        exp_output = [4, 3]
+        self.assertListEqual(sorted(output), sorted(exp_output))
+
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -82,7 +82,7 @@ class LinkedList:
         return False
 
     def detect_cycle_v2(self):
-        """Floyd’s Cycle-Finding algorithm."""
+        """Floyd's Cycle-Finding algorithm."""
 
         slow_pointer = self.head
         fast_pointer = self.head

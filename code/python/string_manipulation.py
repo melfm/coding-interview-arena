@@ -38,7 +38,7 @@ def is_palindrome(word):
 
     is_palin = True
 
-    while(p0 < p1):
+    while (p0 < p1):
 
         if word[p0].lower() != word[p1].lower():
             is_palin = False
@@ -60,7 +60,7 @@ def return_palindrome_subset(word):
     beg_w = []
     end_w = []
 
-    while(p0 < p1):
+    while (p0 < p1):
 
         if word[p0].lower() != word[p1].lower():
 
@@ -199,8 +199,10 @@ def breakup_sentence(input_string, char_limit):
 
         if word_size > char_limit:
             # Need to break the string down further
-            splitted_words = [current_word[i:i+char_limit]
-                              for i in range(0, len(current_word), char_limit)]
+            splitted_words = [
+                current_word[i:i + char_limit]
+                for i in range(0, len(current_word), char_limit)
+            ]
 
             splitted_string[i] = splitted_words
             flattened = flatten(splitted_string)
@@ -314,8 +316,7 @@ def combine_and_permute(str_list):
         # list(itertools.permutations(data))
         permute(list(prefix), 0, perm_combs)
         for i in range(0, len(data)):
-            combinate(prefix + data[i],
-                      data[i + 1:], perm_combs)
+            combinate(prefix + data[i], data[i + 1:], perm_combs)
 
     perm_combs = []
     combinate("", str_list, perm_combs)
@@ -380,6 +381,73 @@ def remove_str_mask_char_v2(input_str, str_mask):
 
     return new_string
 
+
+def isEditDistanceOne(str1, str2):
+
+    m = len(str1)
+    n = len(str2)
+
+    if abs(m - n) > 1: return False
+
+    edit_count = 0
+
+    p1 = 0
+    p2 = 0
+
+    while (p1 < m and p2 < n):
+
+        if str1[p1] != str2[p2]:
+            if edit_count == 1:
+                return False
+
+            # Decide how to increment each pointer
+            if m < n:
+                # One string is larger, move on that one
+                # maybe you can replace one character
+                p2 += 1
+            if m > n:
+                p1 += 1
+            else:
+                # Need to keep going synchronously and
+                # count the number of differences
+                p1 += 1
+                p2 += 1
+
+            # Already seen a conflict to increment this
+            edit_count += 1
+        else:
+            p1 += 1
+            p2 += 1
+
+    # We might have missed a last character in one of the strings
+    if p1 < m or p2 < n:
+        edit_count += 1
+
+    return edit_count == 1
+
+
+def k_palindrome_rec(str, str_rev, m, n):
+
+    # If first string is empty, we need to remove
+    # all characters from the second string
+    if m == 0: return n
+
+    # The other way round of above.
+    if n == 0: return m
+
+    # If last two characters are the same, ignore the last
+    # characters and get count for remaining strings
+    if str[m - 1] == str_rev[n - 1]:
+        return k_palindrome_rec(str, str_rev, m - 1, n - 1)
+
+    # If they are not the same, remove from both
+    # and take the min op.
+    res = 1 + min(k_palindrome_rec(str, str_rev, m - 1, n),
+                  (k_palindrome_rec(str, str_rev, m, n - 1)))
+
+    return res
+
+
 def k_palindrome(input_str, k):
     """
     A k-palindrome is a string which transforms into a palindrome
@@ -387,7 +455,11 @@ def k_palindrome(input_str, k):
     Given a string and int K, print YES or NO
     S can be large 20,000 characters
     0<=k<=30
+    The time complexity of this sol exponential.
+    In worst case, we may end up doing O(2n) operations.
     Ideally O(N*K) complexity. Edit-Distance algorithm without this
     k removal, would be O(N^2).
     """
-    pass
+    reversed_str = input_str[::-1]
+    l = len(input_str)
+    return (k_palindrome_rec(input_str, reversed_str, l, l) <= k * 2)
