@@ -10,20 +10,35 @@ class GraphTraversalQuestionsTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.graph_one = {'A': ['B', 'C', 'E'],
-                         'B': ['A', 'D', 'E'],
-                         'C': ['A', 'F', 'G'],
-                         'D': ['B'],
-                         'E': ['A', 'B', 'D'],
-                         'F': ['C'],
-                         'G': ['C']}
+        cls.graph_one = {
+            'A': ['B', 'C', 'E'],
+            'B': ['A', 'D', 'E'],
+            'C': ['A', 'F', 'G'],
+            'D': ['B'],
+            'E': ['A', 'B', 'D'],
+            'F': ['C'],
+            'G': ['C']
+        }
 
-        cls.graph_two = {'A': ['B', 'C'],
-                         'B': ['A', 'D', 'E'],
-                         'C': ['A', 'F'],
-                         'D': ['B'],
-                         'E': ['B', 'F'],
-                         'F': ['C', 'E']}
+        cls.graph_two = {
+            'A': ['B', 'C'],
+            'B': ['A', 'D', 'E'],
+            'C': ['A', 'F'],
+            'D': ['B'],
+            'E': ['B', 'F'],
+            'F': ['C', 'E']
+        }
+
+        cls.graph_three = {'A': ['B', 'C'], 'B': ['A'], 'C': ['A']}
+
+        cls.graph_four = {
+            'A': ['B', 'C'],
+            'B': ['A', 'D'],
+            'C': ['A', 'F'],
+            'D': ['B'],
+            'F': ['C', 'G'],
+            'G': ['F']
+        }
 
     def test_bfs(self):
 
@@ -71,18 +86,14 @@ class GraphTraversalQuestionsTest(unittest.TestCase):
 
     def test_path_exist(self):
 
-        graph_data = {1: [2, 3],
-                      2: [4, 5, 6],
-                      3: [7, 8, 9],
-                      8: [10]}
+        graph_data = {1: [2, 3], 2: [4, 5, 6], 3: [7, 8, 9], 8: [10]}
 
         path_found = graph.path_exist(graph_data, 1, 1, 6)
         if self.dump_output:
             print('Path found.')
         self.assertTrue(path_found[0])
 
-        path_found = graph.path_exist(
-            graph_data, 1, 3, 4, [], False, [])
+        path_found = graph.path_exist(graph_data, 1, 3, 4, [], False, [])
         self.assertFalse(path_found)
 
     def test_island_graph_dfs(self):
@@ -128,6 +139,18 @@ class GraphTraversalQuestionsTest(unittest.TestCase):
         test_graph = graph.IslandGraph(row, col, graph_mat)
         num_islands = test_graph.count_islands()
         self.assertEqual(num_islands, 1)
+
+    def test_bfs_shortest_distance(self):
+
+        distances = graph.bfs_shortest_distance(self.graph_three, 'A')
+        exp_distances = [0, 6, 6]
+
+        self.assertEqual(distances, exp_distances)
+
+        distances = graph.bfs_shortest_distance(self.graph_four, 'A')
+
+        exp_distances = [0, 6, 6, 12, 12, 18]
+        self.assertEqual(distances, exp_distances)
 
 
 if __name__ == '__main__':

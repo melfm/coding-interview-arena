@@ -50,8 +50,12 @@ def bfs(graph, start_node):
     return visited
 
 
-def path_exist(graph, start_node, node_a, node_b,
-               visited=[], first_node_found=False,
+def path_exist(graph,
+               start_node,
+               node_a,
+               node_b,
+               visited=[],
+               first_node_found=False,
                path_found_list=[]):
     """ Q: You are given a network dataset, composed of nodes
     and one-directional links. Check whether a route exists between
@@ -92,9 +96,8 @@ def path_exist(graph, start_node, node_a, node_b,
                         path_found_list.append(path_found)
 
                 if current_node in graph:
-                    path_exist(graph, current_node, node_a, node_b,
-                               visited, first_node_found,
-                               path_found_list)
+                    path_exist(graph, current_node, node_a, node_b, visited,
+                               first_node_found, path_found_list)
 
     return path_found_list
 
@@ -205,7 +208,29 @@ class IslandGraph:
             for j in range(0, self.col):
                 if visit_map[i][j] == 1:
                     continue
-                visit_map, num_of_islands = self.dfs_search(visit_map,
-                                                            i, j)
+                visit_map, num_of_islands = self.dfs_search(visit_map, i, j)
                 num_of_islands_total += num_of_islands
         return num_of_islands_total
+
+
+def bfs_shortest_distance(graph, start_node):
+    """Breadth-first search with the added node distance"""
+
+    visited = []
+    queue = [start_node]
+    distances = {start_node: 0}
+
+    while queue:
+        node = queue.pop(0)
+        if node not in visited:
+            visited.append(node)
+            neighbors = graph[node]
+
+            for neighbor in neighbors:
+                if neighbor not in distances:
+                    distances[neighbor] = distances[node] + 6
+
+                queue.append(neighbor)
+
+    print('Distances ', distances)
+    return [*distances.values()]
