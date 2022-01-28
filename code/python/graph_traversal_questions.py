@@ -213,7 +213,7 @@ class IslandGraph:
         return num_of_islands_total
 
 
-def bfs_shortest_distance(graph, start_node):
+def bfs_node_distance(graph, start_node):
     """Breadth-first search with the added node distance"""
 
     visited = []
@@ -234,3 +234,66 @@ def bfs_shortest_distance(graph, start_node):
 
     print('Distances ', distances)
     return [*distances.values()]
+
+
+def snakes_and_ladder(board, N):
+    """
+    Given a snake and ladder board, find the minimum number of dice
+    throws required to reach the destination X.
+    "If I can always roll the die to whatever number I want,
+    what would be the least number of rolls to reach the destination?"
+
+    Construct a graph representation of board replacing snakes and
+    ladder positions with where in the graph it takes you. Then
+    do a BFS search to find the shortest path in the graph.
+    Note that with this method, you only pick the forward moves i.e.
+    the ladder moves and jump to those.
+    """
+
+    class Graph:
+
+        def __init__(self, v=0, dist=0):
+            self.v = v
+            self.dist = dist
+
+    visited = [False] * N
+    queue = []
+    visited[0] = True
+    queue.append(Graph(0, 0))
+
+    while queue:
+        node = queue.pop(0)
+        vertex = node.v
+
+        if vertex == N - 1:
+            break
+
+        j = vertex + 1
+
+        while (j <= vertex + 6 and j < N):
+
+            if visited[j] == False:
+
+                new_node = Graph()
+                new_node.dist = node.dist + 1
+
+                # This logic seems to work for the test example
+                # but it feels like its missing something i.e.
+                # how do you not go back when you see a snake loc.
+                # If you haven't visited it, you always update it to
+                # board[j] without considering whether its a ladder
+                # or a snake ? Snake node will increase your distance
+                # so it wont be the minimum path? Perhaps write a test
+                # example that causes this.
+                if board[j] != -1:
+                    new_node.v = board[j]
+
+                else:
+                    new_node.v = j
+
+                queue.append(new_node)
+                visited[j] = True
+
+            j += 1
+
+    return node.dist

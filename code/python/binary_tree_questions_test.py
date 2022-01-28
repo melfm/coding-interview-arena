@@ -23,13 +23,11 @@ class BinaryTreeQuestionTest(unittest.TestCase):
     def test_in_order_traversal(self):
 
         all_children = []
-        self.root.traverse_inorder(self.root,
-                                   all_children)
+        self.root.traverse_inorder(self.root, all_children)
 
         exp_child_values = [4, 2, 5, 1, 6, 3, 7]
 
-        self.assertEqual(all_children,
-                         exp_child_values)
+        self.assertEqual(all_children, exp_child_values)
 
         if self.dump_output:
             print(all_children)
@@ -37,13 +35,11 @@ class BinaryTreeQuestionTest(unittest.TestCase):
     def test_pre_order_traversal(self):
 
         all_children = []
-        self.root.traverse_preorder(self.root,
-                                    all_children)
+        self.root.traverse_preorder(self.root, all_children)
 
         exp_child_values = [1, 2, 4, 5, 3, 6, 7]
 
-        self.assertEqual(all_children,
-                         exp_child_values)
+        self.assertEqual(all_children, exp_child_values)
 
         if self.dump_output:
             print(all_children)
@@ -51,13 +47,11 @@ class BinaryTreeQuestionTest(unittest.TestCase):
     def test_post_order_traversal(self):
 
         all_children = []
-        self.root.traverse_postorder(self.root,
-                                     all_children)
+        self.root.traverse_postorder(self.root, all_children)
 
         exp_child_values = [4, 5, 2, 6, 7, 3, 1]
 
-        self.assertEqual(all_children,
-                         exp_child_values)
+        self.assertEqual(all_children, exp_child_values)
 
         if self.dump_output:
             print(all_children)
@@ -141,7 +135,6 @@ class BinaryTreeQuestionTest(unittest.TestCase):
 
         self.assertFalse(root.is_tree_BST(root))
 
-
     def test_create_tree_from_sorted_array(self):
 
         array = [0, 1, 2, 3, 4, 5, 6]
@@ -169,9 +162,8 @@ class BinaryTreeQuestionTest(unittest.TestCase):
 
         node_a = tree_var.right.right.right
         node_b = tree_var.right.left
-        common_ancestor = trees.find_first_common_ancestor(tree_var,
-                                                           node_a,
-                                                           node_b)
+        common_ancestor = trees.find_first_common_ancestor(
+            tree_var, node_a, node_b)
         self.assertEqual(common_ancestor.value, 6)
 
     def test_find_first_common_ancestor_v2(self):
@@ -185,16 +177,14 @@ class BinaryTreeQuestionTest(unittest.TestCase):
 
         node_a = tree_var.right.right.right
         node_b = tree_var.right.left
-        common_ancestor = trees.find_first_common_ancestor_v2(tree_var,
-                                                              node_a,
-                                                              node_b)
+        common_ancestor = trees.find_first_common_ancestor_v2(
+            tree_var, node_a, node_b)
         self.assertEqual(common_ancestor.value, 6)
 
         node_a = tree_var.right
         node_b = tree_var.right.right
-        common_ancestor = trees.find_first_common_ancestor_v2(tree_var,
-                                                              node_a,
-                                                              node_b)
+        common_ancestor = trees.find_first_common_ancestor_v2(
+            tree_var, node_a, node_b)
         # The common ancestor is one of the nodes itself
         self.assertEqual(common_ancestor.value, 6)
 
@@ -208,10 +198,19 @@ class BinaryTreeQuestionTest(unittest.TestCase):
         node_a = tree_var.left.left.right
         node_b = tree_var.left.right.right
 
-        common_ancestor = trees.find_first_common_ancestor_v2(tree_var,
-                                                              node_a,
-                                                              node_b)
+        common_ancestor = trees.find_first_common_ancestor_v2(
+            tree_var, node_a, node_b)
         self.assertEqual(common_ancestor.value, 3)
+
+    def test_binary_search_insert(self):
+
+        all_children = []
+        self.root.traverse_postorder(self.root, all_children)
+
+        self.root.insert(self.root, 8)
+
+        all_children = []
+        self.root.traverse_postorder(self.root, all_children)
 
 
 if __name__ == '__main__':

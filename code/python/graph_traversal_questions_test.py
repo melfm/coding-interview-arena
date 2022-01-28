@@ -140,17 +140,38 @@ class GraphTraversalQuestionsTest(unittest.TestCase):
         num_islands = test_graph.count_islands()
         self.assertEqual(num_islands, 1)
 
-    def test_bfs_shortest_distance(self):
+    def test_bfs_node_distance(self):
 
-        distances = graph.bfs_shortest_distance(self.graph_three, 'A')
+        distances = graph.bfs_node_distance(self.graph_three, 'A')
         exp_distances = [0, 6, 6]
 
         self.assertEqual(distances, exp_distances)
 
-        distances = graph.bfs_shortest_distance(self.graph_four, 'A')
+        distances = graph.bfs_node_distance(self.graph_four, 'A')
 
         exp_distances = [0, 6, 6, 12, 12, 18]
         self.assertEqual(distances, exp_distances)
+
+    def test_snakes_and_ladder(self):
+
+        N = 30
+        board = [-1] * N
+
+        # Ladders
+        board[2] = 21
+        board[4] = 7
+        board[10] = 25
+        board[19] = 28
+
+        # Snakes
+        board[26] = 0
+        board[20] = 8
+        board[16] = 3
+        board[18] = 6
+
+        min_dice_throw = graph.snakes_and_ladder(board, N)
+
+        self.assertEqual(min_dice_throw, 3)
 
 
 if __name__ == '__main__':

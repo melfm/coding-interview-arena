@@ -67,7 +67,7 @@ class TreeNode:
         queue = []
         queue.append(node)
 
-        while(len(queue) > 0):
+        while (len(queue) > 0):
             curr_node = queue.pop(0)
             children_list.append(curr_node.value)
 
@@ -81,16 +81,14 @@ class TreeNode:
         if node is None:
             return 0
 
-        return 1 + max(self.max_depth(node.right),
-                       self.max_depth(node.left))
+        return 1 + max(self.max_depth(node.right), self.max_depth(node.left))
 
     def min_depth(self, node):
         # Find the min depth of a binary tree
         if node is None:
             return 0
 
-        return 1 + min(self.min_depth(node.right),
-                       self.min_depth(node.left))
+        return 1 + min(self.min_depth(node.right), self.min_depth(node.left))
 
     def is_tree_balanced(self, node):
         # Find whether a binary tree is balanced or not
@@ -145,6 +143,29 @@ class TreeNode:
 
         return is_valid_BST(node, min_val, max_val)
 
+    def insert(self, node, new_value):
+        # This is typically a binary search tree insertion
+        # Since we check the left and right children values
+        # but remember its not a balanced tree, or a heap
+        # so no node replacing is happening
+
+        # Check left
+        if new_value > node.value:
+            # if it has no right node
+            if node.right is None:
+                new_node = TreeNode(new_value)
+                node.right = new_node
+            else:
+                self.insert(node.right, new_value)
+
+        elif new_value < node.value:
+            # if it has no left node
+            if node.left is None:
+                new_node = TreeNode(new_value)
+                node.left = new_node
+            else:
+                self.insert(node.left, new_value)
+
 
 def create_tree_from_sorted_array(array):
     """Q: Given a sorted (increasing order) array, write an algorithm to
@@ -170,6 +191,7 @@ def find_first_common_ancestor(tree, node_a, node_b):
     in a binary tree. Avoid storing additional nodes in a data structure.
     NOTE: This is not necessarily a binary *search* tree.
     """
+
     def covers(tree, node):
 
         if tree is None:
