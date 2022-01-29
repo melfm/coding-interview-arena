@@ -1,6 +1,7 @@
 """Array questions."""
 
 import numpy as np
+import sys
 
 import string_manipulation as str_manip
 
@@ -67,12 +68,12 @@ def add_one(array):
 
     for i in range(len(array)):
         # Iterate the array backwards
-        current_sum = array[-(i+1)] + carry
+        current_sum = array[-(i + 1)] + carry
         if current_sum == 10:
             carry = 1
         else:
             carry = 0
-        result[-(i+1)] = current_sum % 10
+        result[-(i + 1)] = current_sum % 10
 
     if carry == 1:
         result = np.insert(result, 0, 1)
@@ -159,7 +160,7 @@ def shuffle_cards(input_array):
 
     mid_point = int(len(input_array) / 2)
 
-    deck_1 = input_array[0: mid_point]
+    deck_1 = input_array[0:mid_point]
     deck_2 = input_array[mid_point:]
 
     shuffled_array = []
@@ -184,7 +185,7 @@ def smallest_odd_occurrence(input_array):
     count = 1
     input_array = sorted(input_array)
     for i in range(len(input_array) - 1):
-        if input_array[i] == input_array[i+1]:
+        if input_array[i] == input_array[i + 1]:
             count += 1
         else:
             if count % 2 != 0:
@@ -219,7 +220,8 @@ def combine_sum_pieces(array_p, array_s):
                 combos.append(new_combo)
                 # This [1:] slicing is the magic here
                 if prefix:
-                    combinate([prefix, input_array[0]], input_array[1:], combos)
+                    combinate([prefix, input_array[0]], input_array[1:],
+                              combos)
                 else:
                     combinate(input_array[0], input_array[1:], combos)
                 combinate(prefix, input_array[1:], combos)
@@ -250,3 +252,39 @@ def combine_sum_pieces(array_p, array_s):
                 all_combos.append(flat_list)
 
     return all_combos
+
+
+def max_subarray_sum(array):
+    """Find the sum of contiguous subarray within
+    a one-dimensional array of numbers that has
+    the largest sum.
+    """
+    max_so_far = -sys.maxsize - 1
+    max_ending_here = 0
+
+    for i in range(len(array)):
+        max_ending_here += array[i]
+
+        if max_so_far < max_ending_here :
+            max_so_far = max_ending_here
+
+        if max_ending_here < 0:
+            # Reset
+            max_ending_here = 0
+
+    return max_so_far
+
+
+def find_two_disjoint_subarray_max(array):
+    """Given an array of integers, find two disjoint
+    contiguous sub-arrays such that the absolute diff
+    between the sum of two sub-arrays is maximum.
+
+    E.g. [2, -1, -2, 1, -2, 2, 8]
+    Answer: [-1,-2,1,-4], [2,8] Diff=16
+
+    Need to use the Kadane's Algorithm from max_subarray_sum()
+    to find 4 subarrays.
+    https://www.geeksforgeeks.org/maximum-absolute-difference-between-sum-of-two-contiguous-sub-arrays/
+    """
+    pass

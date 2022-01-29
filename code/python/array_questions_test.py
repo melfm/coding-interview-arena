@@ -51,7 +51,7 @@ class ArraysTest(unittest.TestCase):
         if self.dump_output:
 
             print("Max so far {} with indices {},{} ".format(
-                    max_sum, start, end))
+                max_sum, start, end))
 
         input_array = [-1, 6, -7, 8, 3, -4, 2]
         exp_sum = 11
@@ -66,7 +66,7 @@ class ArraysTest(unittest.TestCase):
         if self.dump_output:
 
             print("Max so far {} with indices {},{} ".format(
-                    max_sum, start, end))
+                max_sum, start, end))
 
         input_array = [-1, 6, 7, 8, 3, -4, 2]
         exp_sum = 24
@@ -80,7 +80,7 @@ class ArraysTest(unittest.TestCase):
 
         if self.dump_output:
             print("Max so far {} with indices {},{} ".format(
-                    max_sum, start, end))
+                max_sum, start, end))
 
     def test_add_one(self):
 
@@ -150,7 +150,6 @@ class ArraysTest(unittest.TestCase):
         max_nums = array_qs.max_frequent_number(input_array)
         self.assertDictEqual(max_nums, exp_output)
 
-
     def test_shuffle_cards(self):
 
         input_array = [1, 2, 3, 4, 5, 6]
@@ -187,11 +186,16 @@ class ArraysTest(unittest.TestCase):
 
         input_array = [4, 5, 6, 1, 3]
         sum_array = [9, 15, 12, 8]
-        exp_combos = [[4, 4], [4, 5], [4, 5, 6], [4, 5, 3],
-                      [4, 1, 3], [5, 6, 1], [5, 6, 1, 3],
-                      [5, 1, 3], [5, 3], [6, 6], [6, 3]]
+        exp_combos = [[4, 4], [4, 5], [4, 5, 6], [4, 5, 3], [4, 1,
+                                                             3], [5, 6, 1],
+                      [5, 6, 1, 3], [5, 1, 3], [5, 3], [6, 6], [6, 3]]
         combinations = array_qs.combine_sum_pieces(input_array, sum_array)
         self.assertEqual(combinations, exp_combos)
+
+    def test_max_subarray_sum(self):
+        array = [-2, -3, 4, -1, -2, 1, 5, -3]
+        max_sum = array_qs.max_subarray_sum(array)
+        self.assertEqual(max_sum, 7)
 
 
 if __name__ == '__main__':
