@@ -228,7 +228,8 @@ def combine_sum_pieces(array_p, array_s):
 
         combos = []
         combinate([], input_array, combos)
-        combos = [x for x in combos if x != []]
+        # Mel: This line is not needed?
+        # combos = [x for x in combos if x != []]
         return combos
 
     combinations = combine_and_permute_order_free(array_p)
