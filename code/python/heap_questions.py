@@ -1,8 +1,8 @@
 """ Heap Questions.
 """
+import heapq
 
-
-def find_smallest_range_k_lists():
+def find_smallest_range_k_lists(list1, list2, list3):
     """ You have k lists of sorted integers.
     Find the smallest range that includes at least
     one number from each of the k lists.
@@ -23,7 +23,7 @@ def find_smallest_range_k_lists():
     3. find the max value and min value pointed/indexed
         by p1, p2 and p3
     4. difference of max value and min value discovered
-        in step 3 is the current range. compare it with
+        in step 3 is the current range. Compare it with
         smallest_range and update it, if found smaller.
     5. increment the pointer/index of min value found
         in step 3.
@@ -32,4 +32,21 @@ def find_smallest_range_k_lists():
 
     constant space and O(n) time.
     """
-    pass
+    # init_dict= {0: list1[0], 1: list2[0], 2: list3[0]}
+    init_dict= {list1[0] : 0, list2[0]: 1, list3[0]: 2}
+    min_heap = list(init_dict.items())
+    heapq.heapify(min_heap)
+
+    dist_list1 = len(list1)
+    dist_list2 = len(list2)
+    dist_list3 = len(list3)
+
+    top_node = min_heap[1][1]
+    big_node = min_heap[2][1]
+    current_range = big_node - top_node
+
+    min_heap[1] = (list2[1], 1)
+    # TODO: Need to check if this heap lib allows storing
+    # dict type values since we want to decide how to replace
+    # each node value from a particular list.
+    heapq.heapify(min_heap)

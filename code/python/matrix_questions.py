@@ -199,7 +199,6 @@ def shorted_path_bin_maze(maze, start, end):
             # Check adjacent neighbours
             row = cell[0] + rowNum[i]
             col = cell[1] + colNum[i]
-
             if is_valid(row, col, row_len, col_len) and \
                     maze[row][col] and (not visit_map[row][col]):
                 # Append distance information to the cell
@@ -293,6 +292,15 @@ def spiral(n):
         val += 1
 
     return matrix
+
+
+def convolve2d(image, kernel):
+    """FB Coding question: Implement a convolution with a normal kernel.
+    Then consider other types of convolution such as gaussian kernel and
+    think about how to optimize the convolution operation.
+    """
+    # TODO
+    pass
 
 
 """
