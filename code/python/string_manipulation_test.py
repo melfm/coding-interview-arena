@@ -9,7 +9,7 @@ import string_manipulation as str_manip
 
 class StringManipulationTest(unittest.TestCase):
 
-    dump_output = True
+    dump_output = False
     test_runtime = True
 
     def test_rever_str(self):
@@ -177,11 +177,11 @@ class StringManipulationTest(unittest.TestCase):
 
             start = time.time()
             output = str_manip.remove_str_mask_char(random_str, random_mask)
-            print('\nremove_str_mask_char took ', time.time() - start)
+            # print('\nremove_str_mask_char took ', time.time() - start)
 
             start = time.time()
             output = str_manip.remove_str_mask_char_v2(random_str, random_mask)
-            print('\nremove_str_mask_char_v2 took ', time.time() - start)
+            # print('\nremove_str_mask_char_v2 took ', time.time() - start)
 
     def test_isEditDistanceOne(self):
         str1 = "cat"
@@ -223,6 +223,13 @@ class StringManipulationTest(unittest.TestCase):
         k = 3
         output = str_manip.k_palindrome(input_str, k)
         self.assertTrue(output)
+
+    def test_longest_unique_substring(self):
+
+        input_str = "pwwkew"
+        output = str_manip.longest_unique_substring_v2(input_str)
+        exp_subs = ['wke', 'kew']
+        self.assertEqual(output, exp_subs)
 
 
 if __name__ == '__main__':

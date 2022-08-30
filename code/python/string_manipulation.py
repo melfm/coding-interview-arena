@@ -1,6 +1,7 @@
 """String manipulation questions."""
 
 from collections import Iterable
+from collections import defaultdict
 
 
 def reverse_string_py(string):
@@ -64,7 +65,7 @@ def return_palindrome_subset(word):
 
         if word[p0].lower() != word[p1].lower():
 
-            print('Palindrome subset')
+            # print('Palindrome subset')
             sub_word = beg_w + end_w
             sub_word = ''.join(sub_word)
             return sub_word
@@ -463,3 +464,72 @@ def k_palindrome(input_str, k):
     reversed_str = input_str[::-1]
     l = len(input_str)
     return (k_palindrome_rec(input_str, reversed_str, l, l) <= k * 2)
+
+def longest_unique_substring(str_input):
+    """ Question and other solutions:
+    https://www.geeksforgeeks.org/length-of-the-longest-substring-without-repeating-characters/
+    """
+    p1 = 0
+    p2 = 1
+
+    n = len(str_input)
+    max_sub = ''
+    all_subs = []
+
+    window = defaultdict()
+
+    while p2 <= n:
+        if p2 != n:
+            p1_character = str_input[p1]
+            p2_character = str_input[p2]
+            window[p1_character] = 1
+        if not p2_character in window.keys():
+            window[p2_character] = 1
+            p2 +=1
+        else:
+            current_sub = str_input[p1:p2]
+            if len(max_sub) <= len(current_sub):
+                max_sub = current_sub
+                all_subs.append(max_sub)
+            # reset window
+            window = {}
+            p1 = p1 + 1
+            p2 = p1 + 1
+
+    max_len = len(max(all_subs, key=len))
+    return [state for state in all_subs if len(state) == max_len]
+
+def longest_unique_substring_v2(str_input):
+
+    n = len(str_input)
+
+    if n == 0: return n
+
+    p1 = 0
+    p2 = 0
+    window = defaultdict(int)
+    max_sub = ''
+    all_subs = [max_sub]
+
+    while p2 < n:
+        # slide the window forward
+        p2_character = str_input[p2]
+        window[p2_character] += 1
+        p2 += 1
+
+        # if a duplicate char appears, drop it off from left(p1)
+        # to make them unique again
+        while window[p2_character] > 1:
+            window[str_input[p1]] -=1
+            p1 += 1
+        curr_sub = str_input[p1:p2]
+        if len(curr_sub) > len(max_sub):
+            all_subs = []
+            max_sub = curr_sub
+            all_subs.append(max_sub)
+        elif len(curr_sub) == len(max_sub):
+            # keep both
+            max_sub = curr_sub
+            all_subs.append(max_sub)
+
+    return all_subs
