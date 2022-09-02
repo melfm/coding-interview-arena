@@ -294,62 +294,84 @@ def spiral(n):
     return matrix
 
 
-def convolve2d(image, kernel):
+def convolve2d_vanilla(matrix, kernel):
     """FB Coding question: Implement a convolution with a normal kernel.
     Then consider other types of convolution such as gaussian kernel and
     think about how to optimize the convolution operation.
+    See: https://github.com/detkov/Convolution-From-Scratch/blob/main/convolution.py
+
+    The kernel can be arbitrary or for Gaussian kernel or other options see:
+    https://en.wikipedia.org/wiki/Kernel_(image_processing)
+
+    This is a vanilla version which does not handle padding, varied stride, dilation.
     """
-    # TODO
-    pass
 
+    n_row = matrix.shape[0]
+    m_col = matrix.shape[1]
 
-"""
-More of an image processing question.
-Rotating Image By Any Angle.
-https://gautamnagrawal.medium.com/rotating-image-by-any-angle-shear-transformation-using-only-numpy-d28d16eb5076
+    k_row = kernel.shape[0]
+    k_col = kernel.shape[1]
 
-1) Recall 2D representation of (x,y) in terms of cos and sin angles
-2) Formula for calculating the new dimensions after rotation
-3) Aliasing problem
+    out_row = n_row - 1
+    out_col = m_col - 1
 
-# Define the height and width of the new image that is to be formed
-new_height  = round(abs(image.shape[0]*cosine)+abs(image.shape[1]*sine)) + 1
-new_width  = round(abs(image.shape[1]*cosine)+abs(image.shape[0]*sine)) + 1
+    matrix_out = np.zeros((out_row, out_col))
 
-output = np.zeros((new_height,new_width,image.shape[2]))
+    slide_x_0 = 0
+    slide_y_0 = 0
 
-# Find the centre of the image about which we have to rotate the image
-# With respect to the old image
-original_centre_height = round(((image.shape[0] + 1)/2) - 1)
-original_centre_width = round(((image.shape[1] + 1)/2) - 1)
+    for i in range(out_row):
+        slide_x = slide_x_0 + i
+        indices_x = [slide_x + l for l in range(k_row)]
 
-# Find the centre of the new image that will be obtained
-# with respect to the new image
-new_centre_height= round(((new_height+1)/2) - 1)
-new_centre_width= round(((new_width+1)/2) - 1)
+        for j in range(out_col):
+            slide_y = slide_y_0 + j
+            indices_y = [slide_y + l for l in range(k_col)]
+            submatrix = matrix[indices_x, :][:, indices_y]
+            matrix_out[i][j] = np.sum(np.multiply(submatrix, kernel))
 
-for i in range(height):
-    for j in range(width):
-        # co-ordinates of pixel with respect to the centre of original image
-        y = image.shape[0]-1-i-original_centre_height
-        x = image.shape[1]-1-j-original_centre_width
+    return matrix_out
 
-        # co-ordinate of pixel with respect to the rotated image
-        new_y=round(-x*sine + y*cosine)
-        new_x=round(x*cosine + y*sine)
+def _add_padding(matrix, padding):
+    """ Pad the matrix so we can apply convolve2d.
+    """
 
-        # The image will be rotated and the center will change too
-        new_y=new_centre_height-new_y
-        new_x=new_centre_width-new_x
+    n, m = matrix.shape
+    r, c = padding[0], padding[1]
 
-        #Prevent any errors in the processing
-        if 0 <= new_x < new_width and 0 <= new_y < new_height and new_x>=0 and new_y>=0:
-            output[new_y,new_x,:]=image[i,j,:]
+    padded_matrix = np.zeros((n + r*2, m + c*2))
+    padded_matrix[r : n + r, c: m + c] = matrix
+    return padded_matrix
 
-Aliasing problem: Multiplying by sines and cosines on the integer
-coordinates of the source image gives real number results,
-and these have to be rounded back to integers again to be plotted.
-This means the same destination location is addressed more than once,
-and sometimes certain pixels are missed completely. Oversampling or AreaMapping
-are some solutions. See the link above.
-"""
+def convolve2d(matrix, kernel, padding, stride, dilation):
+    """ Apply convolution by considering padding, stride and dilation parameters.
+    TODO: Figure out indices with dilation.
+    """
+
+    n_row = matrix.shape[0]
+    m_col = matrix.shape[1]
+
+    k_row = kernel.shape[0]
+    k_col = kernel.shape[1]
+
+    out_row = int((n_row + 2*padding[0] - k_row)/stride + 1)
+    out_col = int((m_col + 2*padding[1] - k_col)/stride + 1)
+
+    padded_mat = _add_padding(matrix, padding)
+
+    matrix_out = np.zeros((out_row, out_col))
+
+    slide_x_0 = 0
+    slide_y_0 = 0
+
+    for i in range(out_row):
+        slide_x = slide_x_0 + i
+        indices_x = [slide_x + l for l in range(k_row)]
+
+        for j in range(out_col):
+            slide_y = slide_y_0 + j
+            indices_y = [slide_y + l for l in range(k_col)]
+            submatrix = padded_mat[indices_x, :][:, indices_y]
+            matrix_out[i][j] = np.sum(np.multiply(submatrix, kernel))
+
+    return matrix_out
