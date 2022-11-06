@@ -1,5 +1,7 @@
 """
 Linear Regression - Implement using gradient descent.
+For a slightly different LR using covariance calculation see:
+https://machinelearningmastery.com/implement-simple-linear-regression-scratch-python/
 """
 import numpy as np
 import matplotlib.pyplot as plt
@@ -27,6 +29,10 @@ class LinearRegression():
     def update_W(self):
         y_pred = self.predict(self.X)
         # calculate gradients
+        # here we apply the chain rule to the MSE
+        # (W^T.X - y)^2
+        # recall: partial_derivative = 2 * (expression) * grad(expression)
+        # this becomes X.(error_term)
         dW = -(2 * (self.X.T).dot(self.y - y_pred)) / self.m
         db = -2 * sum(self.y - y_pred) / self.m
         # update weights
