@@ -225,3 +225,14 @@ def scale_balancing(scale, weights):
                 return [first_weight, second_weight]
 
     return 'No match found'
+
+def citadel_worker_days(queue):
+    """Q: Given a workers job in the following format:
+    [[1, 5], [3, 5]] where index 0 represents the day
+    and index 1 number of days to complete the job.
+    The jobs are coming in to the queue. For any given
+    time step, calculate the number of jobs the worker has
+    and how many days of work he has left.
+    """
+    # TODO
+    pass

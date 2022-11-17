@@ -533,3 +533,66 @@ def longest_unique_substring_v2(str_input):
             all_subs.append(max_sub)
 
     return all_subs
+
+
+def remove_duplicate_char_order(str):
+    """ Given a string s, remove duplicate letters so that every
+    letter appears once and only once. You must make sure your
+    result is  the smallest in lexicographical order
+    among all possible results.
+
+    This question seems easy at first, but actually the order
+    preserving logic makes it harder. The question is not phrased
+    very well.
+    """
+
+    last_occurrence = {}
+    stack = []
+
+    # Keep the unique characters first
+    for i in range(len(str)):
+        last_occurrence[str[i]] = i
+
+    # Order matters
+    # If its not in the stack, we want to push it
+    # But it also has to be lexicographically smaller
+    # than other elements in the stack.
+    for i in range(len(str)):
+        if str[i] not in stack:
+            while(stack and stack[-1] > str[i] and last_occurrence[stack[-1]] > i):
+                stack.pop()
+            stack.append(str[i])
+
+    return ''.join(stack)
+
+
+def isInterleave(s1: str, s2: str, s3: str) -> bool:
+    """https://leetcode.com/problems/interleaving-string/
+    Apparently my implementation fails on the second test-case
+    on leetcode, but I didn't understand why.
+    """
+
+    def construct_dict(str):
+        char_dict = {}
+
+        for char in str:
+            if not char in char_dict:
+                # if its a new item
+                char_dict[char] = 1
+            else:
+                occurence = char_dict[char]
+                occurence += 1
+                char_dict[char] = occurence
+        return char_dict
+
+    input_dict = construct_dict(s1 + s2)
+    output_dict = construct_dict(s3)
+
+    interleave_match = True
+    for key_char_s_in in input_dict:
+        for key_char_s_out in output_dict:
+            if key_char_s_in == key_char_s_out:
+                if input_dict[key_char_s_in] != output_dict[key_char_s_out]:
+                    interleave_match = False
+                    return interleave_match
+    return interleave_match

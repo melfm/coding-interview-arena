@@ -231,6 +231,36 @@ class StringManipulationTest(unittest.TestCase):
         exp_subs = ['wke', 'kew']
         self.assertEqual(output, exp_subs)
 
+    def test_remove_duplicate_char_order(self):
+
+        input_str = "bcabc"
+        exp_string = "abc"
+
+        output = str_manip.remove_duplicate_char_order(input_str)
+        self.assertEqual(output, exp_string)
+
+        input_str = "cbacdcbc"
+        exp_string = "acdb"
+        output = str_manip.remove_duplicate_char_order(input_str)
+        self.assertEqual(output, exp_string)
+
+    def test_isInterleave(self):
+
+        # input_str1 = "aabcc"
+        # input_str2 = "dbbca"
+        # output_str = "aadbbcbcac"
+
+        # output = str_manip.isInterleave(input_str1, input_str2, output_str)
+
+        # self.assertTrue(output)
+
+        input_str1 = "aabcc"
+        input_str2 = "dbbca"
+        output_str = "aadbbbaccc"
+
+        output = str_manip.isInterleave(input_str1, input_str2, output_str)
+
+        self.assertFalse(output)
 
 if __name__ == '__main__':
     unittest.main()
