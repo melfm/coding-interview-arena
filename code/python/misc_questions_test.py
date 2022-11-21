@@ -144,6 +144,11 @@ class MiscQuestionsTest(unittest.TestCase):
         balancing_w = misc.scale_balancing(scale, weights)
         self.assertEqual(balancing_w, [0, 1])
 
+    def test_citadel_worker_days(self):
+
+        worker_queue = [[1, 5], [3, 5]]
+
+        misc.citadel_worker_days(worker_queue)
 
 if __name__ == '__main__':
     unittest.main()

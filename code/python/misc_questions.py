@@ -233,6 +233,33 @@ def citadel_worker_days(queue):
     The jobs are coming in to the queue. For any given
     time step, calculate the number of jobs the worker has
     and how many days of work he has left.
+
+    TODO: The logic requires more book-keeping ??
     """
-    # TODO
-    pass
+    global_timestep = 0
+    job_backlog = {}
+    jobs_remaining = True
+
+    for job in queue:
+        job_backlog.update({job[0]: job[1]})
+
+    while jobs_remaining:
+        global_timestep += 1
+        job_remaining = 0
+
+        for timestamp, job_duration in list(job_backlog.items()):
+
+            if timestamp < global_timestep:
+
+                job_remaining += job_duration + global_timestep
+                print('Timestep ', global_timestep)
+                print("Job ", timestamp, "durationg ",job_duration )
+                print("Job Remaining ", job_remaining)
+            print("Job backlog ", job_backlog)
+            if job_duration == global_timestep:
+                # TODO: This logic is wrong atm
+                # you need to calculate the job duration
+                # based on the starting index
+                del job_backlog[timestamp]
+                if not job_backlog:
+                    jobs_remaining = False
