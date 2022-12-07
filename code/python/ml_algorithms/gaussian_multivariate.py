@@ -20,6 +20,7 @@ def my_logpdf(x, mu, covar):
 
 
 # Sample inputs
+# This is still 1D - can try with 2D input
 mu = np.array([1.0, 3.0, 2.0], dtype=np.float32)
 sigma = np.array([1.0, 1.0, 1.0], dtype=np.float32)
 covar = np.diag(sigma)
