@@ -1,4 +1,5 @@
 import numpy as np
+from collections import deque
 
 
 def rotate_matrix(matrix):
@@ -154,11 +155,51 @@ def map_matrix_island_string_version(row, col, input_string):
             check_neighbourhood(matrix[i][j], visit_map, matrix, i, j)
     return num_of_visited_x
 
+def shortest_path_maze_bfs(maze, start, goal):
+    """Finds the shortest path in a 2D maze using BFS.
+    
+    Args:
+        maze (list of list of int): The 2D maze where 0 represents open space and 1 represents walls.
+        start (tuple): The starting coordinates (row, col).
+        goal (tuple): The goal coordinates (row, col).
+    
+    Returns:
+        list: The shortest path from start to goal as a list of (row, col) tuples. 
+            Empty list if no path exists.
+    """
+    rows, cols = len(maze), len(maze[0])
+    # Up, Down, Left, Right
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    # (current_position, path_so_far)
+    queue = deque([(start, [start])])
+    visited = set()
 
-def shorted_path_bin_maze(maze, start, end):
-    """Shortest path in a Binary Maze.
+    def is_valid(delta_r, delta_c, max_row, max_col):
+        return 0 <= delta_r < max_row and 0 <= delta_c < max_col and \
+            maze[delta_r][delta_c] == 0 and (delta_r, delta_c) not in visited
+    
+    while queue:
+        (r, c), path = queue.popleft()
+        
+        if (r, c) == goal:
+            return path
+        
+        if (r, c) in visited:
+            continue
+        visited.add((r, c))
+        
+        for dr, dc in directions:
+            delta_r, delta_c = r + dr, c + dc
+            if is_valid(delta_r, delta_c, rows, cols):
+                queue.append(((delta_r, delta_c), path + [(delta_r, delta_c)]))
+    
+    # No path found
+    return []
+
+def find_path_bin_maze_dfs(maze, start, end):
+    """Find any path in a Binary Maze.
     Given a MxN matrix where each element can either be 0 or 1.
-    We need to find the shortest path between a given start
+    We need to find any valid path between a given start
     cell to an end cell. The path can only be created out of a
     cell if its value is 1.
 
@@ -189,6 +230,8 @@ def shorted_path_bin_maze(maze, start, end):
     colNum = [0, -1, 1, 0]
 
     while queue:
+        # Watch out as this no longer guarantees shortest path
+        # Popping from the back (pop()) makes it behave like a stack (DFS)
         cell = queue.pop()
         current_distance = cell[2]
 
