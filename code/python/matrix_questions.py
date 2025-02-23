@@ -24,16 +24,17 @@ def rotate_matrix(matrix):
     return new_matrix
 
 
-def rotate_matrix_in_place(matrix, n):
+def rotate_matrix_in_place(matrix):
     """Given an matrix represented by N x N matrix where each pixel in the
     matrix is 4 bytes write a method to rotate the matrix by 90 degrees
     Do this in place.
     """
+    N = len(matrix)
 
-    for layer in range(n):
+    for layer in range(N):
 
         first = layer
-        last = n - 1 - layer
+        last = N - 1 - layer
 
         for i in range(first, last):
             # offset gets reduced for inner matrix
@@ -51,6 +52,19 @@ def rotate_matrix_in_place(matrix, n):
 
     return matrix
 
+def rotate_matrix_90(matrix):
+    N = len(matrix)
+
+    # Step 1: Transpose the matrix (swap rows and columns)
+    for i in range(N):
+        for j in range(i + 1, N):
+            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+
+    # Step 2: Reverse each row
+    for i in range(N):
+        matrix[i] = matrix[i][::-1]
+
+    return matrix
 
 def check_neighbourhood(colour, visit_map, matrix, i, j):
 
@@ -278,13 +292,22 @@ def set_matrix_row_col_all_zeros(matrix):
 
     return matrix
 
+def set_matrix_row_col_all_zeros_vec(matrix):
+    """
+    If an element in an MxN matrix is 0, its entire row and column are set to 0.
+    Vectorized implementation using NumPy.
+    """
 
-def isInvalidMatrixSpiral(matrix, r, c):
-    mat_len = matrix.shape[0]
-    if r < 0 or c < 0 or r >= mat_len or c >= mat_len or matrix[r][c] != 0:
-        return True
-    return False
+    # Find the row and column indices where the matrix has zeros
+    zero_rows, zero_cols = np.where(matrix == 0)
 
+    # Set entire rows to zero
+    matrix[zero_rows, :] = 0
+
+    # Set entire columns to zero
+    matrix[:, zero_cols] = 0
+
+    return matrix
 
 def spiral(n):
     """
@@ -321,6 +344,14 @@ def spiral(n):
     c = 0
     limit = n * n
 
+
+    def isInvalidMatrixSpiral(matrix, r, c):
+        mat_len = matrix.shape[0]
+        if r < 0 or c < 0 or r >= mat_len or c >= mat_len or matrix[r][c] != 0:
+            return True
+        return False
+
+
     while (val <= limit):
         matrix[r][c] = val
         r += dr[dir]
@@ -348,47 +379,24 @@ def convolve2d_vanilla(matrix, kernel):
 
     This is a vanilla version which does not handle padding, varied stride, dilation.
     """
-
-    n_row = matrix.shape[0]
-    m_col = matrix.shape[1]
-
-    k_row = kernel.shape[0]
-    k_col = kernel.shape[1]
-
-    out_row = n_row - 1
-    out_col = m_col - 1
-
+    n_row, m_col = matrix.shape
+    k_row, k_col = kernel.shape
+    
+    out_row = n_row - k_row + 1
+    out_col = m_col - k_col + 1
+    
     matrix_out = np.zeros((out_row, out_col))
-
-    slide_x_0 = 0
-    slide_y_0 = 0
-
+    
     for i in range(out_row):
-        slide_x = slide_x_0 + i
-        indices_x = [slide_x + l for l in range(k_row)]
-
         for j in range(out_col):
-            slide_y = slide_y_0 + j
-            indices_y = [slide_y + l for l in range(k_col)]
-            submatrix = matrix[indices_x, :][:, indices_y]
-            matrix_out[i][j] = np.sum(np.multiply(submatrix, kernel))
-
+            submatrix = matrix[i:i+k_row, j:j+k_col]
+            matrix_out[i, j] = np.sum(submatrix * kernel)
+    
     return matrix_out
 
-def _add_padding(matrix, padding):
-    """ Pad the matrix so we can apply convolve2d.
-    """
-
-    n, m = matrix.shape
-    r, c = padding[0], padding[1]
-
-    padded_matrix = np.zeros((n + r*2, m + c*2))
-    padded_matrix[r : n + r, c: m + c] = matrix
-    return padded_matrix
-
-def convolve2d(matrix, kernel, padding, stride, dilation):
+def convolve2d(matrix, kernel, padding, stride):
     """ Apply convolution by considering padding, stride and dilation parameters.
-    TODO: Figure out indices with dilation.
+        Does not support dilation.
     """
 
     n_row = matrix.shape[0]
@@ -396,6 +404,14 @@ def convolve2d(matrix, kernel, padding, stride, dilation):
 
     k_row = kernel.shape[0]
     k_col = kernel.shape[1]
+
+    def _add_padding(matrix, padding):
+        n, m = matrix.shape
+        r, c = padding[0], padding[1]
+
+        padded_matrix = np.zeros((n + r*2, m + c*2))
+        padded_matrix[r : n + r, c: m + c] = matrix
+        return padded_matrix
 
     out_row = int((n_row + 2*padding[0] - k_row)/stride + 1)
     out_col = int((m_col + 2*padding[1] - k_col)/stride + 1)
@@ -417,4 +433,39 @@ def convolve2d(matrix, kernel, padding, stride, dilation):
             submatrix = padded_mat[indices_x, :][:, indices_y]
             matrix_out[i][j] = np.sum(np.multiply(submatrix, kernel))
 
+    return matrix_out
+
+
+
+def _add_padding(matrix, padding):
+    """
+    Pad the matrix to allow convolution to be applied correctly.
+    """
+    n, m = matrix.shape
+    r, c = padding
+    
+    padded_matrix = np.zeros((n + 2*r, m + 2*c))
+    padded_matrix[r:n+r, c:m+c] = matrix
+    return padded_matrix
+
+def convolve2d_V2(matrix, kernel, padding=(0,0), stride=1, dilation=1):
+    """
+    Perform 2D convolution with padding, stride, and dilation parameters.
+    """
+    matrix = _add_padding(matrix, padding)
+    
+    n_row, m_col = matrix.shape
+    k_row, k_col = kernel.shape
+    
+    # Compute output dimensions
+    out_row = (n_row - (k_row - 1) * dilation - 1) // stride + 1
+    out_col = (m_col - (k_col - 1) * dilation - 1) // stride + 1
+    
+    matrix_out = np.zeros((out_row, out_col))
+    
+    for i in range(out_row):
+        for j in range(out_col):
+            submatrix = matrix[i*stride:i*stride+k_row*dilation:dilation, j*stride:j*stride+k_col*dilation:dilation]
+            matrix_out[i, j] = np.sum(submatrix * kernel)
+    
     return matrix_out

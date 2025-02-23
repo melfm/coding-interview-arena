@@ -8,37 +8,79 @@ class MatrixQuestionsTest(unittest.TestCase):
 
     dump_output = False
 
-    def test_rotate_matrix(self):
+    def test_3x3_matrix(self):
+        matrix = np.array([
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9]
+        ])
+        
+        expected = np.array([
+            [7, 4, 1],
+            [8, 5, 2],
+            [9, 6, 3]
+        ])
 
-        if self.dump_output:
+        matrix_q.rotate_matrix_90(matrix)
+        np.testing.assert_array_equal(matrix, expected)
 
-            dummy_matrix = np.round(np.random.rand(5, 5), 2)
-            print('Original matrix')
-            print(dummy_matrix)
+        matrix = np.array([
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9]
+        ])
 
-            rotated_matrix = matrix_q.rotate_matrix(dummy_matrix)
-            print('Rotated matrix by 90')
-            print(rotated_matrix)
+        matrix_q.rotate_matrix_in_place(matrix)
+        np.testing.assert_array_equal(matrix, expected)
 
-            dummy_matrix = np.random.rand(5, 6)
-            print('Original matrix')
-            print(dummy_matrix)
+    def test_4x4_matrix(self):
+        matrix = np.array([
+            [1,  2,  3,  4],
+            [5,  6,  7,  8],
+            [9, 10, 11, 12],
+            [13, 14, 15, 16]
+        ])
 
-            rotated_matrix = matrix_q.rotate_matrix(dummy_matrix)
-            print('Rotated matrix by 90')
-            print(rotated_matrix)
+        expected = np.array([
+            [13,  9, 5, 1],
+            [14, 10, 6, 2],
+            [15, 11, 7, 3],
+            [16, 12, 8, 4]
+        ])
 
-    def test_rotate_matrix_in_place(self):
+        matrix_q.rotate_matrix_90(matrix)
+        np.testing.assert_array_equal(matrix, expected)
 
-        if self.dump_output:
+        matrix = np.array([
+            [1,  2,  3,  4],
+            [5,  6,  7,  8],
+            [9, 10, 11, 12],
+            [13, 14, 15, 16]
+        ])
 
-            dummy_matrix = np.round(np.random.rand(5, 5), 2)
-            print('Original matrix')
-            print(dummy_matrix)
+        matrix_q.rotate_matrix_in_place(matrix)
+        np.testing.assert_array_equal(matrix, expected)
 
-            rotated_matrix = matrix_q.rotate_matrix_in_place(dummy_matrix, 5)
-            print('Rotated matrix by 90')
-            print(rotated_matrix)
+    def test_5x5_matrix(self):
+        matrix = np.array([
+            [1,  2,  3,  4,  5],
+            [6,  7,  8,  9, 10],
+            [11, 12, 13, 14, 15],
+            [16, 17, 18, 19, 20],
+            [21, 22, 23, 24, 25]
+        ])
+
+        expected = np.array([
+            [21, 16, 11,  6,  1],
+            [22, 17, 12,  7,  2],
+            [23, 18, 13,  8,  3],
+            [24, 19, 14,  9,  4],
+            [25, 20, 15, 10,  5]
+        ])
+
+        matrix_q.rotate_matrix_90(matrix)
+        np.testing.assert_array_equal(matrix, expected)
+
 
     def test_map_matrix_island_color(self):
 
@@ -106,6 +148,16 @@ class MatrixQuestionsTest(unittest.TestCase):
         mat_out = matrix_q.set_matrix_row_col_all_zeros(matrix)
         np.testing.assert_array_equal(mat_out, exp_matrix)
 
+    def test_set_matrix_zeros_vec(self):
+        matrix = np.asarray([[1, 2, 3, 4, 5], [0, 4, 7, 6, 2], [3, 0, 3, 6, 2],
+                             [1, 2, 3, 4, 1]])
+
+        exp_matrix = np.asarray([[0, 0, 3, 4, 5], [0, 0, 0, 0, 0],
+                                 [0, 0, 0, 0, 0], [0, 0, 3, 4, 1]])
+
+        mat_out = matrix_q.set_matrix_row_col_all_zeros_vec(matrix)
+        np.testing.assert_array_equal(mat_out, exp_matrix)
+
     def test_map_matrix_island_string_version(self):
 
         connected_xs = matrix_q.map_matrix_island_string_version(
@@ -145,15 +197,13 @@ class MatrixQuestionsTest(unittest.TestCase):
 
         padding = (1,1)
         stride = 1
-        dilation = 0
-        feature_map = matrix_q.convolve2d(matrix, kernel, padding, stride,
-                                          dilation).astype(int)
+        feature_map = matrix_q.convolve2d(matrix, kernel, padding, stride).astype(int)
 
-        # padding = (1,1)
-        # stride = 1
-        # dilation = 1
-        # feature_map = matrix_q.convolve2d(matrix, kernel, padding, stride,
-        #                                   dilation).astype(int)
+        padding = (1,1)
+        stride = 1
+        dilation = 1
+        feature_map = matrix_q.convolve2d_V2(matrix, kernel, padding, stride,
+                                          dilation).astype(int)
 
 
 if __name__ == '__main__':
