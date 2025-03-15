@@ -71,5 +71,14 @@ class DynamicProgrammingQuestionsTest(unittest.TestCase):
         print("Alive probability 3 Step ", dp.alive_probability(0, 0, 3))
 
 
+    def test_unique_paths_with_obstacles(self):
+        grid = [
+        [0, 0, 0],
+        [0, 1, 0],
+        [0, 0, 0]
+        ]
+        print(dp.unique_paths_with_obstacles(grid))
+
+
 if __name__ == '__main__':
     unittest.main()

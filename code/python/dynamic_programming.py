@@ -215,3 +215,55 @@ def alive_probability(x, y, N):
     if (x < 0 or x > (N - 1) or y < 0 or y > (N - 1) or N < 1):
         return 0.0
     return alive_probs_check(x, y, N, N, {})
+
+
+def unique_paths_with_obstacles(grid):
+    """
+    You are designing an autonomous vehicle's path-planning algorithm.
+    The vehicle must navigate from the top-left corner of a m x n grid to
+    the bottom-right corner while avoiding obstacles.
+
+    The grid consists of:
+        0 (open cell): The vehicle can move to this cell.
+        1 (obstacle): The vehicle cannot move through this cell.
+    The vehicle can only move right or down at each step.
+    Return the number of unique paths from the top-left to the bottom-right.
+    """
+    if not grid or grid[0][0] == 1:
+        return 0
+
+    m, n = len(grid), len(grid[0])
+    dp = [[0] * n for _ in range(m)]
+    dp[0][0] = 1
+
+    # Fill DP table
+    for i in range(m):
+        for j in range(n):
+            if grid[i][j] == 1:
+                dp[i][j] = 0  # No path through obstacles
+            else:
+                if i > 0:
+                    dp[i][j] += dp[i-1][j]  # Paths from top
+                if j > 0:
+                    dp[i][j] += dp[i][j-1]  # Paths from left
+
+    return dp[m-1][n-1]
+
+def unique_paths_with_obstacles_op2(grid):
+    # Instead of maintaining a full 2D DP table,
+    # we reuse a single row (1D array) to store intermediate results.
+    if not grid or grid[0][0] == 1:
+        return 0
+
+    m, n = len(grid), len(grid[0])
+    dp = [0] * n  # Only storing one row
+    dp[0] = 1  # Start position
+
+    for i in range(m):
+        for j in range(n):
+            if grid[i][j] == 1:
+                dp[j] = 0  # Obstacle blocks the path
+            elif j > 0:
+                dp[j] += dp[j - 1]  # Accumulate paths from the left
+
+    return dp[-1]
