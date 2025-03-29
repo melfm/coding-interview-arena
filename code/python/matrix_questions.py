@@ -66,6 +66,7 @@ def rotate_matrix_90(matrix):
 
     return matrix
 
+
 def check_neighbourhood(colour, visit_map, matrix, i, j):
 
     row_len = matrix.shape[0]
@@ -119,6 +120,45 @@ def map_matrix_island_color_recursive(matrix):
             check_neighbourhood(matrix[i][j], visit_map, matrix, i, j)
     return num_of_visited_countries
 
+
+def matrix_island_color_v2(grid):
+    """This is a cleaner implementation of the above function.
+    """
+
+    if not grid or not grid[0]:
+        return 0
+
+    rows, cols = len(grid), len(grid[0])
+
+    visited = set()
+    islands = 0
+
+    directions = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+
+
+    def dfs(x, y):
+
+        # Recursive stopping criterion
+        if (x <0 or x >= rows or
+            y <0 or y >= cols or
+            (x, y) in visited or
+            grid[x][y] != 1 ):
+            return
+
+        visited.add((x, y))
+
+        for dx, dy in directions:
+            dfs(x + dx, y + dy)
+
+
+    for i in range(rows):
+        for j in range(cols):
+            if grid[i][j] == 1 and (i, j) not in visited:
+                dfs(i, j)
+                visited.add((i, j))
+                islands += 1
+
+    return islands
 
 def map_matrix_island_string_version(row, col, input_string):
     """Similar idea to 'map_matrix_island_color', however in this case

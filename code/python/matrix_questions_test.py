@@ -180,6 +180,30 @@ class MatrixQuestionsTest(unittest.TestCase):
             3, 3, '.........')
         self.assertEqual(connected_xs, 0)
 
+
+    def test_matrix_island_color_v2(self):
+
+        grid = [
+            [1, 1, 0, 0],
+            [1, 0, 0, 1],
+            [0, 0, 1, 1],
+            [1, 0, 0, 0]
+        ]
+
+        islands = matrix_q.matrix_island_color_v2(grid)
+        self.assertEqual(islands, 3)
+
+        grid = [
+            [1, 1, 0, 0, 0, 1],
+            [1, 0, 0, 1, 1, 1],
+            [0, 0, 0, 0, 0, 0],
+            [1, 0, 1, 0, 1, 0],
+            [1, 0, 1, 0, 1, 0],
+        ]
+
+        islands = matrix_q.matrix_island_color_v2(grid)
+        self.assertEqual(islands, 5)
+
     def test_spiral(self):
 
         out_mat = matrix_q.spiral(4)
