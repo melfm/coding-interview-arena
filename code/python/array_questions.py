@@ -1,6 +1,7 @@
 """Array questions."""
 
 import numpy as np
+import random
 import sys
 
 import string_manipulation as str_manip
@@ -289,3 +290,28 @@ def find_two_disjoint_subarray_max(array):
     https://www.geeksforgeeks.org/maximum-absolute-difference-between-sum-of-two-contiguous-sub-arrays/
     """
     pass
+
+
+def pick_random_max(arr):
+    """
+    Find the maximum in an array and if multiple elements are the same,
+    return one of these elements in a uniform distribution.
+    """
+
+    max_value = float('-inf')
+    count = 0
+    candidate_index = -1
+
+    for i, value in enumerate(arr):
+        if value > max_value:
+            # Update max value
+            max_value = value
+            count = 1
+            candidate_index = i
+
+        elif value == max_value:
+            count += 1
+            if random.randint(1, count) == 1:
+                candidate_index = i
+
+    return candidate_index

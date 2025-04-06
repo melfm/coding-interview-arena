@@ -1,6 +1,6 @@
 """String manipulation questions."""
 
-from collections import Iterable
+from collections.abc import Iterable
 from collections import defaultdict
 
 

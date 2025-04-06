@@ -1,13 +1,14 @@
 import numpy as np
 import time
 import unittest
+from collections import Counter
 
 import array_questions as array_qs
 
 
 class ArraysTest(unittest.TestCase):
 
-    dump_output = True
+    dump_output = False
     test_runtime = False
 
     def test_find_largest_sub_input_array_sum(self):
@@ -196,6 +197,34 @@ class ArraysTest(unittest.TestCase):
         array = [-2, -3, 4, -1, -2, 1, 5, -3]
         max_sum = array_qs.max_subarray_sum(array)
         self.assertEqual(max_sum, 7)
+
+
+    def test_pick_random_max(self):
+        arr = [5, 1, 5, 3, 5]
+        max_indices = [0, 2, 4]
+        max_value = 5
+        num_trials = 10_000
+        counts = Counter()
+
+        for _ in range(num_trials):
+            result_indx = array_qs.pick_random_max(arr)
+            result = arr[result_indx]
+            self.assertEqual(result, max_value)
+            # Count how often each index is picked
+            for idx in max_indices:
+                if idx == result_indx:
+                    counts[idx] += 1
+                    break
+
+        # Check approximate uniformity — within 5% margin
+        expected = num_trials / len(max_indices)
+        for idx in max_indices:
+            picked = counts[idx]
+            ratio_diff = abs(picked - expected) / expected
+            self.assertTrue(
+                ratio_diff < 0.05,
+                f"Index {idx} was picked {picked} times, expected ~{expected}"
+            )
 
 
 if __name__ == '__main__':
