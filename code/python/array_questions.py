@@ -277,19 +277,78 @@ def max_subarray_sum(array):
     return max_so_far
 
 
-def find_two_disjoint_subarray_max(array):
+def find_two_disjoint_subarray_max(arr):
     """Given an array of integers, find two disjoint
     contiguous sub-arrays such that the absolute diff
     between the sum of two sub-arrays is maximum.
 
     E.g. [2, -1, -2, 1, -2, 2, 8]
-    Answer: [-1,-2,1,-4], [2,8] Diff=16
+    Answer: [-1,-2,1,-4]=-6, [2,8]=10 abs_diff=16
 
-    Need to use the Kadane's Algorithm from max_subarray_sum()
+    Need to use the Kadane's algorithm from max_subarray_sum()
     to find 4 subarrays.
-    https://www.geeksforgeeks.org/maximum-absolute-difference-between-sum-of-two-contiguous-sub-arrays/
+
+    Kadane's algorithm finds the maximum sum subarray in O(n) time.
+
+    def min_kadane(arr):
+        current_min = min_sum = arr[0]
+        for num in arr[1:]:
+            current_min = min(num, current_min + num)
+            min_sum = min(min_sum, current_min)
+        return min_sum
     """
-    pass
+    n = len(arr)
+
+    min_left = [0] * n
+    max_left = [0] * n
+    min_right = [0] * n
+    max_right = [0] * n
+
+    # Step 1) Fill from left, keeping track of max and min values from left
+    max_sum = min_sum = arr[0]
+    max_left[0] = min_left[0] = arr[0]
+
+    for i in range(1, n):
+        # Maximum subarray sum ending at i - either extend previous or start fresh
+        max_sum = max(arr[i], max_sum + arr[i])
+        # Keep track of max so far, based on previous history
+        max_left[i] = max(max_left[i - 1], max_sum)
+
+        # Minimum subarray ending at i
+        min_sum = min(arr[i], min_sum + arr[i])
+        min_left[i] = min(min_left[i - 1], min_sum)
+
+
+    # Step 2) Fill from right, using reverse Kadane
+    max_sum = min_sum = arr[-1]
+    max_right[-1] = min_right[-1] = arr[-1]
+
+    for i in range(n -2, -1, -1):
+        # Maximum subarray starting at i
+        max_sum = max(arr[i], max_sum + arr[i])
+        # Now we move to the left
+        max_right[i] = max(max_right[i + 1], max_sum)
+
+        # Minimum subarray starting at i
+        min_sum = min(arr[i], min_sum + arr[i])
+        min_right[i] = min(min_right[i + 1], min_sum)
+
+    # Step 3) Check all split points to find max absolute difference
+    max_diff = 0
+
+    for i in range(1, n):
+        # Consider split between i, i +1
+        # Max on the left, min on the right
+        diff1 = abs(max_left[i] - min_right[i])
+
+        # Min on the left, max on the right
+        diff2 = abs(min_left[i] - max_right[i])
+
+        # Max of current differences
+        max_diff = max(max_diff, diff1, diff2)
+
+
+    return max_diff
 
 
 def pick_random_max(arr):

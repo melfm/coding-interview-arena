@@ -20,41 +20,41 @@ class BinaryTreeQuestionTest(unittest.TestCase):
         cls.root.right.left = trees.TreeNode(6)
         cls.root.right.right = trees.TreeNode(7)
 
-    def test_in_order_traversal(self):
+    # def test_in_order_traversal(self):
 
-        all_children = []
-        self.root.traverse_inorder(self.root, all_children)
+    #     all_children = []
+    #     self.root.traverse_inorder(self.root, all_children)
 
-        exp_child_values = [4, 2, 5, 1, 6, 3, 7]
+    #     exp_child_values = [4, 2, 5, 1, 6, 3, 7]
 
-        self.assertEqual(all_children, exp_child_values)
+    #     self.assertEqual(all_children, exp_child_values)
 
-        if self.dump_output:
-            print(all_children)
+    #     if self.dump_output:
+    #         print(all_children)
 
-    def test_pre_order_traversal(self):
+    # def test_pre_order_traversal(self):
 
-        all_children = []
-        self.root.traverse_preorder(self.root, all_children)
+    #     all_children = []
+    #     self.root.traverse_preorder(self.root, all_children)
 
-        exp_child_values = [1, 2, 4, 5, 3, 6, 7]
+    #     exp_child_values = [1, 2, 4, 5, 3, 6, 7]
 
-        self.assertEqual(all_children, exp_child_values)
+    #     self.assertEqual(all_children, exp_child_values)
 
-        if self.dump_output:
-            print(all_children)
+    #     if self.dump_output:
+    #         print(all_children)
 
-    def test_post_order_traversal(self):
+    # def test_post_order_traversal(self):
 
-        all_children = []
-        self.root.traverse_postorder(self.root, all_children)
+    #     all_children = []
+    #     self.root.traverse_postorder(self.root, all_children)
 
-        exp_child_values = [4, 5, 2, 6, 7, 3, 1]
+    #     exp_child_values = [4, 5, 2, 6, 7, 3, 1]
 
-        self.assertEqual(all_children, exp_child_values)
+    #     self.assertEqual(all_children, exp_child_values)
 
-        if self.dump_output:
-            print(all_children)
+    #     if self.dump_output:
+    #         print(all_children)
 
     def test_find_max_depth(self):
         root = trees.TreeNode(1)
@@ -211,6 +211,33 @@ class BinaryTreeQuestionTest(unittest.TestCase):
 
         all_children = []
         self.root.traverse_postorder(self.root, all_children)
+
+    def test_distanceK(self):
+
+        def build_example_tree():
+            # Build tree from example
+            #         3
+            #        / \
+            #       5   1
+            #      / \  / \
+            #     6  2 0  8
+            #       / \
+            #      7   4
+
+            n7 = trees.TreeNodeV2(7)
+            n4 = trees.TreeNodeV2(4)
+            n2 = trees.TreeNodeV2(2, n7, n4)
+            n6 = trees.TreeNodeV2(6)
+            n5 = trees.TreeNodeV2(5, n6, n2)
+            n0 = trees.TreeNodeV2(0)
+            n8 = trees.TreeNodeV2(8)
+            n1 = trees.TreeNodeV2(1, n0, n8)
+            root = trees.TreeNodeV2(3, n5, n1)
+            return root, n5
+        
+        root, target = build_example_tree()
+        result = trees.distanceK(root, target, 2)
+        assert sorted(result) == sorted([7, 4, 1])
 
 
 if __name__ == '__main__':

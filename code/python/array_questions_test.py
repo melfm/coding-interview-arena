@@ -198,6 +198,17 @@ class ArraysTest(unittest.TestCase):
         max_sum = array_qs.max_subarray_sum(array)
         self.assertEqual(max_sum, 7)
 
+    def test_find_two_disjoint_subarray_max(self):
+        arr = [2, -1, -2, 1, -4, 2, 8]
+        max_subarray_sum = array_qs.find_two_disjoint_subarray_max(arr)
+        # For the example above, we'd expect the following 4 arrays.
+        # max_left  = [2, 2, 2, 2, 2, 2, 10]
+        # min_right = [-6, -6, -5, -4, -4, 2, 8]
+
+        # min_left  = [2, -1, -3, -3, -6, -6, -6]
+        # max_right = [10, 10, 10, 10, 10, 10, 8]
+        self.assertEqual(max_subarray_sum, 16)
+
 
     def test_pick_random_max(self):
         arr = [5, 1, 5, 3, 5]

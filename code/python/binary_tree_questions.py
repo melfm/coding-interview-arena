@@ -1,9 +1,13 @@
 """Binary Tree Questions."""
 
+from collections import deque
+from typing import List, Optional
+
 
 class TreeNode:
 
     def __init__(self, value):
+        # This is buggy TODO fix.
 
         self.left = None
         self.right = None
@@ -67,7 +71,7 @@ class TreeNode:
         queue = []
         queue.append(node)
 
-        while (len(queue) > 0):
+        while len(queue) > 0:
             curr_node = queue.pop(0)
             children_list.append(curr_node.value)
 
@@ -101,8 +105,9 @@ class TreeNode:
         if abs(height_diff) > 1:
             return False
         else:
-            return self.is_tree_balanced(node.left) and\
-                self.is_tree_balanced(node.right)
+            return self.is_tree_balanced(node.left) and self.is_tree_balanced(
+                node.right
+            )
 
     def is_tree_BST(self, node):
         """Check if a binary tree is BST or not. A BST satisfies the following
@@ -136,10 +141,12 @@ class TreeNode:
             if node is None:
                 return True
 
-            return node.value > min_val and \
-                node.value < max_val and \
-                is_valid_BST(node.left, min_val, node.value) and \
-                is_valid_BST(node.right, node.value, max_val)
+            return (
+                node.value > min_val
+                and node.value < max_val
+                and is_valid_BST(node.left, min_val, node.value)
+                and is_valid_BST(node.right, node.value, max_val)
+            )
 
         return is_valid_BST(node, min_val, max_val)
 
@@ -197,15 +204,15 @@ def find_first_common_ancestor(tree, node_a, node_b):
         if tree is None:
             return False
 
-        if (tree == node):
+        if tree == node:
             return True
 
         return covers(tree.left, node) or covers(tree.right, node)
 
-    if (covers(tree.left, node_a) and covers(tree.left, node_b)):
+    if covers(tree.left, node_a) and covers(tree.left, node_b):
         return find_first_common_ancestor(tree.left, node_a, node_b)
 
-    if (covers(tree.right, node_a) and covers(tree.right, node_b)):
+    if covers(tree.right, node_a) and covers(tree.right, node_b):
         return find_first_common_ancestor(tree.right, node_a, node_b)
 
     return tree
@@ -220,16 +227,16 @@ NO_NODE_FOUND = 0
 
 def find_first_common_ancestor_v2(root, node_a, node_b):
     """For any node r we know the following:
-        - If node_a is on one side and node_b is on the other side, r is
-        the first common ancestor.
-        - Otherwise the first common ancestor is either on the left or right.
+    - If node_a is on one side and node_b is on the other side, r is
+    the first common ancestor.
+    - Otherwise the first common ancestor is either on the left or right.
     """
 
     def covers(root, node_a, node_b):
         res = NO_NODE_FOUND
         if root is None:
             return res
-        if (root == node_a or root == node_b):
+        if root == node_a or root == node_b:
             res += 1
         res += covers(root.left, node_a, node_b)
         if res == TWO_NODES_FOUND:
@@ -237,7 +244,7 @@ def find_first_common_ancestor_v2(root, node_a, node_b):
         res += covers(root.right, node_a, node_b)
         return res
 
-    if (node_a == node_b and (root.left == node_a or root.right == node_a)):
+    if node_a == node_b and (root.left == node_a or root.right == node_a):
         return root
 
     #################
@@ -274,8 +281,79 @@ def find_first_common_ancestor_v2(root, node_a, node_b):
             return node_b
 
     # The nodes are on each side, so the only common ancestor is the root
-    if nodes_from_left == ONE_NODE_FOUND and \
-            nodes_from_right == ONE_NODE_FOUND:
+    if nodes_from_left == ONE_NODE_FOUND and nodes_from_right == ONE_NODE_FOUND:
         return root
     else:
         return None
+
+
+class TreeNodeV2:
+    """
+    We will use this simplified version of TreeNode for the following questions.
+    """
+
+    def __init__(
+        self,
+        val: int,
+        left: Optional["TreeNode"] = None,
+        right: Optional["TreeNode"] = None,
+    ):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __repr__(self):
+        return f"TreeNodeV2({self.val})"
+
+
+def distanceK(root, target, k):
+    """
+    Given the root of a binary tree, a target node, and an integer k,
+    return all the values of the nodes that have a distance k from the target node.
+    You can return the answer in any order.
+        3
+       / \
+      5   1
+     / \  / \
+    6  2 0  8
+      / \
+     7   4
+     
+    Target: Node with value 5
+    k: 2
+    Output: [7, 4, 1] — nodes that are 2 edges away from node 5
+    """
+
+    # Step 1 - DFS to build a map of node -> parent relationship
+    parent_map = {}
+
+    def dfs(node, parent):
+        if not node:
+            return
+
+        parent_map[node] = parent
+        dfs(node.left, node)
+        dfs(node.right, node)
+
+    dfs(root, None)
+
+    # Step 2 - BFS from target node
+    queue = deque([(target, 0)])
+    visited = set([target])
+
+    results = []
+
+    while queue:
+        node, dist = queue.popleft()
+
+        if dist == k:
+            results.append(node.val)
+
+        elif dist < k:
+            # Need to visit left, right children and parent
+            for neighbor in [node.left, node.right, parent_map.get(node)]:
+                if neighbor and neighbor not in visited:
+                    queue.append((neighbor, dist + 1))
+                    visited.add(neighbor)
+
+    return results
